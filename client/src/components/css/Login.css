@@ -1,0 +1,71 @@
+.login-container{
+    color: white;
+    position: fixed;
+    left: 51em;
+    top: 23%;
+}
+
+.header1{
+    font-size:50px;
+}
+
+.header2{
+    position: fixed;
+    font-size: 30px;
+    font-weight: lighter;
+    margin-top: -1.5em;
+    left: 27em;
+}
+.input-container{
+    margin-top:5em;
+}
+.label-email {
+    position: fixed;
+    top: 22em;
+    font-weight: bold;
+}
+.label-password {
+    position: fixed;
+    top: auto;
+    margin-top: 10px;
+    font-weight: bold;
+}
+.input-password{
+    margin-top: 2em;
+}
+
+input {
+    width: 27em;
+    height: auto;
+    border-radius: 10px;
+    font-size: 21px;
+}
+
+.header1 .header2 {
+    position: center;
+}
+
+.button-login{
+    position: fixed;
+    right: 16%;
+    margin-top: 2em;
+    border-radius: 20px;
+    width: 20%;
+    height: 40px;
+    font-weight: bolder;
+    background-color: silver;
+    font-size: large;
+}
+
+.notAUser {
+    position: fixed;
+    right: 21em;
+    top: 36em;
+}
+
+.link-signup {
+    position: fixed;
+    color: white;
+    margin-top: 2em;
+    right: 19.5em;
+}

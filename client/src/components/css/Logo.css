@@ -1,0 +1,9 @@
+.logo-component {
+    position: fixed;
+    top: 30%;
+}
+
+#image{
+    width: 80%;
+    height: auto;
+}

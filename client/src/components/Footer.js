@@ -1,11 +1,15 @@
 import React from 'react';
 import "./css/Footer.css";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 
-const Footer = () => {
+const Footer = (props)=> {
     return (
-        <footer className="footer-container">
-            <p>&copy; 2024 EZBid. All Rights Reserved.</p>
-        </footer>
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+            {'Copyright © '}
+                EZBid {' '}
+            {new Date().getFullYear()}
+        </Typography>
     );
 };
 

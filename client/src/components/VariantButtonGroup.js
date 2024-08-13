@@ -11,7 +11,7 @@ const theme = createTheme({
             main: '#000000', // Custom color
         },
         customSecondary: {
-            main: '#dc004e', // Custom color
+            main: '#ffffff', // Custom color
         },
     },
 });
@@ -27,12 +27,15 @@ export default function VariantButtonGroup() {
                 '& > *': {
                     m: 1,
                 },
+                backgroundColor: (t) =>
+                    t.palette.mode === 'dark' ? t.palette.grey[50] : t.palette.grey[900],
+                backgroundSize: 'auto',
             }}
         >
-            <ButtonGroup color="customPrimary" variant="text" aria-label="Basic button group">
-                <Button>One</Button>
-                <Button>Two</Button>
-                <Button>Three</Button>
+            <ButtonGroup color="customSecondary" variant="text" aria-label="Basic button group">
+                <Button>Home</Button>
+                <Button>My Account</Button>
+                <Button>Logout</Button>
             </ButtonGroup>
         </Box>
         </ThemeProvider>

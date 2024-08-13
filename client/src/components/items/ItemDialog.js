@@ -1,7 +1,7 @@
 import {CardMedia, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import {useState} from "react";
+import Button from "@mui/material/Button";
 
 const ItemDialog = ({open, handleClose, item}) => {
     return(
@@ -15,10 +15,14 @@ const ItemDialog = ({open, handleClose, item}) => {
                     style = {{height:'auto'}}
                         />
                 <Typography variant = 'h6'>
-                    Item Description
+                    Item Name {item.name}
                 </Typography>
                 <Typography paragraph>
-                    Here you can place a bid on {item.name}
+                    Description: {item.description}<br/>
+                    start price: <br/>
+                    current bid:<br/>
+                    end Date:
+
                 </Typography>
                 <TextField
                     autoFocus
@@ -30,12 +34,12 @@ const ItemDialog = ({open, handleClose, item}) => {
                     />
             </DialogContent>
             <DialogActions>
-                <button onClick={handleClose} color="primary">
+                <Button onClick={handleClose} color="primary">
                     Cancel
-                </button>
-                <button onClick={handleClose} color="primary">
+                </Button>
+                <Button onClick={handleClose} color="primary">
                     Place Bid
-                </button>
+                </Button>
             </DialogActions>
         </Dialog>
     )

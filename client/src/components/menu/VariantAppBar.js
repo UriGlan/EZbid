@@ -1,7 +1,7 @@
 import {AppBar, Toolbar} from "@mui/material";
-import logo from "../img/logo.png";
+import logo from "../../img/logo.png";
 import Box from "@mui/material/Box";
-import VariantButtonGroup from "./VariantButtonGroup";
+import VariantButtonGroup from "../VariantButtonGroup";
 import React from "react";
 
 const VariantAppBar = () =>{

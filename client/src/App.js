@@ -1,13 +1,11 @@
 import React from 'react';
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import SignIn from './pages/SignIn.js';
-import SignUpComponent from './components/SignUpComponent.js';
 import Items from './pages/Items.js';
 import SignUp from './pages/SignUp.js';
-import MyBids from "./pages/MyBids";
+import MyBids from "./pages/myAccount/MyBids";
+import MyListedItems from "./pages/myAccount/MyListedItems";
 
-// Import additional pages or components here
-// import Home from './pages/Home'; (for example)
 
 function App() {
     return (
@@ -19,6 +17,7 @@ function App() {
                 <Route path="/signUp" element={<SignUp />} />
                 <Route path="/items" element={<Items />} />
                 <Route path="/mybids" element={<MyBids />} />
+                <Route path="/mylisteditems" element={<MyListedItems />} />
             </Routes>
         </Router>
     );

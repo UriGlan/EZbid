@@ -7,6 +7,7 @@ import MyListedItemsDialog from "../../components/items/Dialog/MyListedItemsDial
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import {useState} from "react";
+import Footer from "../../components/Footer";
 
 
 const MyItems = () => {
@@ -24,34 +25,47 @@ const MyItems = () => {
             };
             setCardList([...cardList, newItem]); // add the new item to the list
         };
+        const handleDeleteItem = (itemId) => {
+        setCardList(cardList.filter(item => item.id !== itemId));
+    };
+
     return (
         <>
             <PermanentDrawerLeft />
-            <Box
-                component="main"
-                sx={{ flexGrow: 1, paddingLeft: 35, paddingRight: 7 }}
-            >
-                <Typography
-                    variant='h2'
-                    align='center'
-                    paddingTop={2}
-                    fontWeight={700}
-                >
-                    My Listed Items
-                </Typography>
-                <ListItems items={cardList} DialogComponent={MyListedItemsDialog} />
-                <Grid
-                    container
-                    justifyContent="center"
-                    sx={{ mt: 4, paddingBottom: 10, paddingTop: 2 }}
-                >
-                    <Button onClick={handleNewItem} variant="contained" color="primary">
-                        Add new item +
-                    </Button>
-                </Grid>
-            </Box>
-        </>
-    )
-}
+            <main>
+                <Box
+                    sx={{
+                        backgroundColor: '#d7d7d7',
+                        height: 'auto',
+                        paddingLeft:35,
+                        paddingRight:7,
+                        paddingTop: '80px',
+                        paddingBottom: '15%'
+                }}>
+                    <Typography
+                        variant='h2'
+                        align='center'
+                        paddingTop={2}
+                        fontWeight={700}
+                    >
+                        My Listed Items
+                    </Typography>
+                    <ListItems items={cardList} DialogComponent={MyListedItemsDialog}
+                               handleDeleteItem={handleDeleteItem}/>
+                    <Grid
+                        container
+                        justifyContent="center"
+                        sx={{mt: 4, paddingBottom: 10, paddingTop: 2}}
+                    >
+                        <Button onClick={handleNewItem} variant="contained" color="primary">
+                            Add new item +
+                        </Button>
+                    </Grid>
+                    <Footer/>
+                </Box>
+                </main>
+            </>
+            )
+            }
 
-export default MyItems;
+            export default MyItems;

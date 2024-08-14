@@ -2,7 +2,11 @@ import {CardMedia, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
-const MyListedItemsDialog = ({open, handleClose, item}) => {
+const MyListedItemsDialog = ({open, handleClose, item, handleDeleteItem}) => {
+    const handleDelete = () => {
+        handleDeleteItem(item.id);
+        handleClose();
+    };
     return(
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Bid on {item.name}</DialogTitle>
@@ -26,7 +30,7 @@ const MyListedItemsDialog = ({open, handleClose, item}) => {
                 </Typography>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose} color="primary">
+                <Button onClick={handleDelete} color="primary">
                     Delete Item
                 </Button>
                 <Button onClick={handleClose} color="primary">

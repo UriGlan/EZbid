@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import React, { useState } from "react";
 
-const CardItem = ({ item, DialogComponent }) => {
+const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -35,7 +35,7 @@ const CardItem = ({ item, DialogComponent }) => {
                 </CardActions>
             </Card>
             {DialogComponent && (
-                <DialogComponent open={open} handleClose={handleClose} item={item} />
+                <DialogComponent open={open} handleClose={handleClose} item={item} handleDeleteItem ={handleDeleteItem}/>
             )}
         </>
     )

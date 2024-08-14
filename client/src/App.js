@@ -5,6 +5,8 @@ import Items from './pages/Items.js';
 import SignUp from './pages/SignUp.js';
 import MyBids from "./pages/myAccount/MyBids";
 import MyItems from "./pages/myAccount/MyItems";
+import Profile from "./pages/myAccount/Profile";
+import EditProfile from "./pages/myAccount/ProfileEdit";
 
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
                 <Route path="/items" element={<Items />} />
                 <Route path="/mybids" element={<MyBids />} />
                 <Route path="/myitems" element={<MyItems />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/editprofile" element={<EditProfile />} />
             </Routes>
         </Router>
     );

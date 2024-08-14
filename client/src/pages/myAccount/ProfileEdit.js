@@ -6,8 +6,9 @@ import {Box, Container} from "@mui/material";
 import DividerVariants from "../../components/DividerVariants";
 import Button from "@mui/material/Button";
 import * as React from "react";
+import ProfileEditComponents from "../../components/ProfileEditComponents";
 
-const Profile = () => {
+const EditProfile = () => {
     return (
         <>
             <VariantAppBar/>
@@ -28,20 +29,26 @@ const Profile = () => {
                         paddingTop={2}
                         fontWeight={700}
                     >
-                        My Profile
+                        Profile Edit
                     </Typography>
                     <Container    sx={{
                         paddingTop: 7,
                         paddingBottom: 17,
                         display: 'flex',
                         justifyContent: 'center', // Center the Divider horizontally
-                        alignItems: 'center', // Center the Divider vertically (if applicable)
+                        alignItems: 'center',
+                        flexDirection: 'column',
                     }} >
-                        <DividerVariants />
+                        <Box sx={{textAlign: 'center' , maxWidth:'70%'}}>
+                            <ProfileEditComponents />
+                        </Box>
                     </Container>
                     <Box sx={{ textAlign: 'center', paddingBottom:7 }}>
-                        <Button  variant="contained" color="primary">
-                            Edit
+                        <Button  variant="contained" color="primary" sx={{width: 5}}>
+                            Save
+                        </Button>
+                        <Button  variant="contained" color="primary" sx={{marginLeft:3, width: 5}}>
+                            Cancel
                         </Button>
                     </Box>
                     <Footer/>
@@ -50,4 +57,4 @@ const Profile = () => {
         </>
     )
 };
-export default Profile;
+export default EditProfile;

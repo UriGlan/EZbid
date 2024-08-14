@@ -4,7 +4,7 @@ import SignIn from './pages/SignIn.js';
 import Items from './pages/Items.js';
 import SignUp from './pages/SignUp.js';
 import MyBids from "./pages/myAccount/MyBids";
-import MyListedItems from "./pages/myAccount/MyListedItems";
+import MyItems from "./pages/myAccount/MyItems";
 
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
                 <Route path="/signUp" element={<SignUp />} />
                 <Route path="/items" element={<Items />} />
                 <Route path="/mybids" element={<MyBids />} />
-                <Route path="/mylisteditems" element={<MyListedItems />} />
+                <Route path="/myitems" element={<MyItems />} />
             </Routes>
         </Router>
     );

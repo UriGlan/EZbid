@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import CardItem from "../components/items/CardItem";
 import Footer from "../components/Footer";
 import ListItems from "../components/items/ListItems";
-import ItemDialog from "../components/items/ItemDialog";
+import ItemDialog from "../components/items/Dialog/ItemDialog";
 
 const cardList = [
     { id: 1, name: "A cute Dog" },

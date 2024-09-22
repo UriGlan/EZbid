@@ -1,3 +1,4 @@
+/*
 package com.ezbid.security;
 
 import org.springframework.context.annotation.Bean;
@@ -15,7 +16,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/public/**").permitAll()  // Public access to specific paths
+                                .requestMatchers("/auctions", "/public/**").permitAll()  // Allow public access to /auctions
                                 .anyRequest().authenticated()  // Authenticate all other requests
                 )
                 .formLogin(formLogin ->  // Custom form login configuration
@@ -31,4 +32,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 }
+*/
+

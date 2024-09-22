@@ -12,6 +12,7 @@ public class Auction {
 
     private String itemName;
     private String description;
+    private String image;
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -30,6 +31,7 @@ public class Auction {
         this.startTime = startTime;
         this.endTime = endTime;
         this.seller = seller;
+        this.image = image;
     }
 
     public Long getId() {
@@ -79,4 +81,14 @@ public class Auction {
     public void setSeller(User seller) {
         this.seller = seller;
     }
+
+    public void setImage(String fileName) {
+        this.image = fileName;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+
 }

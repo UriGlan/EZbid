@@ -6,41 +6,41 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+// This class is the model for a bid
+
 @Entity
 public class Bid {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long bidId;
 
     private Double bidAmount;
     private LocalDateTime bidTime;
 
     @ManyToOne
-    @JoinColumn(name = "auction_id")
+    @JoinColumn(name = "auctionId")
     private Auction auction;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User bidder;
 
     public Bid() {
     }
 
-    public Bid(Long id, Double bidAmount, LocalDateTime bidTime, Auction auction, User bidder) {
-        this.id = id;
+    public Bid(Long bidId, Double bidAmount, LocalDateTime bidTime, Auction auction, User bidder) {
+        this.bidId = bidId;
         this.bidAmount = bidAmount;
         this.bidTime = bidTime;
         this.auction = auction;
         this.bidder = bidder;
     }
 
-    public Long getId() {
-        return id;
-    }
+// Getters and setters
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getId() {
+        return bidId;
     }
 
     public Double getBidAmount() {

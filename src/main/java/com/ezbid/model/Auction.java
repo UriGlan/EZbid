@@ -3,12 +3,13 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+// This class is the model for an auction
 @Entity
 public class Auction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long auction_id;
 
     private String itemName;
     private String description;
@@ -16,31 +17,28 @@ public class Auction {
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private int days = 7;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User seller;
 
+
+// Empty constructor
     public Auction() {
+        this.startTime = LocalDateTime.now();
+        this.endTime = LocalDateTime.now().plusDays(days);
     }
 
-    public Auction(Long id, String itemName, String description, LocalDateTime startTime, LocalDateTime endTime, User seller) {
-        this.id = id;
+    public Auction(Long auction_id, String itemName, String description, int days) {
+        this.auction_id = auction_id;
         this.itemName = itemName;
         this.description = description;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.seller = seller;
-        this.image = image;
+        this.startTime = LocalDateTime.now();
+        this.endTime = LocalDateTime.now().plusDays(days);
+    }
+// Getters and setters
+    public Long getAuction_id() {
+        return auction_id;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getItemName() {
         return itemName;
@@ -62,10 +60,6 @@ public class Auction {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
     public LocalDateTime getEndTime() {
         return endTime;
     }
@@ -74,21 +68,7 @@ public class Auction {
         this.endTime = endTime;
     }
 
-    public User getSeller() {
-        return seller;
+    public void setImage(String filePath) {
+        this.image = filePath;
     }
-
-    public void setSeller(User seller) {
-        this.seller = seller;
-    }
-
-    public void setImage(String fileName) {
-        this.image = fileName;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-
 }

@@ -1,4 +1,3 @@
-/*
 package com.ezbid.security;
 
 import org.springframework.context.annotation.Bean;
@@ -10,29 +9,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/auctions", "/public/**").permitAll()  // Allow public access to /auctions
-                                .anyRequest().authenticated()  // Authenticate all other requests
+                        authorizeRequests.anyRequest().permitAll()  // Permit all requests
                 )
-                .formLogin(formLogin ->  // Custom form login configuration
-                        formLogin
-                                .loginPage("/login")  // Custom login page URL
-                                .permitAll()  // Allow everyone to access the login page
-                )
-                .logout(logout ->  // Custom logout configuration
-                        logout
-                                .logoutUrl("/logout")  // Custom logout URL
-                                .logoutSuccessUrl("/")  // Redirect after successful logout
-                );
+                .csrf(csrf -> csrf.disable())  // Disable CSRF protection
+                .formLogin(formLogin -> formLogin.disable())  // Disable form login
+                .logout(logout -> logout.disable());  // Disable logout
 
         return http.build();
     }
-
 }
-*/
-

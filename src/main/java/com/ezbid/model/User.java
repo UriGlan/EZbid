@@ -2,37 +2,31 @@ package com.ezbid.model;
 
 import jakarta.persistence.*;
 
+// This class is the model for a user
 @Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
 
     private String username;
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
-    // Default constructor (required by JPA)
+    // Empty constructor
     public User() {
     }
 
-    // Constructor with fields
-    public User(String username, String password, Role role) {
+    public User(Long userId,String username, String password) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
-        this.role = role;
     }
 
     // Getters and Setters
     public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        return userId;
     }
 
     public String getUsername() {
@@ -51,11 +45,4 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
 }

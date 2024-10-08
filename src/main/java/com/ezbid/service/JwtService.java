@@ -18,9 +18,9 @@ import static io.jsonwebtoken.security.Keys.hmacShaKeyFor;
 
 @Service
 public class JwtService {
-    @Value("${security.jwt.secret}")
+    @Value("${jwt.secret}")
     private String secretKey;
-    @Value("${security.jwt.expirationMs}")
+    @Value("${jwt.expirationMs}")
     private long jwtExpirationMs;
 
     // This method extracts the username from a token

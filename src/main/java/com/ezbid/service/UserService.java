@@ -6,6 +6,8 @@ import com.ezbid.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 // This class is a service that handles logics for users
@@ -14,11 +16,17 @@ import java.util.List;
 @Transactional(rollbackOn = Exception.class)
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository, EmailService emailService) {
+        this.userRepository = userRepository;
+    }
+
     // This method returns all users
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        List<User> users = new ArrayList<>();
+        userRepository.findAll().forEach(users::add);
+        return users;
     }
     // This method creates a user
     public User createUser(User user) {

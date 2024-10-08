@@ -2,7 +2,7 @@ package com.ezbid.responses;
 
 public class LogInResponse {
     private String token;
-    private String expiresIn;
+    private Long expiresIn;
 
     public LogInResponse(String token, long expiresIn) {
         this.token = token;
@@ -18,11 +18,11 @@ public class LogInResponse {
         this.token = token;
     }
 
-    public String getExpiresIn() {
+    public Long getExpiresIn() {
         return expiresIn;
     }
 
-    public void setExpiresIn(String expiresIn) {
+    public void setExpiresIn(Long expiresIn) {
         this.expiresIn = expiresIn;
     }
 

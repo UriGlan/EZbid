@@ -52,36 +52,8 @@ public class AuctionService {
         return auctionRepository.findById(auctionId)
                 .orElseThrow(() -> new ResourceNotFoundException("Auction not found"));
     }
-
+    // Optional method tho add a picture:
     // Method to upload image
-    public String uploadImage(Long auctionId, MultipartFile file) {
-        Auction auction = getAuctionById(auctionId);
-        String filePath = storeFile(file); // Store the file
-        auction.setImage(filePath);
-        auctionRepository.save(auction);
-        return filePath; // Return the file path in string format
-    }
-
     // Method to store file locally (Consider security implications when storing user-uploaded files)
-    public String storeFile(MultipartFile file) {
-        long maxFileSizeInBytes = 5 * 1024 * 1024; // Set to 5MB.
 
-        if (file.getSize() > maxFileSizeInBytes) {
-            throw new RuntimeException("File is too large. Maximum size is 5MB.");
-        }
-
-        try {
-            Path path = Paths.get(PHOTO_DIRECTORY + file.getOriginalFilename());
-
-            // Security consideration: Check if the file type is allowed
-            if (!Objects.requireNonNull(file.getContentType()).startsWith("image/")) {
-                throw new RuntimeException("Only image files are allowed.");
-            }
-
-            Files.copy(file.getInputStream(), path);
-            return path.toString();
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to store file", e);
-        }
-    }
 }

@@ -10,10 +10,11 @@ public class Auction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long auction_id;
-
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     private String itemName;
     private String description;
-    private String image;
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -27,14 +28,18 @@ public class Auction {
         this.endTime = LocalDateTime.now().plusDays(days);
     }
 
-    public Auction(Long auction_id, String itemName, String description, int days) {
+    public Auction(Long auction_id,User user, String itemName, String description, int days) {
         this.auction_id = auction_id;
+        this.user = user;
         this.itemName = itemName;
         this.description = description;
         this.startTime = LocalDateTime.now();
         this.endTime = LocalDateTime.now().plusDays(days);
     }
 // Getters and setters
+    public void setAuction_id(Long auction_id) {
+        this.auction_id = auction_id;
+    }
     public Long getAuction_id() {
         return auction_id;
     }
@@ -68,7 +73,22 @@ public class Auction {
         this.endTime = endTime;
     }
 
-    public void setImage(String filePath) {
-        this.image = filePath;
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
+    }
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -22,6 +22,8 @@ public class User implements UserDetails {
     private String password;
     @Column(unique = true, nullable = false)
     private String email;
+    @OneToMany(mappedBy = "user")
+    private List<Auction> auctions;
     private boolean enabled = true;
     private String verificationCode;
     private Timestamp verificationCodeExpiration = Timestamp.valueOf(LocalDateTime.now().plusMinutes(15));
@@ -59,6 +61,12 @@ public class User implements UserDetails {
     }
     public String getEmail() {
         return email;
+    }
+    public void setAuctions(List<Auction> auctions) {
+        this.auctions = auctions;
+    }
+    public List<Auction> getAuctions() {
+        return auctions;
     }
 
     public void setEnabled(boolean enabled) {

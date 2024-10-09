@@ -1,6 +1,8 @@
 package com.ezbid.config;
 
 import com.ezbid.service.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.micrometer.common.lang.NonNull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -40,6 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
         final String authHeader = request.getHeader("Authorization");
 
         if(authHeader == null || !authHeader.startsWith("Bearer ")){
+            logger.warn("Missing or invalid Authorization header.");
             filterChain.doFilter(request, response);
             return;
         }
@@ -66,7 +69,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
             }
 
             filterChain.doFilter(request, response);
-        }catch (Exception e){
+        } catch (ExpiredJwtException e){
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Token expired. Please log in again.");
+            response.getWriter().flush();
+            return;
+        } catch (JwtException e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Invalid token. Please log in again.");
+            response.getWriter().flush();
+            return;
+        } catch (Exception e){
             handlerExceptionResolver.resolveException(request, response, null, e);
         }
 

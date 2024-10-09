@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,7 +31,9 @@ public class AuctionService {
 
     // This method returns all auctions
     public List<Auction> getAllAuctions() {
-        return auctionRepository.findAll();
+        List<Auction> auctions = auctionRepository.findAll();
+        System.out.println("Ausctions fetched from DB: " + auctions);
+        return auctions;
     }
 
     // This method creates an auction

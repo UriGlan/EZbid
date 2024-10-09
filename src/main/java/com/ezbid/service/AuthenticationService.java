@@ -30,7 +30,7 @@ public class AuthenticationService {
     }
 
     public User signUp(RegisterUserDto input) {
-        User user = new User(input.getUsername(), input.getEmail(), passwordEncoder.encode(input.getPassword()));
+        User user = new User(input.getUsername(),passwordEncoder.encode(input.getPassword()), input.getEmail());
         user.setVerificationCode(generateVerificationCode());
         user.setVerificationCodeExpiration(LocalDateTime.now().plusMinutes(15));
         user.setEnabled(false);
@@ -65,7 +65,7 @@ public class AuthenticationService {
                 user.setVerificationCodeExpiration(null);
                 userRepository.save(user);
             } else {
-                throw new RuntimeException("Account not found.");
+                throw new RuntimeException("Invalid verification code. Please try again.");
             }
         }
     }

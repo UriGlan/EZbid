@@ -24,7 +24,7 @@ public class User implements UserDetails {
     private String email;
     private boolean enabled = true;
     private String verificationCode;
-    private Timestamp verificationCodeExpiration;
+    private Timestamp verificationCodeExpiration = Timestamp.valueOf(LocalDateTime.now().plusMinutes(15));
 
 
     // Empty constructor

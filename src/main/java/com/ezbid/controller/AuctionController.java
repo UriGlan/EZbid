@@ -2,6 +2,7 @@ package com.ezbid.controller;
 
 import com.ezbid.model.Auction;
 import com.ezbid.service.AuctionService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +20,9 @@ public class AuctionController {
 
     // This method returns all auctions
     @GetMapping("/auctions")
-    public List<Auction> getAllAuctions() {
-        return auctionService.getAllAuctions();
+    public ResponseEntity <List<Auction>> getAllAuctions() {
+        List<Auction> auctions = auctionService.getAllAuctions();
+        return ResponseEntity.ok(auctions);
     }
 
     // This method creates a new auction

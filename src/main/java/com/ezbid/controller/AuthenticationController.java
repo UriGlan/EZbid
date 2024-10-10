@@ -2,11 +2,13 @@ package com.ezbid.controller;
 
 import com.ezbid.dto.LoginUserDto;
 import com.ezbid.dto.RegisterUserDto;
+import com.ezbid.dto.UserResponseDto;
 import com.ezbid.dto.VerifyUserDto;
 import com.ezbid.model.User;
 import com.ezbid.responses.LogInResponse;
 import com.ezbid.service.AuthenticationService;
 import com.ezbid.service.JwtService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ public class AuthenticationController {
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
 
+    @Autowired
     public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService) {
         this.jwtService = jwtService;
         this.authenticationService = authenticationService;
@@ -28,11 +31,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LogInResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
-        User authernicateUser = authenticationService.authenticate(loginUserDto);
-        String jwt = jwtService.generateToken(authernicateUser);
-        LogInResponse logInResponse = new LogInResponse(jwt, jwtService.getJwtExpirationMs());
-        return ResponseEntity.ok(logInResponse);
+    public ResponseEntity<LogInResponse> login(@RequestBody LoginUserDto loginUserDto) {
+        LogInResponse response = authenticationService.authenticate(loginUserDto);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/verify")

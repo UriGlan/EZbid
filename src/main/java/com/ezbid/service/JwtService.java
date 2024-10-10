@@ -1,6 +1,7 @@
 package com.ezbid.service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -79,12 +80,16 @@ public class JwtService {
 
     // This method extracts all claims from a token
     private Claims extractAllClaims(String token){
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSightInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try{
+            return Jwts
+                    .parserBuilder()
+                    .setSigningKey(getSightInKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (JwtException e){
+            throw new RuntimeException("Invalid token", e);
+        }
     }
 
     // This method returns the secret key (used for signing and verifying tokens)

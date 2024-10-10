@@ -44,6 +44,9 @@ public class SecurityConfig {
         return http.build();
     }
 
+
+
+
     // This method is to configure authentication manager
     @Bean
     public AuthenticationManager authenticationManger(AuthenticationConfiguration authenticationConfiguration) throws Exception {

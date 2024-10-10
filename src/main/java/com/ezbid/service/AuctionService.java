@@ -32,7 +32,7 @@ public class AuctionService {
     // This method returns all auctions
     public List<Auction> getAllAuctions() {
         List<Auction> auctions = auctionRepository.findAll();
-        System.out.println("Ausctions fetched from DB: " + auctions);
+        System.out.println("Auctions fetched from DB: " + auctions);
         return auctions;
     }
 

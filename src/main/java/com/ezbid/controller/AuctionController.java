@@ -20,14 +20,15 @@ public class AuctionController {
 
     // This method returns all auctions
     @GetMapping("/all")
-    public ResponseEntity <List<Auction>> getAllAuctions() {
-        System.out.println("Getting all auctions");
+    public ResponseEntity<List<Auction>> getAllAuctions() {
+        System.out.println("Controller method reached: Getting all auctions");
         List<Auction> auctions = auctionService.getAllAuctions();
         if (auctions.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(auctions);
     }
+
 
     // This method creates a new auction
     @PostMapping("/new")

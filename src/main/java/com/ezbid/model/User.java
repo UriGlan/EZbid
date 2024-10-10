@@ -24,7 +24,7 @@ public class User implements UserDetails {
     private String email;
     @OneToMany(mappedBy = "user")
     private List<Auction> auctions;
-    private boolean enabled = true;
+    private boolean enabled;
     private String verificationCode;
     private Timestamp verificationCodeExpiration = Timestamp.valueOf(LocalDateTime.now().plusMinutes(15));
 

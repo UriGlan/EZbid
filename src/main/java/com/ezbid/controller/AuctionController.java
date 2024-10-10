@@ -10,7 +10,7 @@ import java.util.List;
 // This class is a REST controller that handles HTTP requests
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auctions")
 public class AuctionController {
     private final AuctionService auctionService;
 
@@ -19,26 +19,29 @@ public class AuctionController {
     }
 
     // This method returns all auctions
-    @GetMapping("/auctions")
+    @GetMapping("/all")
     public ResponseEntity <List<Auction>> getAllAuctions() {
         List<Auction> auctions = auctionService.getAllAuctions();
+        if (auctions.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(auctions);
     }
 
     // This method creates a new auction
-    @PostMapping("/auctions/new")
+    @PostMapping("/new")
     public Auction createAuction(@RequestBody Auction auction) {
         return auctionService.createAuction(auction);
     }
 
     // This method deletes an auction
-    @DeleteMapping("/auctions/{id}")
+    @DeleteMapping("/{id}")
     public void deleteAuction(@PathVariable Long id) {
         auctionService.deleteAuction(id);
     }
 
     // This method returns an auction by its ID
-    @GetMapping("/auctions/{id}")
+    @GetMapping("/{id}")
     public Auction getAuctionById(@PathVariable Long id) {
         return auctionService.getAuctionById(id);
     }

@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,8 +23,10 @@ public class User implements UserDetails {
     private String password;
     @Column(unique = true, nullable = false)
     private String email;
-    @OneToMany(mappedBy = "user")
-    private List<Auction> auctions;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Auction> auctions = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Bid> bids = new ArrayList<>();
     private boolean enabled;
     private String verificationCode;
     private Timestamp verificationCodeExpiration = Timestamp.valueOf(LocalDateTime.now().plusMinutes(15));
@@ -62,12 +65,6 @@ public class User implements UserDetails {
     public String getEmail() {
         return email;
     }
-    public void setAuctions(List<Auction> auctions) {
-        this.auctions = auctions;
-    }
-    public List<Auction> getAuctions() {
-        return auctions;
-    }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
@@ -89,7 +86,31 @@ public class User implements UserDetails {
         return verificationCodeExpiration;
     }
 
+    // Bids methods
+    public List<Bid> getBids() {
+        return bids;
+    }
+    public void addBid(Bid bid) {
+        bids.add(bid);
+        bid.setUser(this);
+    }
+    public void removeBid(Bid bid) {
+        bids.remove(bid);
+        bid.setUser(null);
+    }
+    // Auction methods
+    public void addAuction(Auction auction) {
+        auctions.add(auction);
+        auction.setUser(this);
+    }
+    public List<Auction> getAuctions() {
+        return auctions;
+    }
 
+    public void removeAuction(Auction auction) {
+        auctions.remove(auction);
+        auction.setUser(null);
+    }
     // UserDetails methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

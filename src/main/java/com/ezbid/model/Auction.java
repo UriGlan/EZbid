@@ -14,6 +14,9 @@ public class Auction {
     @JoinColumn(name = "user_id")
     private User user;
     private String itemName;
+    private double startingBid;
+    private double currentBid;
+
     private String description;
 
     private LocalDateTime startTime;
@@ -28,10 +31,11 @@ public class Auction {
         this.endTime = LocalDateTime.now().plusDays(days);
     }
 
-    public Auction(Long auction_id,User user, String itemName, String description, int days) {
+    public Auction(Long auction_id,User user, String itemName,Double startingBid, String description, int days) {
         this.auction_id = auction_id;
         this.user = user;
         this.itemName = itemName;
+        this.startingBid = startingBid;
         this.description = description;
         this.startTime = LocalDateTime.now();
         this.endTime = LocalDateTime.now().plusDays(days);
@@ -90,5 +94,21 @@ public class Auction {
     }
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public double getStartingBid() {
+        return startingBid;
+    }
+
+    public void setStartingBid(double startingBid) {
+        this.startingBid = startingBid;
+    }
+
+    public double getCurrentBid() {
+        return currentBid;
+    }
+
+    public void setCurrentBid(double currentBid) {
+        this.currentBid = currentBid;
     }
 }

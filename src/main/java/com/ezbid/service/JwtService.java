@@ -52,6 +52,7 @@ public class JwtService {
     // This method builds a token with the information provided
     private String buildToken(HashMap<String, Object> extraClaims, UserDetails userDetails, long expirationMs){
         return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))

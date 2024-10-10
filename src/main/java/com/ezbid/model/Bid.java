@@ -19,22 +19,22 @@ public class Bid {
     private LocalDateTime bidTime;
 
     @ManyToOne
-    @JoinColumn(name = "auctionId")
+    @JoinColumn(name = "auction_id")
     private Auction auction;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private User bidder;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Bid() {
     }
 
-    public Bid(Long bidId, Double bidAmount, LocalDateTime bidTime, Auction auction, User bidder) {
+    public Bid(Long bidId, Double bidAmount, LocalDateTime bidTime, Auction auction, User user) {
         this.bidId = bidId;
         this.bidAmount = bidAmount;
         this.bidTime = bidTime;
         this.auction = auction;
-        this.bidder = bidder;
+        this.user = user;
     }
 
 // Getters and setters
@@ -67,11 +67,11 @@ public class Bid {
         this.auction = auction;
     }
 
-    public User getBidder() {
-        return bidder;
+    public User getUser() {
+        return user;
     }
 
-    public void setBidder(User bidder) {
-        this.bidder = bidder;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

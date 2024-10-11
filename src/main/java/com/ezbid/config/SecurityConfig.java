@@ -43,7 +43,6 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Disable CSRF
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll() // Allow all requests to /auth/**
-                        .requestMatchers(HttpMethod.GET, "/api/auctions/all").permitAll()  // Public access to fetch auctions
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

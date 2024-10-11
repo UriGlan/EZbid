@@ -11,7 +11,7 @@ public class Auction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long auction_id;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
     private String itemName;
     private double startingBid;

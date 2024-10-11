@@ -6,17 +6,7 @@ import com.ezbid.repository.AuctionRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import static com.ezbid.constant.Constant.PHOTO_DIRECTORY;
 
 @Service
 @Transactional(rollbackOn = Exception.class)

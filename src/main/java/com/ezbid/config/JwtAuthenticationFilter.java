@@ -40,13 +40,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
         System.out.println("AuthHeader: " + authHeader);
+        //  Bypass token validation for the /auth/** endpoint
+        if (request.getServletPath().equals("/auth/**")) {
+            filterChain.doFilter(request, response);  // Skip filter and proceed to log in
+            return;
+        }
 
         // Check for missing or invalid Authorization header
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-
-            // Log missing or invalid header
-            System.out.println("No JWT token or invalid token.");
-
             logger.warn("Missing or invalid Authorization header.");
             filterChain.doFilter(request, response); // Continue with the filter chain if there's no valid header
             return;

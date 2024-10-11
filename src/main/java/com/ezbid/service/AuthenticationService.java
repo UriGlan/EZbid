@@ -51,15 +51,15 @@ public class AuthenticationService {
     // This method authenticates a user and return the JWT token
     public LogInResponse authenticate(LoginUserDto input) {
         User user = userRepository.findByEmail(input.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found" + input.getEmail()));
-        System.out.println("mail = " + user.getEmail() + "name= "+ user.getUsername() +"Id= " + user.getId());
+                .orElseThrow(() -> new RuntimeException("User not found " + input.getEmail()));
+        System.out.println("mail = " + user.getEmail() + " name= "+ user.getUsername() +"Id= " + user.getId());
         if (!user.isEnabled()) {
             throw new RuntimeException("Account not verified. Please check your email for the verification code.");
         }
         // Authenticate the user
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        input.getEmail(),
+                        user.getUsername(),
                         input.getPassword()
                 )
         );

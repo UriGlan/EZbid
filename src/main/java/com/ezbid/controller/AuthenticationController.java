@@ -2,7 +2,6 @@ package com.ezbid.controller;
 
 import com.ezbid.dto.LoginUserDto;
 import com.ezbid.dto.RegisterUserDto;
-import com.ezbid.dto.UserResponseDto;
 import com.ezbid.dto.VerifyUserDto;
 import com.ezbid.model.User;
 import com.ezbid.responses.LogInResponse;

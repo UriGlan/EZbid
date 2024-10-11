@@ -15,17 +15,35 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Footer from "../components/Footer";
 import logo from "../img/logo.png";
+import axios from "axios";
+import { useState } from "react";
+
 
 const defaultTheme = createTheme();
 
 const SignInSide = () => {
-    const handleSubmit = (event) => {
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
+
+        const loginData = {
             email: data.get('email'),
-            password: data.get('password'),
-        });
+            password: data.get('password')
+        };
+        try {
+            // Send a POST request to the server
+            const response = await axios.post('http://localhost:8080/auth/login', loginData);
+            const token = response.data.token;
+            localStorage.setItem('token', token);
+            console.log('Login successful');
+            window.location.href = '/items';
+
+            } catch (error) {
+            setError('Login failed. Please check your cerdenials and try again');
+            console.error('There was an error!', error);
+        }
     };
 
     return (

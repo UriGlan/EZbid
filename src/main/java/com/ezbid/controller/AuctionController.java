@@ -1,7 +1,6 @@
 package com.ezbid.controller;
 
 import com.ezbid.dto.AuctionDto;
-import com.ezbid.model.Auction;
 import com.ezbid.service.AuctionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 // This class is a REST controller that handles HTTP requests
-
 @RestController
 @RequestMapping("/api/auctions")
 public class AuctionController {

@@ -13,11 +13,7 @@ public class Bid {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bidId;
-
-    private Double bidAmount;
-    private LocalDateTime bidTime;
-
+    private Long bid_id;
     @ManyToOne
     @JoinColumn(name = "auction_id")
     private Auction auction;
@@ -26,11 +22,15 @@ public class Bid {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private Double bidAmount;
+    private LocalDateTime bidTime;
+
+
     public Bid() {
     }
 
-    public Bid(Long bidId, Double bidAmount, LocalDateTime bidTime, Auction auction, User user) {
-        this.bidId = bidId;
+    public Bid(Long bid_id, Double bidAmount, LocalDateTime bidTime, Auction auction, User user) {
+        this.bid_id = bid_id;
         this.bidAmount = bidAmount;
         this.bidTime = bidTime;
         this.auction = auction;
@@ -40,7 +40,7 @@ public class Bid {
 // Getters and setters
 
     public Long getId() {
-        return bidId;
+        return bid_id;
     }
 
     public Double getBidAmount() {

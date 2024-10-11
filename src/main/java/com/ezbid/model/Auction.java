@@ -13,15 +13,16 @@ public class Auction {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    private String itemName;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bid_id")
+    private Bid currentBid;
     private double startingBid;
-    private double currentBid;
-
+    private String title;
     private String description;
-
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private int days = 7;
+    private boolean active = true;
 
 
 
@@ -31,10 +32,9 @@ public class Auction {
         this.endTime = LocalDateTime.now().plusDays(days);
     }
 
-    public Auction(Long auction_id,User user, String itemName,Double startingBid, String description, int days) {
-        this.auction_id = auction_id;
+    public Auction(User user, String title,Double startingBid, String description, int days) {
         this.user = user;
-        this.itemName = itemName;
+        this.title = title;
         this.startingBid = startingBid;
         this.description = description;
         this.startTime = LocalDateTime.now();
@@ -49,12 +49,12 @@ public class Auction {
     }
 
 
-    public String getItemName() {
-        return itemName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -104,11 +104,15 @@ public class Auction {
         this.startingBid = startingBid;
     }
 
-    public double getCurrentBid() {
+    public Bid getCurrentBid() {
         return currentBid;
     }
 
-    public void setCurrentBid(double currentBid) {
+    public void setCurrentBid(Bid currentBid) {
         this.currentBid = currentBid;
+    }
+
+    public void checkAuctionStatus() {
+        this.active = LocalDateTime.now().isBefore(this.endTime);
     }
 }

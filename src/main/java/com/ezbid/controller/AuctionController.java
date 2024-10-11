@@ -1,8 +1,11 @@
 package com.ezbid.controller;
 
+import com.ezbid.dto.AuctionDto;
 import com.ezbid.model.Auction;
 import com.ezbid.service.AuctionService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +23,9 @@ public class AuctionController {
 
     // This method returns all auctions
     @GetMapping("/all")
-    public ResponseEntity<List<Auction>> getAllAuctions() {
+    public ResponseEntity<List<AuctionDto>> getAllAuctions() {
         System.out.println("Controller method reached: Getting all auctions");
-        List<Auction> auctions = auctionService.getAllAuctions();
+        List<AuctionDto> auctions = auctionService.getAllAuctions();
         if (auctions.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -32,8 +35,10 @@ public class AuctionController {
 
     // This method creates a new auction
     @PostMapping("/new")
-    public Auction createAuction(@RequestBody Auction auction) {
-        return auctionService.createAuction(auction);
+    public ResponseEntity<AuctionDto> createAuction(@RequestBody AuctionDto auctionDto, @AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();  // Extract the username from the token
+        AuctionDto createdAuction = auctionService.createAuction(auctionDto, username);
+        return ResponseEntity.ok(createdAuction);
     }
 
     // This method deletes an auction
@@ -44,8 +49,9 @@ public class AuctionController {
 
     // This method returns an auction by its ID
     @GetMapping("/{id}")
-    public Auction getAuctionById(@PathVariable Long id) {
-        return auctionService.getAuctionById(id);
+    public ResponseEntity<AuctionDto> getAuctionById(@PathVariable Long id) {
+        AuctionDto auctionDTO = auctionService.getAuctionById(id);
+        return ResponseEntity.ok(auctionDTO);
     }
 
     // Add other endpoints like update, delete, etc.

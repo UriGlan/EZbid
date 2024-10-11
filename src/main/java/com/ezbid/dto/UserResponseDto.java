@@ -9,15 +9,12 @@ public class UserResponseDto {
     private Long id;
     private String username;
     private String email;
-    private List<Auction> auctions;
-    private List<Bid> bids;
 
-    public UserResponseDto(Long id, String username, String email, List<Auction> auctions, List<Bid> bids) {
+    public UserResponseDto(Long id, String username, String email) {
         this.id = id;
         this.username = username;
         this.email = email;
-        this.auctions = auctions;
-        this.bids = bids;
+
     }
 
 // Getters and setters
@@ -46,19 +43,4 @@ public class UserResponseDto {
         this.email = email;
     }
 
-    public List<Auction> getAuctions() {
-        return auctions;
-    }
-
-    public void setAuctions(List<Auction> auctions) {
-        this.auctions = auctions;
-    }
-
-    public List<Bid> getBids() {
-        return bids;
-    }
-
-    public void setBids(List<Bid> bids) {
-        this.bids = bids;
-    }
 }

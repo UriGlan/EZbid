@@ -17,18 +17,13 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long user_id;
     @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
     private String password;
     @Column(unique = true, nullable = false)
     private String email;
-    @JsonIgnore
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<Auction> auctions = new ArrayList<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Bid> bids = new ArrayList<>();
     private boolean enabled;
     private String verificationCode;
     private Timestamp verificationCodeExpiration = Timestamp.valueOf(LocalDateTime.now().plusMinutes(15));
@@ -47,7 +42,7 @@ public class User implements UserDetails {
 
     // Getters and Setters
     public Long getId() {
-        return userId;
+        return user_id;
     }
     public void setUsername(String username) {
         this.username = username;
@@ -88,31 +83,7 @@ public class User implements UserDetails {
         return verificationCodeExpiration;
     }
 
-    // Bids methods
-    public List<Bid> getBids() {
-        return bids;
-    }
-    public void addBid(Bid bid) {
-        bids.add(bid);
-        bid.setUser(this);
-    }
-    public void removeBid(Bid bid) {
-        bids.remove(bid);
-        bid.setUser(null);
-    }
-    // Auction methods
-    public void addAuction(Auction auction) {
-        auctions.add(auction);
-        auction.setUser(this);
-    }
-    public List<Auction> getAuctions() {
-        return auctions;
-    }
 
-    public void removeAuction(Auction auction) {
-        auctions.remove(auction);
-        auction.setUser(null);
-    }
     // UserDetails methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

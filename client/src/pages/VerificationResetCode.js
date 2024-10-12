@@ -1,12 +1,8 @@
-
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -18,30 +14,33 @@ import logo from "../img/logo.png";
 import axios from "axios";
 import { useState } from "react";
 
-
 const defaultTheme = createTheme();
 
-const SignInSite = () => {
+const VerificationResetCode = () => {
+    const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        const loginData = {
+        const resetData = {
             email: data.get('email'),
-            password: data.get('password')
+            token: data.get('token'),  // Assuming you have a token in the reset email
+            newPassword: data.get('newPassword'),
         };
-        try {
-            // Send a POST request to the server
-            const response = await axios.post('http://localhost:8080/auth/login', loginData);
-            const token = response.data.token;
-            localStorage.setItem('token', token);
-            console.log('Login successful');
-            window.location.href = '/home';
 
-            } catch (error) {
-            setError('Login failed. Please check your cerdenials and try again');
+        try {
+            // Send a POST request to the backend for resetting the password
+            const response = await axios.post('http://localhost:8080/auth/reset-password', {
+                email: resetData.email,
+                token: resetData.token,
+                password: resetData.newPassword,
+            });
+            setMessage('Password reset successfully. Please log in with your new password.');
+            window.location.href = '/signIn';
+        } catch (error) {
+            setError('Password reset failed. Please check your token and try again.');
             console.error('There was an error!', error);
         }
     };
@@ -78,8 +77,10 @@ const SignInSite = () => {
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            Sign in
+                            Reset Password
                         </Typography>
+                        {error && <Typography color="error">{error}</Typography>}
+                        {message && <Typography color="success">{message}</Typography>}
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             <TextField
                                 margin="normal"
@@ -95,22 +96,20 @@ const SignInSite = () => {
                                 margin="normal"
                                 required
                                 fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
+                                id="token"
+                                label="Verification Token"
+                                name="token"
+                                autoComplete="token"
                             />
-                            <Box>
-                                {error &&
-                                    <Typography color="error" variant="body2" sx={{ mt: 2}}>
-                                        {error}
-                                    </Typography>
-                                }
-                            </Box>
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="newPassword"
+                                label="New Password"
+                                type="password"
+                                id="newPassword"
+                                autoComplete="new-password"
                             />
                             <Button
                                 type="submit"
@@ -118,20 +117,8 @@ const SignInSite = () => {
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                             >
-                                Sign In
+                                Reset Password
                             </Button>
-                            <Grid container>
-                                <Grid item xs>
-                                    <Link href="/ResetPassword" variant="body2">
-                                        Forgot password?
-                                    </Link>
-                                </Grid>
-                                <Grid item>
-                                    <Link href="/signup" variant="body2">
-                                        {"Don't have an account? Sign Up"}
-                                    </Link>
-                                </Grid>
-                            </Grid>
                             <Footer sx={{ mt: 5 }} />
                         </Box>
                     </Box>
@@ -141,5 +128,4 @@ const SignInSite = () => {
     );
 }
 
-export default SignInSite;
-
+export default VerificationResetCode;

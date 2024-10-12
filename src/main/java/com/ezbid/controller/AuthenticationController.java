@@ -1,12 +1,12 @@
 package com.ezbid.controller;
 
-import com.ezbid.dto.LoginUserDto;
-import com.ezbid.dto.RegisterUserDto;
-import com.ezbid.dto.VerifyUserDto;
+import com.ezbid.dto.*;
 import com.ezbid.model.User;
 import com.ezbid.responses.LogInResponse;
 import com.ezbid.service.AuthenticationService;
 import com.ezbid.service.JwtService;
+import jakarta.mail.MessagingException;
+import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,4 +54,25 @@ public class AuthenticationController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PostMapping("/reset-password-mail")
+    public ResponseEntity<?> sendResetPasswordMail(@RequestBody MailAddressDto emailDto) {
+        try {
+            authenticationService.sendPasswordEmail(emailDto);
+            return ResponseEntity.ok("Password reset link sent successfully");
+        } catch (MessagingException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody NewPasswordDto newPasswordDto) {
+        try {
+            authenticationService.resetPassword(newPasswordDto);
+            return ResponseEntity.ok("Password reset successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }

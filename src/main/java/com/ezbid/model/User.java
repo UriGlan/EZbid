@@ -24,6 +24,12 @@ public class User implements UserDetails {
     private String password;
     @Column(unique = true, nullable = false)
     private String email;
+    @Column
+    private String firstName;
+    @Column
+    private String lastName;
+
+
     private boolean enabled;
     private String verificationCode;
     private Timestamp verificationCodeExpiration = Timestamp.valueOf(LocalDateTime.now().plusMinutes(15));
@@ -33,10 +39,12 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String password, String email) {
+    public User(String username, String password, String email, String firstName, String lastName) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
 
     }
 

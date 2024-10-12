@@ -1,12 +1,13 @@
 package com.ezbid.service;
 
-import com.ezbid.dto.LoginUserDto;
-import com.ezbid.dto.RegisterUserDto;
-import com.ezbid.dto.VerifyUserDto;
+import com.ezbid.dto.*;
+import com.ezbid.model.PasswordResetToken;
 import com.ezbid.model.User;
+import com.ezbid.repository.PasswordResetTokenRepository;
 import com.ezbid.repository.UserRepository;
 import com.ezbid.responses.LogInResponse;
 import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +22,7 @@ import java.util.UUID;
 @Service
 public class AuthenticationService {
     private final UserRepository userRepository;
+    private PasswordResetTokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final EmailService emailService;
@@ -31,17 +33,22 @@ public class AuthenticationService {
                                  PasswordEncoder passwordEncoder,
                                  AuthenticationManager authenticationManager,
                                  EmailService emailService,
-                                 JwtService jwtService) {
+                                 JwtService jwtService, PasswordResetTokenRepository tokenRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.emailService = emailService;
         this.jwtService = jwtService;
+        this.tokenRepository = tokenRepository;
     }
 
     // This method signs up a user and send a verification email
     public User signUp(RegisterUserDto input) {
-        User user = new User(input.getUsername(),passwordEncoder.encode(input.getPassword()), input.getEmail());
+        User user = new User(input.getUsername(),
+                passwordEncoder.encode(input.getPassword()),
+                input.getEmail(),
+                input.getFirstname(),
+                input.getLastname());
         user.setVerificationCode(generateVerificationCode());
         user.setVerificationCodeExpiration(LocalDateTime.now().plusMinutes(15));
         user.setEnabled(false);
@@ -119,6 +126,42 @@ public class AuthenticationService {
     }
 
     // logic for password reset token
+    public void sendPasswordEmail(MailAddressDto emailDto) throws MessagingException {
+        String email = emailDto.getEmail();
+        System.out.println("Searching for email: " + email);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found " + email));
+
+        String token = UUID.randomUUID().toString();
+        PasswordResetToken passwordResetToken = new PasswordResetToken();
+        passwordResetToken.setToken(token);
+        passwordResetToken.setExpirationTime(LocalDateTime.now().plusMinutes(15));
+        passwordResetToken.setUser(user);
+        tokenRepository.save(passwordResetToken);
+        emailService.sendPasswordResetEmail(email, token);
+    }
+    @Transactional
+    public void resetPassword(NewPasswordDto newPasswordDto) {
+        String token = newPasswordDto.getToken();
+        String email = newPasswordDto.getEmail();
+        String password = newPasswordDto.getPassword();
+        System.out.println("Searching for token: " + token+ " email: "+ email + " password: "+ password);
+        PasswordResetToken passwordResetToken = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new RuntimeException("Invalid token"));
+        if (passwordResetToken.getExpirationTime().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Token expired");
+        }
+        User user1 = passwordResetToken.getUser();
+        User user2 = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found " + email));
+        if (!user1.equals(user2)) {
+            throw new RuntimeException("Invalid user");
+        }
+        user1.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user1);
+        tokenRepository.deleteByToken(token);
+    }
+
 
 
     // Generates a random 4-digit verification code

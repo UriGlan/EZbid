@@ -7,6 +7,8 @@ import MyBids from "./pages/myAccount/MyBids";
 import MyItems from "./pages/myAccount/MyItems";
 import Profile from "./pages/myAccount/Profile";
 import EditProfile from "./pages/myAccount/ProfileEdit";
+import ResetPassword from "./pages/ResetPassword";
+import VerificationResetCode from "./pages/VerificationResetCode";
 
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
                 <Route path="/myitems" element={<MyItems />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/editprofile" element={<EditProfile />} />
+                <Route path="/resetpassword" element={<ResetPassword />} />
+                <Route path="/verificationresetcode" element={<VerificationResetCode />} />
             </Routes>
         </Router>
     );

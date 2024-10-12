@@ -24,4 +24,14 @@ public class EmailService {
 
         emailSender.send(message);
     }
+
+    public void sendPasswordResetEmail(String email, String token) throws MessagingException {
+        String subject = "Password Reset";
+        String text = "<h1>Password Reset</h1>"
+                + "<p>The reset token is</p>" + token
+                + "<p>Please insert it in the reset password form</p>";
+
+        sendVerificationEmail(email, subject, text);
+
+    }
 }

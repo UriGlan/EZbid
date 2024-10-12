@@ -57,7 +57,7 @@ public class AuthenticationService {
     }
 
     // This method authenticates a user and return the JWT token
-    public LogInResponse authenticate(LoginUserDto input) {
+    public LogInResponse authenticate(LoginUserDto input) throws RuntimeException {
         User user = userRepository.findByEmail(input.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found " + input.getEmail()));
         System.out.println("mail = " + user.getEmail() + " name= "+ user.getUsername() +"Id= " + user.getId());

@@ -79,8 +79,6 @@ const VerificationResetCode = () => {
                         <Typography component="h1" variant="h5">
                             Reset Password
                         </Typography>
-                        {error && <Typography color="error">{error}</Typography>}
-                        {message && <Typography color="success">{message}</Typography>}
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             <TextField
                                 margin="normal"
@@ -111,6 +109,8 @@ const VerificationResetCode = () => {
                                 id="newPassword"
                                 autoComplete="new-password"
                             />
+                        {error && <Typography color="error">{error}</Typography>}
+                        {message && <Typography color="success">{message}</Typography>}
                             <Button
                                 type="submit"
                                 fullWidth

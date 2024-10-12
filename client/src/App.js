@@ -9,6 +9,7 @@ import Profile from "./pages/myAccount/Profile";
 import EditProfile from "./pages/myAccount/ProfileEdit";
 import ResetPassword from "./pages/ResetPassword";
 import VerificationResetCode from "./pages/VerificationResetCode";
+import VerificationCode from "./pages/VerificationCode";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/editprofile" element={<EditProfile />} />
                 <Route path="/resetpassword" element={<ResetPassword />} />
                 <Route path="/verificationresetcode" element={<VerificationResetCode />} />
+                <Route path="/verificationcode" element={<VerificationCode />} />
             </Routes>
         </Router>
     );

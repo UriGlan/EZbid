@@ -30,10 +30,15 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LogInResponse> login(@RequestBody LoginUserDto loginUserDto) {
-        LogInResponse response = authenticationService.authenticate(loginUserDto);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> login(@RequestBody LoginUserDto loginUserDto) {
+        try {
+            LogInResponse response = authenticationService.authenticate(loginUserDto);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
+
 
     @PostMapping("/verify")
     public ResponseEntity<?> verifyUser(@RequestBody VerifyUserDto verifyUserDto) {

@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {useNavigate} from "react-router-dom";
 
 
 const theme = createTheme({
@@ -17,6 +18,7 @@ const theme = createTheme({
 });
 
 export default function VariantButtonGroup() {
+    const navigate = useNavigate();
     return (
         <ThemeProvider theme={theme}>
         <Box
@@ -33,9 +35,12 @@ export default function VariantButtonGroup() {
             }}
         >
             <ButtonGroup color="customSecondary" variant="text" aria-label="Basic button group">
-                <Button>Home</Button>
-                <Button>My Account</Button>
-                <Button>Logout</Button>
+                <Button onClick={() => navigate('/home')}>Home</Button>
+                <Button onClick={() => navigate('/mybids')}>My Account</Button>
+                <Button onClick={() => {
+                    localStorage.removeItem('token');
+                    navigate('/signin');
+                }}>Logout</Button>
             </ButtonGroup>
         </Box>
         </ThemeProvider>

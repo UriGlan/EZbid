@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthenticationService {
@@ -116,6 +117,9 @@ public class AuthenticationService {
             e.printStackTrace();
         }
     }
+
+    // logic for password reset token
+
 
     // Generates a random 4-digit verification code
     public String generateVerificationCode() {

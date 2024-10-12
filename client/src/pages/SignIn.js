@@ -38,7 +38,7 @@ const SignInSide = () => {
             const token = response.data.token;
             localStorage.setItem('token', token);
             console.log('Login successful');
-            window.location.href = '/items';
+            window.location.href = '/home';
 
             } catch (error) {
             setError('Login failed. Please check your cerdenials and try again');

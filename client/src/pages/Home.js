@@ -2,13 +2,11 @@ import React from "react";
 import {
     Typography,
     CssBaseline,
-    Grid,
     Container,
 } from "@mui/material";
 import VariantAppBar from "../components/menu/VariantAppBar";
 import SearchItem from "../components/items/SearchItem";
 import Box from "@mui/material/Box";
-import CardItem from "../components/items/CardItem";
 import Footer from "../components/Footer";
 import ListItems from "../components/items/ListItems";
 import ItemDialog from "../components/items/Dialog/ItemDialog";
@@ -19,7 +17,7 @@ const cardList = [
     { id: 3, name: "Snoop Dog" },
     { id: 4, name: "The Smartest Dog" },
 ];
-const Items = () => {
+const Home = () => {
     return (
         <>
             <CssBaseline />
@@ -46,4 +44,4 @@ const Items = () => {
     );
 }
 
-export default Items;
+export default Home;

@@ -14,8 +14,7 @@ public class AuctionDto {
     public AuctionDto() {
     }
 
-    public AuctionDto(Long auction_id, String username, String title,String subtitle, String description, CurrBidDto currentBid,Double startingBid, boolean active) {
-        this.auction_id = auction_id;
+    public AuctionDto(String username, String title,String subtitle, String description, CurrBidDto currentBid,Double startingBid, boolean active) {
         this.username = username;
         this.title = title;
         this.subtitle = subtitle;

@@ -62,7 +62,6 @@ public class AuctionService {
     public List<AuctionDto> getAllActiveAuctions() {
         List<Auction> auctions = auctionRepository.findAll();
         return auctions.stream()
-                .filter(auction -> auction.getEndTime().isAfter(java.time.LocalDateTime.now()))
                 .map(DtoUtils::convertToDto)
                 .collect(Collectors.toList());
     }

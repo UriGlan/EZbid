@@ -54,7 +54,7 @@ public class AuctionController {
 
     @GetMapping("/all")
     public ResponseEntity<List<AuctionDto>> getAllActiveAuctions() {
-        List<AuctionDto> auctions = auctionService.getAllActiveAuctions();
+        List<AuctionDto> auctions = auctionService.getAllAuctions();
         if (auctions.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

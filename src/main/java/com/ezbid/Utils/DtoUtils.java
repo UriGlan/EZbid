@@ -36,6 +36,7 @@ public class DtoUtils {
         dto.setDescription(auction.getDescription());
         dto.setStartingBid(auction.getStartingBid());
         dto.setCurrentBid(convertToCurrBidDto(auction.getCurrentBid()));
+        auction.checkAuctionStatus();
         dto.setActive(auction.isActive());
         return dto;
     }

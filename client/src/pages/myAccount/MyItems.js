@@ -11,10 +11,12 @@ import Footer from "../../components/Footer";
 import MyBidsDialog from "../../components/items/Dialog/MyBidsDialog";
 import makeApiCall, {ApiMethod} from "../../Utils/ApiUtils";
 import {func} from "prop-types";
+import NewAuctionDialog from "../../components/items/Dialog/NewAuctionDialog";
 
 
 const MyItems = () => {
     const [auctions, setAuctions] = React.useState([]);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const fetchAuctions = async () => {
         try {
             const data = await makeApiCall(ApiMethod.ALL_AUCTIONS)
@@ -33,6 +35,7 @@ const MyItems = () => {
         }
     };
 
+
     useEffect(() => {
         fetchAuctions()
         const intervalId = setInterval(fetchAuctions, 2000);
@@ -40,7 +43,7 @@ const MyItems = () => {
     }, []);
 
     function handleNewItem() {
-
+        setIsDialogOpen(true);
     }
 
     function handleDeleteItem(id) {}
@@ -76,6 +79,10 @@ const MyItems = () => {
                         <Button onClick={handleNewItem} variant="contained" color="primary">
                             Add new item +
                         </Button>
+                        <NewAuctionDialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)} onCreate={(newAuction) => {
+                            // Handle the creation of a new auction
+                            setIsDialogOpen(false);
+                        }} />
                     </Grid>
                     <Footer/>
                 </Box>

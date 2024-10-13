@@ -7,7 +7,6 @@ import makeApiCall, {ApiMethod, postApiCalls} from "../../../Utils/ApiUtils";
 
 
 const MyListedItemDialog = ({open, handleClose, item}) => {
-    console.log(item);
     const [bidAmount, setBidAmount]= useState('');
     const [error, setError] = useState('')
     const handlePlaceBid = async () => {

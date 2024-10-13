@@ -52,13 +52,9 @@ public class AuthenticationController {
 
 
     @PostMapping("/reset-password-mail")
-    public ResponseEntity<?> sendResetPasswordMail(@RequestBody MailAddressDto emailDto) {
-        try {
+    public ResponseEntity<?> sendResetPasswordMail(@RequestBody MailAddressDto emailDto) throws MessagingException {
             authenticationService.sendPasswordEmail(emailDto);
             return ResponseEntity.ok("Password reset link sent successfully");
-        } catch (MessagingException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
     }
 
     @PostMapping("/reset-password")

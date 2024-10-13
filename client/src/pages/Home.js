@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
     Typography,
     CssBaseline,
@@ -11,13 +11,22 @@ import Footer from "../components/Footer";
 import ListItems from "../components/items/ListItems";
 import ItemDialog from "../components/items/Dialog/ItemDialog";
 
-const cardList = [
-    { id: 1, name: "A cute Dog" },
-    { id: 2, name: "A very cute Dog" },
-    { id: 3, name: "Snoop Dog" },
-    { id: 4, name: "The Smartest Dog" },
-];
 const Home = () => {
+    const [auctions, setAuctions] = React.useState([]);
+    const fetchAuctions = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/auctions/all');
+            const data = await response.json();
+            setAuctions(data);
+        } catch (error) {
+            console.error('Error fetching auctions:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchAuctions();
+    }, []);
+
     return (
         <>
             <CssBaseline />
@@ -35,7 +44,7 @@ const Home = () => {
                         </Container>
                     </div>
                     <Container>
-                            <ListItems items={cardList} DialogComponent={ItemDialog} />
+                            <ListItems items={auctions} DialogComponent={ItemDialog} />
                     </Container>
                 </Box>
             </main>

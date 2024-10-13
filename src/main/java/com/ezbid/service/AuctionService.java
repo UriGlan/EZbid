@@ -78,4 +78,12 @@ public class AuctionService {
         auction.setCurrentBid(bidService.convertToEntity(dto.getCurrentBid()));
         return auction;
     }
+
+    public List<AuctionDto> getAllActiveAuctions() {
+        List<Auction> auctions = auctionRepository.findAll();
+        return auctions.stream()
+                .filter(auction -> auction.getEndTime().isAfter(java.time.LocalDateTime.now()))
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
 }

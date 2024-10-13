@@ -20,7 +20,7 @@ public class AuctionController {
     }
 
     // This method returns all auctions
-    @GetMapping("/all")
+    @GetMapping("/allAuctions")
     public ResponseEntity<List<AuctionDto>> getAllAuctions() {
         System.out.println("Controller method reached: Getting all auctions");
         List<AuctionDto> auctions = auctionService.getAllAuctions();
@@ -52,5 +52,14 @@ public class AuctionController {
         return ResponseEntity.ok(auctionDTO);
     }
 
-    // Add other endpoints like update, delete, etc.
+    @GetMapping("/all")
+    public ResponseEntity<List<AuctionDto>> getAllActiveAuctions() {
+        List<AuctionDto> auctions = auctionService.getAllActiveAuctions();
+        if (auctions.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(auctions);
+    }
+
+
 }

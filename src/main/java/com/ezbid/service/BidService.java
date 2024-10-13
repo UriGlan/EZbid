@@ -1,6 +1,6 @@
 package com.ezbid.service;
 
-import com.ezbid.dto.CurrBidDto;
+import com.ezbid.Utils.DtoUtils;
 import com.ezbid.model.Auction;
 import com.ezbid.dto.BidDto;
 import com.ezbid.exception.ResourceNotFoundException;
@@ -40,8 +40,7 @@ public class BidService {
     public BidDto placeBid(BidDto bidDto, String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        Auction auction = auctionRepository.findById(bidDto.getAuctionId())
-                .orElseThrow(() -> new ResourceNotFoundException("Auction not found"));
+        Auction auction = DtoUtils.convertToEntity(bidDto.getAuction());
         if(auction.getCurrentBid() != null && bidDto.getBidAmount() <= auction.getCurrentBid().getBidAmount()) {
             throw new IllegalArgumentException("Bid amount must be greater than current bid amount");
         }
@@ -62,7 +61,7 @@ public class BidService {
             return null;
         }
         BidDto dto = new BidDto();
-        dto.setAuctionId(bid.getAuction().getAuction_id());
+        dto.setAuction(DtoUtils.convertToDto(bid.getAuction()));
         dto.setBidAmount(bid.getBidAmount());
         dto.setBidTime(bid.getBidTime());
         dto.setUsername(bid.getUser().getUsername());
@@ -76,7 +75,7 @@ public class BidService {
 
     public Bid convertToEntity(BidDto currentBid) {
         Bid bid = new Bid();
-        bid.setAuction(auctionRepository.findById(currentBid.getAuctionId())
+        bid.setAuction(auctionRepository.findById(currentBid.getAuction().getAuction_id())
                 .orElseThrow(() -> new ResourceNotFoundException("Auction not found")));
         bid.setBidAmount(currentBid.getBidAmount());
         bid.setBidTime(currentBid.getBidTime());
@@ -85,25 +84,7 @@ public class BidService {
         return bid;
     }
 
-    public CurrBidDto convertToCurrBidDto(Bid bid) {
-        if (bid == null) {
-            return null;
-        }
-        CurrBidDto dto = new CurrBidDto();
-        dto.setBid_id(bid.getId());
-        dto.setBidAmount(bid.getBidAmount());
-        return dto;
-    }
 
-    public Bid convertToEntity(CurrBidDto dto) {
-        if (dto == null) {
-            return null;
-        }
-        Bid bid = new Bid();
-        bid.setId(dto.getBid_id());
-        bid.setBidAmount(dto.getBidAmount());
-        return bid;
-    }
 
     public List<BidDto> getMyBids(String username) {
         User user = userRepository.findByUsername(username)

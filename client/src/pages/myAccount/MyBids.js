@@ -6,6 +6,7 @@ import MyBidsDialog from "../../components/items/Dialog/MyBidsDialog";
 import Typography from "@mui/material/Typography";
 import makeApiCall, {ApiMethod} from "../../Utils/ApiUtils";
 import {useEffect} from "react";
+import CardItem from "../../components/items/CardItem";
 
 
 
@@ -44,7 +45,7 @@ const MyBids = () => {
                    >
                     My Bids
                 </Typography>
-                <ListItems items={bids} DialogComponent={MyBidsDialog} />
+                <ListItems items={bids.map(b=>Object.assign(b.auction, {myBid: b.bidAmount}))} DialogComponent={MyBidsDialog} />
             </Box>
         </>
             )

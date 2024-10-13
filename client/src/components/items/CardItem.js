@@ -11,7 +11,7 @@ const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
     const handleClose = () => {
         setOpen(false);
     };
-
+    const bidAmount = item.currentBid ? item.currentBid.bidAmount : item.startingBid;
     return (
         <>
             <Card style={{ height: 'auto', display: 'flex', flexDirection: 'column', marginTop: '3em' }}>
@@ -27,15 +27,21 @@ const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
                     <Typography variant="body2" color="textSecondary">
                         {item.subtitle}
                     </Typography>
-                    {item.currentBid ? (
-                        <Typography variant="body1" color="textPrimary">
-                            Current Bid: ${item.currentBid.bidAmount}
+
+                    <Typography variant="body1" color="textPrimary">
+                        Current Bid: ${bidAmount}
+                    </Typography>
+
+                    {item.myBid ? (
+                        <Typography variant="body1" color={item.myBid == bidAmount ? "green" : "red"}>
+                            My Bid: ${item.myBid}
                         </Typography>
-                    ) : (
-                        <Typography variant="body1" color="textPrimary">
-                            Current Bid Bid: ${item.startingBid}
-                        </Typography>
-                    )}
+                    ) : (<></>)}
+
+                    <Typography variant="body2" color={item.active ? "green": "red"}>
+                        {item.active ? "Active" : "Expired"}
+                    </Typography>
+
                 </CardContent>
                 <CardActions>
                     <Button size="small" color="primary" onClick={handleClickOpen}>

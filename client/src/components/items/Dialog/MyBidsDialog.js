@@ -4,14 +4,15 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 const ItemDialog = ({open, handleClose, item}) => {
+    console.log(item);
     return(
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Bid on {item.name}</DialogTitle>
+            <DialogTitle>Bid on {item.title}</DialogTitle>
             <DialogContent>
                 <CardMedia
                     component = 'img'
                     image = "https://images.unsplash.com/photo-1586796304259-5fa44d5e3f71?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    title ={item.name}
+                    title ={item.title}
                     style = {{height:'auto'}}
                 />
                 <Typography variant = 'h5'>
@@ -30,7 +31,7 @@ const ItemDialog = ({open, handleClose, item}) => {
                     <strong>Starting bid:</strong> ${item.startingBid}
                 </Typography>
                 <Typography>
-                    <strong>Current bid:</strong> ${item.currentBid ? item.currentBid.bidAmount : item.startingBid}
+                    <strong>Current :</strong> ${item.currentBid ? item.currentBid.bidAmount : item.startingBid}
                 </Typography>
                 <TextField
                     autoFocus

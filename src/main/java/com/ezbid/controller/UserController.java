@@ -3,15 +3,18 @@ package com.ezbid.controller;
 
 import com.ezbid.dto.ProfileDto;
 import com.ezbid.dto.UserResponseDto;
+import com.ezbid.exception.ResourceNotFoundException;
 import com.ezbid.model.User;
 import com.ezbid.repository.UserRepository;
 import com.ezbid.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api/users")
 @RestController
@@ -42,5 +45,14 @@ public class UserController {
         User user = userService.getUserById(id);
         UserResponseDto response = new UserResponseDto(user.getId(), user.getUsername(), user.getEmail());
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/editprofile")
+    public ResponseEntity<User> updateUser(@RequestBody Map<String,String>body, @AuthenticationPrincipal UserDetails userDetails) {
+        String firstName = body.get("firstName");
+        String lastName = body.get("lastName");
+        User user = userRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return ResponseEntity.ok(userService.updateUser(user, firstName, lastName));
     }
 }

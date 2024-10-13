@@ -5,7 +5,6 @@ import com.ezbid.exception.ResourceNotFoundException;
 import com.ezbid.model.User;
 import com.ezbid.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,7 +33,9 @@ public class UserService {
         return userRepository.save(user);
     }
     //  This method updates a user
-    public User updateUser(User user) {
+    public User updateUser(User user, String firstName, String lastName) {
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
         return userRepository.save(user);
     }
     // This method deletes a user

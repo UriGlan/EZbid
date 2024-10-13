@@ -1,13 +1,14 @@
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 
-const ProfileEditComponents = (profile) => {
-const fields = [
-    { id: 'username', label: 'User Name', disabled: true, placeholder: profile.profile.username },
-    { id: 'firstName', label: 'First Name', disabled: false, placeholder: profile.profile.firstName },
-    { id: 'lastName', label: 'Last Name', disabled: false, placeholder: profile.profile.lastName },
-    { id: 'email', label: 'Email Address', disabled: true, placeholder: profile.profile.email },
-];
+const ProfileEditComponents = ({profile,onChange}) => {
+
+    const fields = [
+        { id: 'username', label: 'User Name', disabled: true, placeholder: profile.username },
+        { id: 'firstName', label: 'First Name', disabled: false, placeholder: profile.firstName },
+        { id: 'lastName', label: 'Last Name', disabled: false, placeholder: profile.lastName },
+        { id: 'email', label: 'Email Address', disabled: true, placeholder: profile.email },
+    ];
     return (
         <Grid container spacing={2}>
             {fields.map((field) => (
@@ -17,6 +18,7 @@ const fields = [
                         label={field.label}
                         disabled={field.disabled}
                         value={field.placeholder || ''}
+                        onChange={(e) => onChange(e.target.id, e.target.value)}
 
                         variant="outlined"
                         fullWidth

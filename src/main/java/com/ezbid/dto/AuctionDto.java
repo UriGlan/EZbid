@@ -9,11 +9,12 @@ public class AuctionDto {
     private String description;
     private CurrBidDto currentBid;
     private double startingBid;
+    private boolean active;
 
     public AuctionDto() {
     }
 
-    public AuctionDto(Long auction_id, String username, String title,String subtitle, String description, CurrBidDto currentBid,Double startingBid) {
+    public AuctionDto(Long auction_id, String username, String title,String subtitle, String description, CurrBidDto currentBid,Double startingBid, boolean active) {
         this.auction_id = auction_id;
         this.username = username;
         this.title = title;
@@ -21,6 +22,7 @@ public class AuctionDto {
         this.description = description;
         this.currentBid = currentBid;
         this.startingBid = startingBid;
+        this.active = active;
 
     }
 
@@ -75,6 +77,14 @@ public class AuctionDto {
     }
     public void setStartingBid(double startingBid) {
         this.startingBid = startingBid;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
 

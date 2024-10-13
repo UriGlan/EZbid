@@ -1,6 +1,7 @@
 package com.ezbid.service;
 
 import com.ezbid.Utils.DtoUtils;
+import com.ezbid.dto.PlaceBidDto;
 import com.ezbid.model.Auction;
 import com.ezbid.dto.BidDto;
 import com.ezbid.exception.ResourceNotFoundException;
@@ -37,10 +38,11 @@ public class BidService {
     }
 
     // Place new bid
-    public BidDto placeBid(BidDto bidDto, String username) {
+    public void placeBid(PlaceBidDto bidDto, String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        Auction auction = DtoUtils.convertToEntity(bidDto.getAuction());
+        Auction auction = auctionRepository.findById(bidDto.getAuction_id())
+                .orElseThrow(() -> new ResourceNotFoundException("Auction not found"));
         if(auction.getCurrentBid() != null && bidDto.getBidAmount() <= auction.getCurrentBid().getBidAmount()) {
             throw new IllegalArgumentException("Bid amount must be greater than current bid amount");
         }
@@ -53,7 +55,6 @@ public class BidService {
         Bid savedBid = bidRepository.save(bid);
         auction.setCurrentBid(savedBid);
         auctionRepository.save(auction);
-        return convertToDto(savedBid);
     }
 
     public BidDto convertToDto(Bid bid) {

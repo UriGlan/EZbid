@@ -6,7 +6,6 @@ import MyBidsDialog from "../../components/items/Dialog/MyBidsDialog";
 import Typography from "@mui/material/Typography";
 import makeApiCall, {ApiMethod} from "../../Utils/ApiUtils";
 import {useEffect} from "react";
-import CardItem from "../../components/items/CardItem";
 
 
 
@@ -29,6 +28,8 @@ const MyBids = () => {
     };
     useEffect(() => {
         fetchBids();
+        const intervalId = setInterval(fetchBids, 2000);
+        return () => clearInterval(intervalId);
     }, []);
     return (
         <>

@@ -1,6 +1,7 @@
 package com.ezbid.controller;
 
 import com.ezbid.dto.BidDto;
+import com.ezbid.dto.PlaceBidDto;
 import com.ezbid.model.Bid;
 import com.ezbid.service.BidService;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,9 @@ public class BidController {
     }
 
     @PostMapping("/place")
-    public ResponseEntity<BidDto> placeBid(@RequestBody BidDto bidDto, @AuthenticationPrincipal UserDetails userDetails) {
-        BidDto newBid = bidService.placeBid(bidDto, userDetails.getUsername());
-        return ResponseEntity.ok(newBid);
+    public ResponseEntity<Void> placeBid(@RequestBody PlaceBidDto bidDto, @AuthenticationPrincipal UserDetails userDetails)  {
+        bidService.placeBid(bidDto, userDetails.getUsername());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/mybids")

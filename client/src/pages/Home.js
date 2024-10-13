@@ -31,7 +31,9 @@ const Home = () => {
     };
 
     useEffect(() => {
-        fetchAuctions();
+        fetchAuctions()
+        const intervalId = setInterval(fetchAuctions, 2000);
+        return () => clearInterval(intervalId);
     }, []);
 
     return (

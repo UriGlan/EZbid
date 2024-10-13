@@ -2,9 +2,17 @@ import {CardMedia, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import {useState} from "react";
+import makeApiCall, {ApiMethod, postApiCalls} from "../../../Utils/ApiUtils";
+
 
 const ItemDialog = ({open, handleClose, item}) => {
     console.log(item);
+    const [bidAmount, setBidAmount] = useState('');
+    const handlePlaceBid = () => {
+        postApiCalls(ApiMethod.PLACE_BID, {auction_id: item.auction_id, bidAmount:bidAmount});
+        handleClose();
+    }
     return(
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Bid on {item.title}</DialogTitle>
@@ -34,19 +42,21 @@ const ItemDialog = ({open, handleClose, item}) => {
                     <strong>Current :</strong> ${item.currentBid ? item.currentBid.bidAmount : item.startingBid}
                 </Typography>
                 <TextField
-                    autoFocus
-                    margin = 'dense'
-                    label = 'Place your bid'
-                    type = 'number'
-                    fullWidth
-                    variant="outlined"
+                autoFocus
+                margin='dense'
+                label='Place your bid'
+                type='number'
+                fullWidth
+                variant="outlined"
+                value={bidAmount}
+                onChange={(e) => setBidAmount(e.target.value)}
                 />
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={handleClose} color="primary">
+                <Button onClick={handlePlaceBid} color="primary">
                     Place Bid
                 </Button>
             </DialogActions>

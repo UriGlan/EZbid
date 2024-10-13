@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class BidDto {
+    private Long bid_id;
     private Long auction_id;
     private Double bidAmount;
     private String username;

@@ -1,5 +1,6 @@
 package com.ezbid.service;
 
+import com.ezbid.dto.CurrBidDto;
 import com.ezbid.model.Auction;
 import com.ezbid.dto.BidDto;
 import com.ezbid.exception.ResourceNotFoundException;
@@ -75,8 +76,32 @@ public class BidService {
 
     public Bid convertToEntity(BidDto currentBid) {
         Bid bid = new Bid();
+        bid.setAuction(auctionRepository.findById(currentBid.getAuctionId())
+                .orElseThrow(() -> new ResourceNotFoundException("Auction not found")));
         bid.setBidAmount(currentBid.getBidAmount());
         bid.setBidTime(currentBid.getBidTime());
+        bid.setUser(userRepository.findByUsername(currentBid.getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found")));
+        return bid;
+    }
+
+    public CurrBidDto convertToCurrBidDto(Bid bid) {
+        if (bid == null) {
+            return null;
+        }
+        CurrBidDto dto = new CurrBidDto();
+        dto.setBid_id(bid.getId());
+        dto.setBidAmount(bid.getBidAmount());
+        return dto;
+    }
+
+    public Bid convertToEntity(CurrBidDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        Bid bid = new Bid();
+        bid.setId(dto.getBid_id());
+        bid.setBidAmount(dto.getBidAmount());
         return bid;
     }
 

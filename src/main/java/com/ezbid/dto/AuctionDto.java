@@ -1,21 +1,18 @@
 package com.ezbid.dto;
 
-import com.ezbid.model.Bid;
-
-import java.time.LocalDateTime;
 
 public class AuctionDto {
     private Long auction_id;
     private String username;
     private String title;
     private String description;
-    private BidDto currentBid;
+    private CurrBidDto currentBid;
     private double startingBid;
 
     public AuctionDto() {
     }
 
-    public AuctionDto(Long auction_id, String username, String title, String description, BidDto currentBid,Double startingBid) {
+    public AuctionDto(Long auction_id, String username, String title, String description, CurrBidDto currentBid,Double startingBid) {
         this.auction_id = auction_id;
         this.username = username;
         this.title = title;
@@ -57,11 +54,11 @@ public class AuctionDto {
         this.description = description;
     }
 
-    public BidDto getCurrentBid() {
+    public CurrBidDto getCurrentBid() {
         return currentBid;
     }
 
-    public void setCurrentBid(BidDto currentBid) {
+    public void setCurrentBid(CurrBidDto currentBid) {
         this.currentBid = currentBid;
     }
 

@@ -18,19 +18,34 @@ const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
                 <CardMedia
                     component="img"
                     image={item.imageUrl || "https://images.unsplash.com/photo-1586796304259-5fa44d5e3f71?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
-                    title={item.name}
+                    title={item.title}
                 />
                 <CardContent style={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5">
-                        {item.name}
+                        {item.title}
                     </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                        {item.description}
+                    </Typography>
+                    <Typography variant="body1" color="textPrimary">
+                        Seller: {item.username}
+                    </Typography>
+                    {item.currentBid ? (
+                        <Typography variant="body1" color="textPrimary">
+                            Current Bid: ${item.currentBid.bidAmount}
+                        </Typography>
+                    ) : (
+                        <Typography variant="body1" color="textPrimary">
+                            Current Bid Bid: ${item.startingBid}
+                        </Typography>
+                    )}
                     <Typography>
-                        This will be the description of {item.name}.
+                        Starting Bid: ${item.startingBid}
                     </Typography>
                 </CardContent>
                 <CardActions>
                     <Button size="small" color="primary" onClick={handleClickOpen}>
-                        View
+                        View Details
                     </Button>
                 </CardActions>
             </Card>

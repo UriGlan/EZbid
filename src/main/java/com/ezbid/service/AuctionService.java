@@ -65,7 +65,7 @@ public class AuctionService {
         dto.setTitle(auction.getTitle());
         dto.setDescription(auction.getDescription());
         dto.setStartingBid(auction.getStartingBid());
-        dto.setCurrentBid(bidService.convertToDto(auction.getCurrentBid()));
+        dto.setCurrentBid(bidService.convertToCurrBidDto(auction.getCurrentBid()));
         return dto;
     }
 

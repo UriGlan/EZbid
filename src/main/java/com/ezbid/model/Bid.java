@@ -42,6 +42,9 @@ public class Bid {
     public Long getId() {
         return bid_id;
     }
+    public void setId(Long bid_id) {
+        this.bid_id = bid_id;
+    }
 
     public Double getBidAmount() {
         return bidAmount;

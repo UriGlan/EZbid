@@ -1,8 +1,14 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import CardItem from "./CardItem";
+import Typography from "@mui/material/Typography";
 
 const ListItems = ({ items,DialogComponent, handleDeleteItem }) => {
+    if (!Array.isArray(items)){
+        return  <Typography>
+                    No items found
+                </Typography>
+    }
     return (
         <Grid container spacing={4}>
             {items.map((item, index) => (

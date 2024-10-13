@@ -17,9 +17,16 @@ const Home = () => {
         try {
             const response = await fetch('http://localhost:8080/api/auctions/all');
             const data = await response.json();
-            setAuctions(data);
+            if (Array.isArray(data)){
+                setAuctions(data);
+            } else {
+                console.error('Expected array, but got', data);
+                setAuctions([]);
+            }
+
         } catch (error) {
             console.error('Error fetching auctions:', error);
+            setAuctions([]);
         }
     };
 

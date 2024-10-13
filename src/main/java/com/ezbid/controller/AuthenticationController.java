@@ -46,19 +46,10 @@ public class AuthenticationController {
             authenticationService.verifyUser(verifyUserDto);
             return ResponseEntity.ok("Account verified successfully");
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 
-    @PostMapping("/resend")
-    public ResponseEntity<?> resendVerificationCode(@RequestBody String email) {
-        try {
-            authenticationService.resendVerificationCode(email);
-            return ResponseEntity.ok("Verification code sent successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
 
     @PostMapping("/reset-password-mail")
     public ResponseEntity<?> sendResetPasswordMail(@RequestBody MailAddressDto emailDto) {

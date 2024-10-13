@@ -35,8 +35,8 @@ const VerificationCode = () => {
                 email: resetData.email,
                 verificationCode: resetData.verificationCode,
             });
-            setMessage('Password reset successfully. Please log in with your new password.');
-            window.location.href = '/signIn';
+            setMessage('Verification successful. Redirecting to sign in page...');
+            setTimeout(() => {window.location.href = '/signIn'}, 2500 );
         } catch (error) {
             if (error.response && error.response.data) {
                 setError(error.response.data.message || 'Verification failed.');
@@ -101,8 +101,10 @@ const VerificationCode = () => {
                                 name="verificationCode"
                                 autoComplete="verificationCode"
                             />
-                        {error && <Typography color="error">{error}</Typography>}
-                        {message && <Typography color="success">{message}</Typography>}
+                            <Box>
+                                {error && <Typography color="error" variant="body2" sx={{ mt: 2}}>{error}</Typography>}
+                                {message && <Typography color="success" variant="body2" sx={{ mt: 2}}>{message}</Typography>}
+                            </Box>
 
                             <Button
                                 type="submit"

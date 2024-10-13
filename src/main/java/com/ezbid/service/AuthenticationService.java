@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.awt.desktop.SystemSleepEvent;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -50,7 +51,7 @@ public class AuthenticationService {
                 input.getFirstname(),
                 input.getLastname());
         user.setVerificationCode(generateVerificationCode());
-        user.setVerificationCodeExpiration(LocalDateTime.now().plusMinutes(15));
+        user.setVerificationCodeExpiration(Timestamp.valueOf(LocalDateTime.now().plusMinutes(15)));
         user.setEnabled(false);
         sendVerificationEmail(user);
         return userRepository.save(user);
@@ -58,12 +59,16 @@ public class AuthenticationService {
 
     // This method authenticates a user and return the JWT token
     public LogInResponse authenticate(LoginUserDto input) throws RuntimeException {
-        User user = userRepository.findByEmail(input.getEmail())
+        User user = userRepository.findByEmail(input.getEmail().trim())
                 .orElseThrow(() -> new RuntimeException("User not found " + input.getEmail()));
-        System.out.println("mail = " + user.getEmail() + " name= "+ user.getUsername() +"Id= " + user.getId());
         if (!user.isEnabled()) {
+            if(user.getVerificationCodeExpiration().before(Timestamp.valueOf(LocalDateTime.now()))){
+                resendVerificationCode(user);
+                throw new RuntimeException("Account not verified. Verification code expired. A new code has been sent to your email.");
+            }
             throw new RuntimeException("Account not verified. Please check your email for the verification code.");
         }
+
         // Authenticate the user
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -79,11 +84,12 @@ public class AuthenticationService {
 
     // This method verifies the users mail with a code
     public void verifyUser(VerifyUserDto input) {
-        Optional<User> optionalUser = userRepository.findByEmail(input.getEmail());
+        Optional<User> optionalUser = userRepository.findByEmail(input.getEmail().trim());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (user.getVerificationCodeExpiration().before(Timestamp.valueOf(LocalDateTime.now()))) {
-                throw new RuntimeException("Verification code expired. Please sign up again.");
+                resendVerificationCode(user);
+                throw new RuntimeException("Verification code expired. A new code has been sent to your email.");
             }
             if (user.getVerificationCode().equals(input.getVerificationCode())) {
                 user.setEnabled(true);
@@ -91,26 +97,18 @@ public class AuthenticationService {
                 user.setVerificationCodeExpiration(null);
                 userRepository.save(user);
             } else {
-                throw new RuntimeException("Invalid verification code. Please try again.");
+                throw new RuntimeException("Invalid verification code. Please check you email and try again.");
             }
         }
     }
 
     // In case the user did not receive the verification code, this method resends the verification code
-    public void resendVerificationCode(String email){
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            if (user.isEnabled()) {
-                throw new RuntimeException("Account already verified.");
-            }
-            user.setVerificationCode(generateVerificationCode());
-            user.setVerificationCodeExpiration(LocalDateTime.now().plusMinutes(15));
-            sendVerificationEmail(user);
-            userRepository.save(user);
-        } else {
-            throw new RuntimeException("Account not found.");
-        }
+    public void resendVerificationCode(User user){
+        System.out.println("Resending verification code");
+        user.setVerificationCode(generateVerificationCode());
+        user.setVerificationCodeExpiration(Timestamp.valueOf((LocalDateTime.now().plusMinutes(15))));
+        sendVerificationEmail(user);
+        userRepository.save(user);
     }
 
     // This method sends a verification email to the user

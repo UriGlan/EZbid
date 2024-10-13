@@ -17,12 +17,14 @@ import Footer from "../components/Footer";
 import logo from "../img/logo.png";
 import axios from "axios";
 import { useState } from "react";
+import {useNavigate} from "react-router-dom";
 
 
 const defaultTheme = createTheme();
 
 const SignInSite = () => {
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -41,12 +43,17 @@ const SignInSite = () => {
             window.location.href = '/home';
 
             } catch (error) {
-            if (error.response) {
-                console.log('Error status:', error.response.status);
-                console.log('Error response data:', error.response.data);
-                setError(error.response.data.message || 'Sign up failed.');
+            if (error.response && error.response.data) {
+                const errorMessage = error.response.data.message;
+
+                if (errorMessage.includes('Account not verified' || 'Verification code expired')) {
+                    setError('Account not verified. Redirecting to verification page...');
+                    // Redirect to verification page
+                    setTimeout(() => {navigate('/VerificationCode'); },2500);
+                } else {
+                    setError(errorMessage || 'Sign up failed.');
+                }
             } else {
-                console.log('No response received:', error.message);
                 setError('Sign up failed. Please try again.');
             }
             console.error('There was an error!', error);

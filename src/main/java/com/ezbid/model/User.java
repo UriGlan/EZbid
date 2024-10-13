@@ -84,8 +84,8 @@ public class User implements UserDetails {
         return verificationCode;
     }
 
-    public void setVerificationCodeExpiration(LocalDateTime plusMinutes) {
-        this.verificationCodeExpiration = verificationCodeExpiration;
+    public void setVerificationCodeExpiration(Timestamp plusMinutes) {
+        this.verificationCodeExpiration = plusMinutes;
     }
     public Timestamp getVerificationCodeExpiration() {
         return verificationCodeExpiration;

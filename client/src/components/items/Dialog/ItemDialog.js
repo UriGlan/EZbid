@@ -14,15 +14,20 @@ const ItemDialog = ({open, handleClose, item}) => {
                     title ={item.name}
                     style = {{height:'auto'}}
                         />
-                <Typography variant = 'h6'>
-                    Item Name {item.name}
+                <Typography variant = 'h5'>
+                    {item.title}
                 </Typography>
-                <Typography paragraph>
-                    Description: {item.description}<br/>
-                    start price: <br/>
-                    current bid:<br/>
-                    end Date:
-
+                <Typography variant= 'h6'>
+                    {item.description}
+                </Typography>
+                <Typography variant= 'h7'>
+                    <strong>Seller:</strong> {item.username}
+                </Typography>
+                <Typography>
+                    <strong>Starting bid:</strong> ${item.startingBid}
+                </Typography>
+                <Typography>
+                    <strong>Current bid:</strong> ${item.currentBid ? item.currentBid.bidAmount : item.startingBid}
                 </Typography>
                 <TextField
                     autoFocus

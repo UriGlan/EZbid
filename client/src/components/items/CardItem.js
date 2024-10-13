@@ -27,9 +27,6 @@ const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
                     <Typography variant="body2" color="textSecondary">
                         {item.description}
                     </Typography>
-                    <Typography variant="body1" color="textPrimary">
-                        Seller: {item.username}
-                    </Typography>
                     {item.currentBid ? (
                         <Typography variant="body1" color="textPrimary">
                             Current Bid: ${item.currentBid.bidAmount}
@@ -39,9 +36,6 @@ const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
                             Current Bid Bid: ${item.startingBid}
                         </Typography>
                     )}
-                    <Typography>
-                        Starting Bid: ${item.startingBid}
-                    </Typography>
                 </CardContent>
                 <CardActions>
                     <Button size="small" color="primary" onClick={handleClickOpen}>

@@ -1,19 +1,13 @@
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 
+const ProfileEditComponents = (profile) => {
 const fields = [
-    { id: 'firstName', label: 'First Name' },
-    { id: 'lastName', label: 'Last Name' },
-    { id: 'dob', label: 'Date of Birth' },
-    { id: 'dateOfJoin', label: 'Date of Join' },
-    { id: 'country', label: 'Country' },
-    { id: 'fullAddress', label: 'Full Address' },
-    { id: 'zipCode', label: 'Zip Code' },
-    { id: 'email', label: 'Email Address' },
-    { id: 'phoneNumber', label: 'Phone Number' },
+    { id: 'username', label: 'User Name', disabled: true, placeholder: profile.profile.username },
+    { id: 'firstName', label: 'First Name', disabled: false, placeholder: profile.profile.firstName },
+    { id: 'lastName', label: 'Last Name', disabled: false, placeholder: profile.profile.lastName },
+    { id: 'email', label: 'Email Address', disabled: true, placeholder: profile.profile.email },
 ];
-
-const ProfileEditComponents = () => {
     return (
         <Grid container spacing={2}>
             {fields.map((field) => (
@@ -21,6 +15,9 @@ const ProfileEditComponents = () => {
                     <TextField
                         id={field.id}
                         label={field.label}
+                        disabled={field.disabled}
+                        value={field.placeholder || ''}
+
                         variant="outlined"
                         fullWidth
                         InputProps={{
@@ -35,6 +32,9 @@ const ProfileEditComponents = () => {
                                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                                     borderColor: 'purple', // Change border color when focused
                                 },
+                                '&::placeholder': {
+                                    color: 'black', // Change label color
+                                },
 
                             },
                         }}
@@ -44,7 +44,9 @@ const ProfileEditComponents = () => {
                                 '&.Mui-focused': {
                                     color: 'purple', // Change label color when focused
                                 },
+
                             },
+                            shrink: true,
                         }}
                     />
                 </Grid>

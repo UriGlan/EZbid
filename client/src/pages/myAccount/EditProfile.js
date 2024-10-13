@@ -7,8 +7,27 @@ import DividerVariants from "../../components/DividerVariants";
 import Button from "@mui/material/Button";
 import * as React from "react";
 import ProfileEditComponents from "../../components/ProfileEditComponents";
+import {useNavigate} from "react-router-dom";
+import makeApiCall, {ApiMethod} from "../../Utils/ApiUtils";
+import {useEffect} from "react";
 
 const EditProfile = () => {
+    const navigate = useNavigate();
+    const [profile, setProfile] = React.useState({});
+    const fetchProfile = async () => {
+        try {
+            const data = await makeApiCall(ApiMethod.PROFILE)
+            setProfile(data);
+
+        } catch (error) {
+            console.error('Error fetching profile:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchProfile()
+    }, []);
+
     return (
         <>
             <VariantAppBar/>
@@ -40,14 +59,14 @@ const EditProfile = () => {
                         flexDirection: 'column',
                     }} >
                         <Box sx={{textAlign: 'center' , maxWidth:'70%'}}>
-                            <ProfileEditComponents />
+                            <ProfileEditComponents  profile = {profile}/>
                         </Box>
                     </Container>
                     <Box sx={{ textAlign: 'center', paddingBottom:7 }}>
                         <Button  variant="contained" color="primary" sx={{width: 5}}>
                             Save
                         </Button>
-                        <Button  variant="contained" color="primary" sx={{marginLeft:3, width: 5}}>
+                        <Button  variant="contained" color="primary" sx={{marginLeft:3, width: 5}} onClick={()=>navigate('/profile')}>
                             Cancel
                         </Button>
                     </Box>

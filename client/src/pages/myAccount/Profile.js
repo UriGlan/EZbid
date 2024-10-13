@@ -8,8 +8,10 @@ import Button from "@mui/material/Button";
 import * as React from "react";
 import makeApiCall, {ApiMethod} from "../../Utils/ApiUtils";
 import {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Profile = () => {
+    const navigate = useNavigate();
     const [profile, setProfile] = React.useState({});
     const fetchProfile = async () => {
         try {
@@ -58,7 +60,7 @@ const Profile = () => {
                         <DividerVariants profile={profile}/>
                     </Container>
                     <Box sx={{ textAlign: 'center', paddingBottom:7 }}>
-                        <Button  variant="contained" color="primary">
+                        <Button  variant="contained" color="primary" onClick={() => navigate("/editprofile")}>
                             Edit
                         </Button>
                     </Box>

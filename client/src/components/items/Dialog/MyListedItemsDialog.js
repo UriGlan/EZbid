@@ -1,38 +1,56 @@
 import {CardMedia, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import {useState} from "react";
+import makeApiCall, {ApiMethod, postApiCalls} from "../../../Utils/ApiUtils";
 
-const MyListedItemsDialog = ({open, handleClose, item, handleDeleteItem}) => {
-    const handleDelete = () => {
-        handleDeleteItem(item.id);
-        handleClose();
-    };
+
+const MyListedItemDialog = ({open, handleClose, item}) => {
+    console.log(item);
+    const [bidAmount, setBidAmount]= useState('');
+    const [error, setError] = useState('')
+    const handlePlaceBid = async () => {
+        try {
+            await postApiCalls(ApiMethod.PLACE_BID, {auction_id: item.auction_id, bidAmount: bidAmount});
+            handleClose();
+        } catch (error) {
+            console.error('Error placing bid:', error);
+            const errorMessage = error.response.data.message;
+            setError(errorMessage || 'Sign up failed.');
+        }
+    }
     return(
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Bid on {item.name}</DialogTitle>
+            <DialogTitle>Bid on {item.title}</DialogTitle>
             <DialogContent>
                 <CardMedia
                     component = 'img'
                     image = "https://images.unsplash.com/photo-1586796304259-5fa44d5e3f71?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    title ={item.name}
+                    title ={item.title}
                     style = {{height:'auto'}}
                 />
-                <Typography variant = 'h6'>
-                    Item Name {item.name}
+                <Typography variant = 'h5'>
+                    {item.title}
                 </Typography>
-                <Typography paragraph>
-                    Description: {item.description}<br/>
-                    Start price: <br/>
-                    Current bid:<br/>
-                    End Date: <br/>
-                    Date Added:
-
+                <Typography variant= 'h6'>
+                    {item.subtitle}
                 </Typography>
+                <Typography variant= "body2">
+                    {item.description}
+                </Typography>
+                <Typography variant= 'h7'>
+                    <strong>Seller:</strong> {item.username}
+                </Typography>
+                <Typography>
+                    <strong>Starting bid:</strong> ${item.startingBid}
+                </Typography>
+                <Typography>
+                    <strong>Current :</strong> ${item.currentBid ? item.currentBid.bidAmount : item.startingBid}
+                </Typography>
+                {error && <Typography color='error'>{error}</Typography>}
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleDelete} color="primary">
-                    Delete Item
-                </Button>
                 <Button onClick={handleClose} color="primary">
                     Close
                 </Button>
@@ -40,4 +58,4 @@ const MyListedItemsDialog = ({open, handleClose, item, handleDeleteItem}) => {
         </Dialog>
     )
 };
-export default MyListedItemsDialog;
+export default MyListedItemDialog;

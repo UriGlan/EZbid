@@ -6,28 +6,44 @@ import Typography from "@mui/material/Typography";
 import MyListedItemsDialog from "../../components/items/Dialog/MyListedItemsDialog";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Footer from "../../components/Footer";
+import MyBidsDialog from "../../components/items/Dialog/MyBidsDialog";
+import makeApiCall, {ApiMethod} from "../../Utils/ApiUtils";
+import {func} from "prop-types";
 
 
 const MyItems = () => {
-        const [cardList, setCardList] = useState([
-            { id: 1, name: "A cute Dog" },
-            { id: 2, name: "A very cute Dog" },
-            { id: 3, name: "Snoop Dog" },
-            { id: 4, name: "The Smartest Dog" },
-        ]);
+    const [auctions, setAuctions] = React.useState([]);
+    const fetchAuctions = async () => {
+        try {
+            const data = await makeApiCall(ApiMethod.ALL_AUCTIONS)
+            if (Array.isArray(data)){
+               const userdata =  await makeApiCall(ApiMethod.PROFILE)
+                console.log(userdata)
+                setAuctions(data.filter(auction => auction.username === userdata.username));
+            } else {
+                console.error('Expected array, but got', data);
+                setAuctions([]);
+            }
 
-        const handleNewItem = () => {
-            const newItem = {
-                id: cardList.length + 1, // generate a new id
-                name: `New Item ${cardList.length + 1}`, // simple name generation
-            };
-            setCardList([...cardList, newItem]); // add the new item to the list
-        };
-        const handleDeleteItem = (itemId) => {
-        setCardList(cardList.filter(item => item.id !== itemId));
+        } catch (error) {
+            console.error('Error fetching auctions:', error);
+            setAuctions([]);
+        }
     };
+
+    useEffect(() => {
+        fetchAuctions()
+        const intervalId = setInterval(fetchAuctions, 2000);
+        return () => clearInterval(intervalId);
+    }, []);
+
+    function handleNewItem() {
+
+    }
+
+    function handleDeleteItem(id) {}
 
     return (
         <>
@@ -50,7 +66,7 @@ const MyItems = () => {
                     >
                         My Listed Items
                     </Typography>
-                    <ListItems items={cardList} DialogComponent={MyListedItemsDialog}
+                    <ListItems items={auctions} DialogComponent={MyListedItemsDialog}
                                handleDeleteItem={handleDeleteItem}/>
                     <Grid
                         container

@@ -9,8 +9,8 @@ import SearchItem from "../components/items/SearchItem";
 import Box from "@mui/material/Box";
 import Footer from "../components/Footer";
 import ListItems from "../components/items/ListItems";
-import ItemDialog from "../components/items/Dialog/ItemDialog";
 import makeApiCall, {ApiMethod} from "../Utils/ApiUtils";
+import MyBidsDialog from "../components/items/Dialog/MyBidsDialog";
 
 const Home = () => {
     const [auctions, setAuctions] = React.useState([]);
@@ -53,7 +53,7 @@ const Home = () => {
                         </Container>
                     </div>
                     <Container>
-                            <ListItems items={auctions} DialogComponent={ItemDialog} />
+                            <ListItems items={auctions} DialogComponent={MyBidsDialog} />
                     </Container>
                 </Box>
             </main>

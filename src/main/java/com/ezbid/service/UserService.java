@@ -1,5 +1,6 @@
 package com.ezbid.service;
 
+import com.ezbid.dto.ProfileDto;
 import com.ezbid.exception.ResourceNotFoundException;
 import com.ezbid.model.User;
 import com.ezbid.repository.UserRepository;
@@ -54,6 +55,19 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
+    public ProfileDto getProfileDto(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return new ProfileDto(user.getUsername(), user.getEmail(), user.getFirstName(), user.getLastName());
+    }
 
-    // Additional methods for updating and deleting users
+    public User profileDto2User(ProfileDto profileDto) {
+        User user = new User();
+        user.setUsername(profileDto.getUsername());
+        user.setEmail(profileDto.getEmail());
+        user.setFirstName(profileDto.getFirstName());
+        user.setLastName(profileDto.getLastName());
+        return user;
+    }
+
 }

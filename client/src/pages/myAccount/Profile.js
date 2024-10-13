@@ -6,8 +6,26 @@ import {Box, Container} from "@mui/material";
 import DividerVariants from "../../components/DividerVariants";
 import Button from "@mui/material/Button";
 import * as React from "react";
+import makeApiCall, {ApiMethod} from "../../Utils/ApiUtils";
+import {useEffect} from "react";
 
 const Profile = () => {
+    const [profile, setProfile] = React.useState({});
+    const fetchProfile = async () => {
+        try {
+            const data = await makeApiCall(ApiMethod.PROFILE)
+            setProfile(data);
+
+        } catch (error) {
+            console.error('Error fetching profile:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchProfile()
+    }, []);
+
+
     return (
         <>
             <VariantAppBar/>
@@ -37,7 +55,7 @@ const Profile = () => {
                         justifyContent: 'center', // Center the Divider horizontally
                         alignItems: 'center', // Center the Divider vertically (if applicable)
                     }} >
-                        <DividerVariants />
+                        <DividerVariants profile={profile}/>
                     </Container>
                     <Box sx={{ textAlign: 'center', paddingBottom:7 }}>
                         <Button  variant="contained" color="primary">

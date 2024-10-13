@@ -6,7 +6,7 @@ import Divider from '@mui/material/Divider';
 
 const style = {
     py: 0,
-    width: '100%',
+    width: '60%',
     borderRadius: 2,
     border: '1px solid',
     borderColor: 'divider',
@@ -14,44 +14,33 @@ const style = {
     alignItems: 'center',
 };
 
-const DividerVariants = () => {
+const DividerVariants = (profile) => {
+    console.log(profile);
     return (
         <List sx={style}>
             <ListItem>
+                <ListItemText primary="User Name" />
+                <ListItemText primary={profile.profile.username} />
+            </ListItem>
+            <Divider variant="middle" component="li" />
+            <ListItem>
                 <ListItemText primary="First Name" />
+                <ListItemText primary={profile.profile.firstName} />
+
             </ListItem>
             <Divider variant="middle" component="li" />
             <ListItem>
                 <ListItemText primary="Last Name" />
-            </ListItem>
-            <Divider variant="middle" component="li" />
-            <ListItem>
-                <ListItemText primary="Birthday" />
-            </ListItem>
-            <Divider variant="middle" component="li" />
-            <ListItem>
-                <ListItemText primary="Date of Join" />
-            </ListItem>
-            <Divider variant="middle" component="li" />
-            <ListItem>
-                <ListItemText primary="Country" />
-            </ListItem>
-            <Divider variant="middle" component="li" />
-            <ListItem>
-                <ListItemText primary="Full Address" />
-            </ListItem>
-            <Divider variant="middle" component="li" />
-            <ListItem>
-                <ListItemText primary="Zip code" />
+                <ListItemText primary={profile.profile.lastName} />
+
             </ListItem>
             <Divider variant="middle" component="li" />
             <ListItem>
                 <ListItemText primary="Email Address" />
+                <ListItemText primary={profile.profile.email} />
+
             </ListItem>
-            <Divider variant="middle" component="li" />
-            <ListItem>
-                <ListItemText primary="Phone Number" />
-            </ListItem>
+
         </List>
     );
 }

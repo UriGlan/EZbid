@@ -1,5 +1,6 @@
 package com.ezbid.repository;
 
+import com.ezbid.model.Auction;
 import com.ezbid.model.Bid;
 import com.ezbid.model.User;
 import org.springframework.data.domain.PageRequest;
@@ -12,4 +13,6 @@ import java.util.List;
 
 public interface BidRepository extends JpaRepository<Bid, Long> {
     List<Bid> findByUser(User user);
+
+    List<Bid> findByUserAndAuction(User user, Auction auction);
 }

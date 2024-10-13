@@ -4,6 +4,7 @@ export class ApiMethod {
     static ALL_AUCTIONS = "auctions/all";
     static MY_BIDS = "bids/mybids";
     static PLACE_BID = "bids/place";
+    static PROFILE = "users/profile";
 }
 
 async function makeApiCall (apiPath){

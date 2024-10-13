@@ -8,10 +8,17 @@ import makeApiCall, {ApiMethod, postApiCalls} from "../../../Utils/ApiUtils";
 
 const ItemDialog = ({open, handleClose, item}) => {
     console.log(item);
-    const [bidAmount, setBidAmount] = useState('');
-    const handlePlaceBid = () => {
-        postApiCalls(ApiMethod.PLACE_BID, {auction_id: item.auction_id, bidAmount:bidAmount});
-        handleClose();
+    const [bidAmount, setBidAmount]= useState('');
+    const [error, setError] = useState('')
+    const handlePlaceBid = async () => {
+        try {
+            await postApiCalls(ApiMethod.PLACE_BID, {auction_id: item.auction_id, bidAmount: bidAmount});
+            handleClose();
+        } catch (error) {
+            console.error('Error placing bid:', error);
+            const errorMessage = error.response.data.message;
+            setError(errorMessage || 'Sign up failed.');
+        }
     }
     return(
         <Dialog open={open} onClose={handleClose}>
@@ -26,7 +33,7 @@ const ItemDialog = ({open, handleClose, item}) => {
                 <Typography variant = 'h5'>
                     {item.title}
                 </Typography>
-                <Typography variant= 'h6'>\
+                <Typography variant= 'h6'>
                     {item.subtitle}
                 </Typography>
                 <Typography variant= "body2">
@@ -51,6 +58,7 @@ const ItemDialog = ({open, handleClose, item}) => {
                 value={bidAmount}
                 onChange={(e) => setBidAmount(e.target.value)}
                 />
+                {error && <Typography color='error'>{error}</Typography>}
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} color="primary">

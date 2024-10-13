@@ -46,6 +46,11 @@ public class BidService {
         if(auction.getCurrentBid() != null && bidDto.getBidAmount() <= auction.getCurrentBid().getBidAmount()) {
             throw new IllegalArgumentException("Bid amount must be greater than current bid amount");
         }
+        // remove the last bid with the same user_id and auction_id
+        List<Bid> lastBid = bidRepository.findByUserAndAuction(user, auction);
+        if (!lastBid.isEmpty()) {
+            bidRepository.delete(lastBid.get(0));
+        }
         // Create a new bid - if the bid amount is greater than the current bid amount
         Bid bid = new Bid();
         bid.setAuction(auction);

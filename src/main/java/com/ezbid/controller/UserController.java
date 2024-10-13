@@ -1,6 +1,7 @@
 package com.ezbid.controller;
 
 
+import com.ezbid.dto.ProfileDto;
 import com.ezbid.dto.UserResponseDto;
 import com.ezbid.model.User;
 import com.ezbid.repository.UserRepository;
@@ -12,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 @RestController
 public class UserController {
     private final UserRepository userRepository;
@@ -23,13 +24,11 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<User> authenticatedUser() {
+    @GetMapping("/profile")
+    public ResponseEntity<ProfileDto> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User currentUser = userRepository.findByUsername(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        return ResponseEntity.ok(currentUser);
+        return ResponseEntity.ok(userService.getProfileDto(userDetails.getUsername()));
     }
 
     @GetMapping("/")

@@ -105,5 +105,10 @@ public class BidService {
         return bid;
     }
 
-    // Additional methods for updating and deleting bids
+    public List<BidDto> getMyBids(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        List<Bid> myBids = bidRepository.findByUser(user);
+        return myBids.stream().map(this::convertToDto).toList();
+    }
 }

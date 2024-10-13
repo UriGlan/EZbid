@@ -18,6 +18,9 @@ const ItemDialog = ({open, handleClose, item}) => {
                     {item.title}
                 </Typography>
                 <Typography variant= 'h6'>
+                    {item.subtitle}
+                </Typography>
+                <Typography variant= "body2">
                     {item.description}
                 </Typography>
                 <Typography variant= 'h7'>

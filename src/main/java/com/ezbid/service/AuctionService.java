@@ -63,6 +63,7 @@ public class AuctionService {
         dto.setAuction_id(auction.getAuction_id());
         dto.setUsername(auction.getUser().getUsername());
         dto.setTitle(auction.getTitle());
+        dto.setSubtitle(auction.getSubtitle());
         dto.setDescription(auction.getDescription());
         dto.setStartingBid(auction.getStartingBid());
         dto.setCurrentBid(bidService.convertToCurrBidDto(auction.getCurrentBid()));
@@ -73,6 +74,7 @@ public class AuctionService {
     private Auction convertToEntity(AuctionDto dto, String username) {
         Auction auction = new Auction();
         auction.setTitle(dto.getTitle());
+        auction.setSubtitle(dto.getSubtitle());
         auction.setDescription(dto.getDescription());
         auction.setStartingBid(dto.getStartingBid());
         auction.setCurrentBid(bidService.convertToEntity(dto.getCurrentBid()));

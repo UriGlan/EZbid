@@ -25,7 +25,7 @@ const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
                         {item.title}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                        {item.description}
+                        {item.subtitle}
                     </Typography>
                     {item.currentBid ? (
                         <Typography variant="body1" color="textPrimary">

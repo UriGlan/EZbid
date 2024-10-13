@@ -4,15 +4,31 @@ import Box from "@mui/material/Box";
 import * as React from "react";
 import MyBidsDialog from "../../components/items/Dialog/MyBidsDialog";
 import Typography from "@mui/material/Typography";
+import makeApiCall, {ApiMethod} from "../../Utils/ApiUtils";
+import {useEffect} from "react";
 
-const cardList = [
-    { id: 1, name: "A cute Dog" },
-    { id: 2, name: "A very cute Dog" },
-    { id: 3, name: "Snoop Dog" },
-    { id: 4, name: "The Smartest Dog" },
-];
+
 
 const MyBids = () => {
+    const [bids, setBids] = React.useState([]);
+    const fetchBids = async () => {
+        try {
+            const data = await makeApiCall(ApiMethod.MY_BIDS)
+            if (Array.isArray(data)){
+                setBids(data);
+            } else {
+                console.error('Expected array, but got', data);
+                setBids([]);
+            }
+
+        } catch (error) {
+            console.error('Error fetching bids:', error);
+            setBids([]);
+        }
+    };
+    useEffect(() => {
+        fetchBids();
+    }, []);
     return (
         <>
             <PermanentDrawerLeft />
@@ -28,7 +44,7 @@ const MyBids = () => {
                    >
                     My Bids
                 </Typography>
-                <ListItems items={cardList} DialogComponent={MyBidsDialog} />
+                <ListItems items={bids} DialogComponent={MyBidsDialog} />
             </Box>
         </>
             )

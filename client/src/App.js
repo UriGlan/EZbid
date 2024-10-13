@@ -6,7 +6,7 @@ import SignUp from './pages/SignUp.js';
 import MyBids from "./pages/myAccount/MyBids";
 import MyItems from "./pages/myAccount/MyItems";
 import Profile from "./pages/myAccount/Profile";
-import EditProfile from "./pages/myAccount/ProfileEdit";
+import EditProfile from "./pages/myAccount/EditProfile";
 import ResetPassword from "./pages/ResetPassword";
 import VerificationResetCode from "./pages/VerificationResetCode";
 import VerificationCode from "./pages/VerificationCode";

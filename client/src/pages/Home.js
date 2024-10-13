@@ -10,13 +10,13 @@ import Box from "@mui/material/Box";
 import Footer from "../components/Footer";
 import ListItems from "../components/items/ListItems";
 import ItemDialog from "../components/items/Dialog/ItemDialog";
+import makeApiCall, {ApiMethod} from "../Utils/ApiUtils";
 
 const Home = () => {
     const [auctions, setAuctions] = React.useState([]);
     const fetchAuctions = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/auctions/all');
-            const data = await response.json();
+            const data = await makeApiCall(ApiMethod.ALL_AUCTIONS)
             if (Array.isArray(data)){
                 setAuctions(data);
             } else {

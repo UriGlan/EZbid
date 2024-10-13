@@ -18,6 +18,7 @@ public class Auction {
     private Bid currentBid;
     private double startingBid;
     private String title;
+    private String subtitle;
     private String description;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -32,9 +33,10 @@ public class Auction {
         this.endTime = LocalDateTime.now().plusDays(days);
     }
 
-    public Auction(User user, String title,Double startingBid, String description, int days) {
+    public Auction(User user, String title,String subtitle, Double startingBid, String description, int days) {
         this.user = user;
         this.title = title;
+        this.subtitle = subtitle;
         this.startingBid = startingBid;
         this.description = description;
         this.startTime = LocalDateTime.now();
@@ -55,6 +57,12 @@ public class Auction {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    public String getSubtitle() {
+        return subtitle;
+    }
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 
     public String getDescription() {

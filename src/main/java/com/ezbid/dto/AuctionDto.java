@@ -5,6 +5,7 @@ public class AuctionDto {
     private Long auction_id;
     private String username;
     private String title;
+    private String subtitle;
     private String description;
     private CurrBidDto currentBid;
     private double startingBid;
@@ -12,10 +13,11 @@ public class AuctionDto {
     public AuctionDto() {
     }
 
-    public AuctionDto(Long auction_id, String username, String title, String description, CurrBidDto currentBid,Double startingBid) {
+    public AuctionDto(Long auction_id, String username, String title,String subtitle, String description, CurrBidDto currentBid,Double startingBid) {
         this.auction_id = auction_id;
         this.username = username;
         this.title = title;
+        this.subtitle = subtitle;
         this.description = description;
         this.currentBid = currentBid;
         this.startingBid = startingBid;
@@ -44,6 +46,12 @@ public class AuctionDto {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    public String getSubtitle() {
+        return subtitle;
+    }
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 
     public String getDescription() {

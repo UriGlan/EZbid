@@ -8,6 +8,7 @@ export class ApiMethod {
     static EDIT_PROFILE = "users/editprofile";
     static NEW_AUCTION = "auctions/new";
     static DELETE_AUCTION = "auctions/";
+    static ALL_CATEGORIES = "categories/all";
 }
 
 async function makeApiCall (apiPath){

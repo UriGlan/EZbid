@@ -16,14 +16,17 @@ public class Auction {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bid_id")
     private Bid currentBid;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
     private double startingBid;
     private int bidsNumber;
     private String title;
     private String subtitle;
     private String description;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
     private int days = 7;
+    private LocalDateTime startTime= LocalDateTime.now();;
+    private LocalDateTime endTime = LocalDateTime.now().plusDays(days);
     private boolean active = true;
 
 
@@ -31,17 +34,17 @@ public class Auction {
 
 // Empty constructor
     public Auction() {
-        this.startTime = LocalDateTime.now();
-        this.endTime = LocalDateTime.now().plusDays(days);
+
     }
 
-    public Auction(User user, String title,String subtitle, Double startingBid, String description, int days) {
+    public Auction(User user, String title,String subtitle, Double startingBid, String description, Category category, int days) {
         this.user = user;
         this.title = title;
         this.subtitle = subtitle;
         this.startingBid = startingBid;
         this.bidsNumber = 0;
         this.description = description;
+        this.category = category;
         this.startTime = LocalDateTime.now();
         this.endTime = LocalDateTime.now().plusDays(days);
     }
@@ -85,11 +88,20 @@ public class Auction {
     }
 
     public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+        if (endTime != null) {
+            this.endTime = endTime;
+        } else {
+            this.endTime = LocalDateTime.now().plusDays(days);
+        }
     }
 
     public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+        if (startTime != null) {
+            this.startTime = startTime;
+        } else {
+            this.startTime = LocalDateTime.now();
+        }
+
     }
 
     public int getDays() {
@@ -141,5 +153,13 @@ public class Auction {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

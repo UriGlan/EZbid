@@ -2,6 +2,7 @@ package com.ezbid.dto;
 
 
 import com.ezbid.model.Auction;
+import com.ezbid.model.Category;
 
 import java.time.LocalDateTime;
 
@@ -14,23 +15,27 @@ public class AuctionDto {
     private String title;
     private String subtitle;
     private String description;
+    private Category category;
     private CurrBidDto currentBid;
     private double startingBid;
     private int bidsNumber;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private String status;
+    private String status = "Active";
 
     public AuctionDto() {
     }
 
-    public AuctionDto(String username,String firstName, String lastName, String title,String subtitle, String description, CurrBidDto currentBid,Double startingBid,int bidsNumber, boolean active) {
+    public AuctionDto(String username,String firstName, String lastName, String title,String subtitle,
+                      String description,Category category, CurrBidDto currentBid, Double startingBid,
+                      int bidsNumber, boolean active) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.title = title;
         this.subtitle = subtitle;
         this.description = description;
+        this.category = category;
         this.currentBid = currentBid;
         this.startingBid = startingBid;
         this.bidsNumber = bidsNumber;
@@ -125,7 +130,11 @@ public class AuctionDto {
     }
 
     public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+        if (startTime != null) {
+            this.startTime = startTime;
+        } else {
+            this.startTime = LocalDateTime.now();
+        }
     }
 
     public LocalDateTime getEndTime() {
@@ -133,7 +142,11 @@ public class AuctionDto {
     }
 
     public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+        if (startTime != null) {
+            this.endTime = endTime;
+        } else {
+            this.endTime = LocalDateTime.now().plusDays(7);
+        }
     }
 
     public String getStatus() {
@@ -166,6 +179,14 @@ public class AuctionDto {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
 

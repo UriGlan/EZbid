@@ -22,7 +22,7 @@ const MyListedItemDialog = ({open, handleClose, item}) => {
 
     return(
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Bid on {item.title}</DialogTitle>
+            <DialogTitle>Auction: {item.title}</DialogTitle>
             <DialogContent>
                 <CardMedia
                     component = 'img'
@@ -39,14 +39,25 @@ const MyListedItemDialog = ({open, handleClose, item}) => {
                 <Typography variant= "body2">
                     {item.description}
                 </Typography>
-                <Typography variant= 'h7'>
-                    <strong>Seller:</strong> {item.username}
+                <Typography>
+                    <strong>Starting Bid:</strong> ${item.startingBid}
                 </Typography>
                 <Typography>
-                    <strong>Starting bid:</strong> ${item.startingBid}
+                    <strong>Current:</strong> ${item.currentBid ? item.currentBid.bidAmount : item.startingBid}
+                </Typography>
+                {item.myBid ? (
+                    <Typography color={item.myBid === item.currentBid ? "green" : ""}>
+                        <strong>My Bid:</strong> ${item.myBid}
+                    </Typography>
+                ) : (<></>)}
+                <Typography>
+                    <strong>Numbers of bid on current auction:</strong> {item.bidsNumber}
                 </Typography>
                 <Typography>
-                    <strong>Current :</strong> ${item.currentBid ? item.currentBid.bidAmount : item.startingBid}
+                    <strong>Auction Started On:</strong> {new Date(item.startTime).toLocaleString(undefined, {hour12: false})}
+                </Typography>
+                <Typography>
+                    <strong>End Date:</strong> {new Date(item.endTime).toLocaleString(undefined, {hour12: false})}
                 </Typography>
                 {error && <Typography color='error'>{error}</Typography>}
             </DialogContent>

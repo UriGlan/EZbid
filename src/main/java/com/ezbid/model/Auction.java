@@ -17,6 +17,7 @@ public class Auction {
     @JoinColumn(name = "bid_id")
     private Bid currentBid;
     private double startingBid;
+    private int bidsNumber;
     private String title;
     private String subtitle;
     private String description;
@@ -24,6 +25,7 @@ public class Auction {
     private LocalDateTime endTime;
     private int days = 7;
     private boolean active = true;
+
 
 
 
@@ -38,6 +40,7 @@ public class Auction {
         this.title = title;
         this.subtitle = subtitle;
         this.startingBid = startingBid;
+        this.bidsNumber = 0;
         this.description = description;
         this.startTime = LocalDateTime.now();
         this.endTime = LocalDateTime.now().plusDays(days);
@@ -118,6 +121,14 @@ public class Auction {
 
     public void setCurrentBid(Bid currentBid) {
         this.currentBid = currentBid;
+    }
+
+    public int getBidsNumber() {
+        return bidsNumber;
+    }
+
+    public void setBidsNumber(int bidsNumber) {
+        this.bidsNumber = bidsNumber;
     }
 
     public void checkAuctionStatus() {

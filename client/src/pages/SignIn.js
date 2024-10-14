@@ -51,10 +51,10 @@ const SignInSite = () => {
                     // Redirect to verification page
                     setTimeout(() => {navigate('/VerificationCode'); },2500);
                 } else {
-                    setError(errorMessage || 'Sign up failed.');
+                    setError(errorMessage || 'Sign in failed.');
                 }
             } else {
-                setError('Sign up failed. Please try again.');
+                setError('Sign in failed. Please try again.');
             }
             console.error('There was an error!', error);
         }

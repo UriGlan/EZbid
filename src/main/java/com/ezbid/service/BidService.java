@@ -51,6 +51,7 @@ public class BidService {
         if (!lastBid.isEmpty()) {
             bidRepository.delete(lastBid.get(0));
         }
+        auction.setBidsNumber(auction.getBidsNumber() + 1);
         // Create a new bid - if the bid amount is greater than the current bid amount
         Bid bid = new Bid();
         bid.setAuction(auction);

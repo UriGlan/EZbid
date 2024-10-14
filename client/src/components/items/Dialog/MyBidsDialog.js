@@ -39,14 +39,20 @@ const ItemDialog = ({open, handleClose, item}) => {
                 <Typography variant= "body2">
                     {item.description}
                 </Typography>
-                <Typography variant= 'h7'>
-                    <strong>Seller:</strong> {item.username}
+                <Typography>
+                    <strong>Starting Bid:</strong> ${item.startingBid}
                 </Typography>
                 <Typography>
-                    <strong>Starting bid:</strong> ${item.startingBid}
+                    <strong>Current:</strong> ${item.currentBid ? item.currentBid.bidAmount : item.startingBid}
                 </Typography>
                 <Typography>
-                    <strong>Current :</strong> ${item.currentBid ? item.currentBid.bidAmount : item.startingBid}
+                    <strong>Numbers of bid on current auction:</strong> {item.bidsNumber}
+                </Typography>
+                <Typography>
+                    <strong>Auction Started On:</strong> {new Date(item.startTime).toLocaleString(undefined, {hour12: false})}
+                </Typography>
+                <Typography>
+                    <strong>End Date:</strong> {new Date(item.endTime).toLocaleString(undefined, {hour12: false})}
                 </Typography>
                 <TextField
                 autoFocus

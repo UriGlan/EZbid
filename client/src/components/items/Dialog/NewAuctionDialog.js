@@ -12,6 +12,8 @@ const NewAuctionDialog = ({ open, onClose, onCreate }) => {
     const [daysLeft, setDaysLeft] = useState('');
     const [error, setError] = useState('');
 
+
+
     // Fetch categories when the dialog opens
     useEffect(() => {
         if (open) {
@@ -42,6 +44,12 @@ const NewAuctionDialog = ({ open, onClose, onCreate }) => {
         try {
             await postApiCalls(ApiMethod.NEW_AUCTION, newAuction);
             onCreate(newAuction);
+            setTitle('');
+            setSubtitle('');
+            setDescription('');
+            setStartingBid('');
+            setSelectedCategory('');
+            setDaysLeft('');
             onClose();
         } catch (error) {
             console.error('Error creating auction:', error);
@@ -88,31 +96,37 @@ const NewAuctionDialog = ({ open, onClose, onCreate }) => {
                 />
                 <TextField
                     margin="dense"
-                    label="Starting Bid"
+                    label="Days Left"
                     type="number"
                     fullWidth
-                    value={startingBid}
-                    onChange={(e) => setStartingBid(e.target.value)}
+                    value={daysLeft}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        if (value >= 1) {
+                            setDaysLeft(value);
+                            setError('');
+                        } else {
+                            setError('Auction duration must be at least 1 day.');
+                        }
+                    }}
                 />
-                fullWidth
-                value={daysLeft}
-                onChange={(e) => {
-                    const value = e.target.value;
-                    if (value >= 1) {
-                        setDaysLeft(value);
-                        setError('');
-                    } else {
-                        setError('Auction duration must be at least 1 day.');
-                    }
-                }}
 
-                {/* Category Dropdown */}
-                <FormControl fullWidth margin="dense">
-                    <InputLabel id="category-label">Category</InputLabel>
+            {/* Category Dropdown */}
+
+                <FormControl fullWidth margin="dense" variant="outlined">
+                    <InputLabel id="category-label" shrink={true}>Category</InputLabel>
                     <Select
                         labelId="category-label"
                         value={selectedCategory}
                         onChange={(e) => setSelectedCategory(e.target.value)}
+                        label="Category"
+                        displayEmpty
+                        renderValue={(selected) => {
+                            if (selected.length === 0) {
+                                return <span style={{ color: 'gray' }}>Select Category</span>;
+                            }
+                            return categories.find(category => category.id === selected)?.name;
+                        }}
                     >
                         {categories.map((category) => (
                             <MenuItem key={category.id} value={category.id}>
@@ -121,6 +135,7 @@ const NewAuctionDialog = ({ open, onClose, onCreate }) => {
                         ))}
                     </Select>
                 </FormControl>
+
 
             </DialogContent>
             {error && <DialogContent>{error}</DialogContent>}

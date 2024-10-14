@@ -3,22 +3,23 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {useState} from "react";
-import makeApiCall, {ApiMethod, postApiCalls} from "../../../Utils/ApiUtils";
+import makeApiCall, {ApiMethod, deleteApiCalls, postApiCalls} from "../../../Utils/ApiUtils";
 
 
 const MyListedItemDialog = ({open, handleClose, item}) => {
     const [bidAmount, setBidAmount]= useState('');
     const [error, setError] = useState('')
-    const handlePlaceBid = async () => {
+    const handleDelete = async () => {
         try {
-            await postApiCalls(ApiMethod.PLACE_BID, {auction_id: item.auction_id, bidAmount: bidAmount});
+            await deleteApiCalls(`${ApiMethod.DELETE_AUCTION}${item.auction_id}`); // Include auction ID in the URL
             handleClose();
         } catch (error) {
-            console.error('Error placing bid:', error);
-            const errorMessage = error.response.data.message;
-            setError(errorMessage || 'Sign up failed.');
+            console.error('Error deleting auction:', error);
+            const errorMessage = error.response?.data?.message;
+            setError(errorMessage || 'Error deleting auction.');
         }
-    }
+    };
+
     return(
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Bid on {item.title}</DialogTitle>
@@ -52,6 +53,9 @@ const MyListedItemDialog = ({open, handleClose, item}) => {
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
                     Close
+                </Button>
+                <Button onClick={handleDelete} color="primary">
+                    Delete Auction
                 </Button>
             </DialogActions>
         </Dialog>

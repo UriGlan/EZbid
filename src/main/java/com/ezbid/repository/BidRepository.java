@@ -15,4 +15,6 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
     List<Bid> findByUser(User user);
 
     List<Bid> findByUserAndAuction(User user, Auction auction);
+
+    void deleteByAuction(Auction auction);
 }

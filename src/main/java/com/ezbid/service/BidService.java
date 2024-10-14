@@ -32,6 +32,11 @@ public class BidService {
         this.auctionRepository = auctionRepository;
     }
 
+    public static void deleteBidsByAuctionId(Long auctionId) {
+        // delete all bids by auction id
+
+    }
+
     // This method returns all bids
     public List<Bid> getAllBids() {
         return bidRepository.findAll();

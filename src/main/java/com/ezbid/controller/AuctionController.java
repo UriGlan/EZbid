@@ -1,6 +1,8 @@
 package com.ezbid.controller;
 
 import com.ezbid.dto.AuctionDto;
+import com.ezbid.exception.ResourceNotFoundException;
+import com.ezbid.model.Auction;
 import com.ezbid.service.AuctionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -41,8 +43,9 @@ public class AuctionController {
 
     // This method deletes an auction
     @DeleteMapping("/{id}")
-    public void deleteAuction(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAuction(@PathVariable Long id) {
         auctionService.deleteAuction(id);
+        return ResponseEntity.noContent().build();
     }
 
     // This method returns an auction by its ID

@@ -7,6 +7,7 @@ export class ApiMethod {
     static PROFILE = "users/profile";
     static EDIT_PROFILE = "users/editprofile";
     static NEW_AUCTION = "auctions/new";
+    static DELETE_AUCTION = "auctions/";
 }
 
 async function makeApiCall (apiPath){
@@ -33,6 +34,19 @@ export async function postApiCalls(apiPath, data){
         throw error;
     }
 }
+
+export async function deleteApiCalls(apiPath) {
+    const headers = {};
+    headers['Authorization'] = `Bearer ${localStorage.token}`;
+    try {
+        const response = await axios.delete(`http://localhost:8080/api/${apiPath}`, { headers });
+        return response.data;
+    } catch (error) {
+        console.error('API call error:', error);
+        throw error;
+    }
+}
+
 
 export default makeApiCall;
 

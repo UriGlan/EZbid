@@ -6,9 +6,11 @@ import com.ezbid.exception.ResourceNotFoundException;
 import com.ezbid.model.Auction;
 import com.ezbid.model.User;
 import com.ezbid.repository.AuctionRepository;
+import com.ezbid.repository.BidRepository;
 import com.ezbid.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,11 +22,13 @@ public class AuctionService {
 
     private final AuctionRepository auctionRepository;
     private final UserRepository userRepository;
+    private final BidRepository bidRepository;
 
     // Constructor injection
-    public AuctionService(AuctionRepository auctionRepository, EntityManager entityManager, UserRepository userRepository) {
+    public AuctionService(AuctionRepository auctionRepository, UserRepository userRepository, BidRepository bidRepository) {
         this.auctionRepository = auctionRepository;
         this.userRepository = userRepository;
+        this.bidRepository = bidRepository;
     }
 
     // Get all auctions and convert them to DTOs
@@ -45,9 +49,15 @@ public class AuctionService {
         return DtoUtils.convertToDto(auction);
     }
     // Delete auction by ID
+    @Transactional
     public void deleteAuction(Long auctionId) {
-        auctionRepository.deleteById(auctionId);
+        Auction auction = auctionRepository.findById(auctionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Auction not found"));
+
+        bidRepository.deleteByAuction(auction);
+        auctionRepository.delete(auction);
     }
+
 
     // Get auction by ID and convert to DTO
     public AuctionDto getAuctionById(Long auctionId) {

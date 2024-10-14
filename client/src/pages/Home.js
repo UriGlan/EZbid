@@ -10,7 +10,6 @@ import {
     Box
 } from "@mui/material";
 import VariantAppBar from "../components/menu/VariantAppBar";
-import SearchItem from "../components/items/SearchItem";
 import Footer from "../components/Footer";
 import ListItems from "../components/items/ListItems";
 import makeApiCall, { ApiMethod } from "../Utils/ApiUtils";
@@ -24,19 +23,20 @@ const Home = () => {
 
     // Fetch Auctions
     const fetchAuctions = async () => {
-        try {
-            const data = await makeApiCall(ApiMethod.ALL_AUCTIONS);
-            if (Array.isArray(data)) {
-                setAuctions(data);
-            } else {
-                console.error('Expected array, but got', data);
-                setAuctions([]);
-            }
-        } catch (error) {
-            console.error('Error fetching auctions:', error);
+    try {
+        const data = await makeApiCall(ApiMethod.ALL_AUCTIONS);
+        if (Array.isArray(data)) {
+            const activeAuctions = data.filter(auction => auction.status === 'Active');
+            setAuctions(activeAuctions);
+        } else {
+            console.error('Expected array, but got', data);
             setAuctions([]);
         }
-    };
+    } catch (error) {
+        console.error('Error fetching auctions:', error);
+        setAuctions([]);
+    }
+};
 
     // Fetch Categories
     const fetchCategories = async () => {
@@ -87,9 +87,7 @@ const Home = () => {
             <VariantAppBar />
             <main>
                 <Box sx={{ backgroundColor: '#d7d7d7', height: 'auto', paddingTop: '80px', paddingBottom: '15%' }}>
-                    <div>
-                        <SearchItem />
-                    </div>
+
                     <Container maxWidth="sm">
                         <Typography variant="h2" align="center" color="textPrimary" gutterBottom sx={{ fontWeight: "bold" }}>
                             Listed Items

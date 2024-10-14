@@ -2,7 +2,7 @@ import PermanentDrawerLeft from "../../components/PermanentDrawerLeft";
 import ListItems from "../../components/items/ListItems";
 import Box from "@mui/material/Box";
 import * as React from "react";
-import MyBidsDialog from "../../components/items/Dialog/MyBidsDialog";
+import MyBidsDialog from "../../components/items/Dialog/ItemDialog";
 import Typography from "@mui/material/Typography";
 import makeApiCall, {ApiMethod} from "../../Utils/ApiUtils";
 import {useEffect} from "react";

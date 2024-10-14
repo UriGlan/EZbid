@@ -65,4 +65,12 @@ public class AuctionService {
                 .map(DtoUtils::convertToDto)
                 .collect(Collectors.toList());
     }
+
+    public AuctionDto endAuction(Long auctionId) {
+        Auction auction = auctionRepository.findById(auctionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Auction not found"));
+        auction.setActive(false);
+        auctionRepository.save(auction);
+        return DtoUtils.convertToDto(auction);
+    }
 }

@@ -2,6 +2,7 @@ import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@
 import React, { useState } from "react";
 
 const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
+    console.log(item);
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -40,6 +41,9 @@ const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
 
                     <Typography variant="body2" color={item.active ? "green": "red"}>
                         {item.active ? "Active" : "Expired"}
+                    </Typography>
+                    <Typography variant="body1" color="green">
+                        {item.currentBid?.bidAmount === item.myBid && item.status === 'Won' ? 'You won this auction!' : ''}
                     </Typography>
 
                 </CardContent>

@@ -61,5 +61,11 @@ public class AuctionController {
         return ResponseEntity.ok(auctions);
     }
 
+    @GetMapping("/endAuction")
+    public ResponseEntity<AuctionDto> endAuction(@PathVariable Long id) {
+        AuctionDto auctionDTO = auctionService.endAuction(id);
+        return ResponseEntity.ok(auctionDTO);
+    }
+
 
 }

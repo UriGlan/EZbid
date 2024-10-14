@@ -31,6 +31,9 @@ public class DtoUtils {
         AuctionDto dto = new AuctionDto();
         dto.setAuction_id(auction.getAuction_id());
         dto.setUsername(auction.getUser().getUsername());
+        dto.setEmail(auction.getUser().getEmail());
+        dto.setFirstName(auction.getUser().getFirstName());
+        dto.setLastName(auction.getUser().getLastName());
         dto.setTitle(auction.getTitle());
         dto.setSubtitle(auction.getSubtitle());
         dto.setDescription(auction.getDescription());
@@ -41,6 +44,7 @@ public class DtoUtils {
         dto.setActive(auction.isActive());
         dto.setStartTime(auction.getStartTime());
         dto.setEndTime(auction.getEndTime());
+        dto.setActive(auction.isActive());
         return dto;
     }
 
@@ -56,6 +60,7 @@ public class DtoUtils {
         auction.setActive(dto.isActive());
         auction.setStartTime(dto.getStartTime());
         auction.setEndTime(dto.getEndTime());
+        auction.setActive(dto.isActive());
         return auction;
     }
 }

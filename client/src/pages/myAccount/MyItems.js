@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import {useEffect, useState} from "react";
 import Footer from "../../components/Footer";
-import MyBidsDialog from "../../components/items/Dialog/MyBidsDialog";
+import MyBidsDialog from "../../components/items/Dialog/ItemDialog";
 import makeApiCall, {ApiMethod} from "../../Utils/ApiUtils";
 import {func} from "prop-types";
 import NewAuctionDialog from "../../components/items/Dialog/NewAuctionDialog";

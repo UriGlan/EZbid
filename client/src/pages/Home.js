@@ -10,7 +10,7 @@ import Box from "@mui/material/Box";
 import Footer from "../components/Footer";
 import ListItems from "../components/items/ListItems";
 import makeApiCall, {ApiMethod} from "../Utils/ApiUtils";
-import MyBidsDialog from "../components/items/Dialog/MyBidsDialog";
+import MyBidsDialog from "../components/items/Dialog/ItemDialog";
 
 const Home = () => {
     const [auctions, setAuctions] = React.useState([]);

@@ -1,11 +1,16 @@
 package com.ezbid.dto;
 
 
+import com.ezbid.model.Auction;
+
 import java.time.LocalDateTime;
 
 public class AuctionDto {
     private Long auction_id;
+    private String email;
     private String username;
+    private String firstName;
+    private String lastName;
     private String title;
     private String subtitle;
     private String description;
@@ -14,20 +19,28 @@ public class AuctionDto {
     private int bidsNumber;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private boolean active;
+    private String status;
 
     public AuctionDto() {
     }
 
-    public AuctionDto(String username, String title,String subtitle, String description, CurrBidDto currentBid,Double startingBid,int bidsNumber, boolean active) {
+    public AuctionDto(String username,String firstName, String lastName, String title,String subtitle, String description, CurrBidDto currentBid,Double startingBid,int bidsNumber, boolean active) {
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.title = title;
         this.subtitle = subtitle;
         this.description = description;
         this.currentBid = currentBid;
         this.startingBid = startingBid;
         this.bidsNumber = bidsNumber;
-        this.active = active;
+        if (active) {
+            this.status = "Active";
+        } else if (currentBid == null) {
+            this.status = "Expired";
+        } else {
+            this.status = "Won";
+        }
 
     }
 
@@ -93,11 +106,18 @@ public class AuctionDto {
     }
 
     public boolean isActive() {
-        return active;
+        return status.equals("Active");
     }
 
     public void setActive(boolean active) {
-        this.active = active;
+
+        if (active) {
+            this.status = "Active";
+        } else if (currentBid == null) {
+            this.status = "Expired";
+        } else {
+            this.status = "Won";
+        }
     }
 
     public LocalDateTime getStartTime() {
@@ -114,6 +134,38 @@ public class AuctionDto {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
 

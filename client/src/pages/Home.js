@@ -59,7 +59,7 @@ const Home = () => {
         if (selectedCategory === "All") {
             setFilteredAuctions(auctions); // Show all auctions
         } else {
-            setFilteredAuctions(auctions.filter(auction => auction.category.name === selectedCategory));
+            setFilteredAuctions(auctions.filter(auction => auction.category && auction.category.name === selectedCategory));
         }
     };
 

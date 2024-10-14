@@ -96,6 +96,22 @@ const NewAuctionDialog = ({ open, onClose, onCreate }) => {
                 />
                 <TextField
                     margin="dense"
+                    label="Starting Bid"
+                    type="number"
+                    fullWidth
+                    value={startingBid}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        if (value >= 1) {
+                            setStartingBid(value);
+                            setError('');
+                        } else {
+                            setError('The starting bid must me more than 1$.');
+                        }
+                    }}
+                />
+                <TextField
+                    margin="dense"
                     label="Days Left"
                     type="number"
                     fullWidth

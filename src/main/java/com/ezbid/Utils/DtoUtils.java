@@ -41,10 +41,10 @@ public class DtoUtils {
         dto.setStartingBid(auction.getStartingBid());
         dto.setCurrentBid(convertToCurrBidDto(auction.getCurrentBid()));
         dto.setBidsNumber(auction.getBidsNumber());
-        auction.checkAuctionStatus();
+        dto.setDaysLeft(auction.getDaysLeft());
         dto.setStartTime(auction.getStartTime());
         dto.setEndTime(auction.getEndTime());
-
+        auction.checkAuctionStatus();
         dto.setActive(auction.isActive());
         return dto;
     }
@@ -59,6 +59,7 @@ public class DtoUtils {
         auction.setStartingBid(dto.getStartingBid());
         auction.setCurrentBid(convertToEntity(dto.getCurrentBid()));
         auction.setBidsNumber(dto.getBidsNumber());
+        auction.setDaysLeft(dto.getDaysLeft());
         auction.setStartTime(dto.getStartTime());
         auction.setEndTime(dto.getEndTime());
         auction.setActive(dto.isActive());

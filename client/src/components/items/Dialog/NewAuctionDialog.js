@@ -9,6 +9,7 @@ const NewAuctionDialog = ({ open, onClose, onCreate }) => {
     const [startingBid, setStartingBid] = useState('');
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [daysLeft, setDaysLeft] = useState('');
     const [error, setError] = useState('');
 
     // Fetch categories when the dialog opens
@@ -35,6 +36,7 @@ const NewAuctionDialog = ({ open, onClose, onCreate }) => {
             description,
             currentBid: null,  // Assuming this will be set by the backend
             startingBid: parseFloat(startingBid),
+            daysLeft: parseInt(daysLeft),
             categoryId: selectedCategory  // Pass selected category to backend
         };
         try {
@@ -74,7 +76,15 @@ const NewAuctionDialog = ({ open, onClose, onCreate }) => {
                     type="text"
                     fullWidth
                     value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        if (value.length <= 1000) {
+                            setDescription(value);
+                            setError('');
+                        } else {
+                            setError('Description must not be more than 1000 characters.');
+                        }
+                    }}
                 />
                 <TextField
                     margin="dense"
@@ -84,6 +94,17 @@ const NewAuctionDialog = ({ open, onClose, onCreate }) => {
                     value={startingBid}
                     onChange={(e) => setStartingBid(e.target.value)}
                 />
+                fullWidth
+                value={daysLeft}
+                onChange={(e) => {
+                    const value = e.target.value;
+                    if (value >= 1) {
+                        setDaysLeft(value);
+                        setError('');
+                    } else {
+                        setError('Auction duration must be at least 1 day.');
+                    }
+                }}
 
                 {/* Category Dropdown */}
                 <FormControl fullWidth margin="dense">

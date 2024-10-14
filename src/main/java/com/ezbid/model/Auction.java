@@ -23,10 +23,12 @@ public class Auction {
     private int bidsNumber;
     private String title;
     private String subtitle;
+    @Lob
+    @Column(length = 1000)
     private String description;
-    private int days = 7;
-    private LocalDateTime startTime= LocalDateTime.now();;
-    private LocalDateTime endTime = LocalDateTime.now().plusDays(days);
+    private int daysLeft = 7;
+    private LocalDateTime startTime= LocalDateTime.now();
+    private LocalDateTime endTime = LocalDateTime.now().plusDays(daysLeft);
     private boolean active = true;
 
 
@@ -37,7 +39,7 @@ public class Auction {
 
     }
 
-    public Auction(User user, String title,String subtitle, Double startingBid, String description, Category category, int days) {
+    public Auction(User user, String title,String subtitle, Double startingBid, String description, Category category, int daysLeft) {
         this.user = user;
         this.title = title;
         this.subtitle = subtitle;
@@ -46,7 +48,7 @@ public class Auction {
         this.description = description;
         this.category = category;
         this.startTime = LocalDateTime.now();
-        this.endTime = LocalDateTime.now().plusDays(days);
+        this.endTime = LocalDateTime.now().plusDays(daysLeft);
     }
 // Getters and setters
     public void setAuction_id(Long auction_id) {
@@ -91,7 +93,7 @@ public class Auction {
         if (endTime != null) {
             this.endTime = endTime;
         } else {
-            this.endTime = LocalDateTime.now().plusDays(days);
+            this.endTime = LocalDateTime.now().plusDays(daysLeft);
         }
     }
 
@@ -104,12 +106,12 @@ public class Auction {
 
     }
 
-    public int getDays() {
-        return days;
+    public int getDaysLeft() {
+        return daysLeft;
     }
 
-    public void setDays(int days) {
-        this.days = days;
+    public void setDaysLeft(int daysLeft) {
+        this.daysLeft = daysLeft;
     }
 
     public User getUser() {
@@ -162,4 +164,6 @@ public class Auction {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+
 }

@@ -21,6 +21,7 @@ public class AuctionDto {
     private int bidsNumber;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private int daysLeft;
     private String status = "Active";
 
     public AuctionDto() {
@@ -28,7 +29,7 @@ public class AuctionDto {
 
     public AuctionDto(String username,String firstName, String lastName, String title,String subtitle,
                       String description,Category category, CurrBidDto currentBid, Double startingBid,
-                      int bidsNumber, boolean active) {
+                      int bidsNumber, boolean active, int daysLeft) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,6 +47,7 @@ public class AuctionDto {
         } else {
             this.status = "Won";
         }
+        this.daysLeft = daysLeft;
 
     }
 
@@ -142,12 +144,16 @@ public class AuctionDto {
     }
 
     public void setEndTime(LocalDateTime endTime) {
-        if (startTime != null) {
-            this.endTime = endTime;
+        if (this.startTime != null) {
+            // Calculate endTime based on startTime + daysLeft
+            this.endTime = this.startTime.plusDays(daysLeft);
+        } else if (daysLeft != 0) {
+            this.endTime = LocalDateTime.now().plusDays(daysLeft);
         } else {
             this.endTime = LocalDateTime.now().plusDays(7);
         }
     }
+
 
     public String getStatus() {
         return status;
@@ -187,6 +193,14 @@ public class AuctionDto {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public int getDaysLeft() {
+        return daysLeft;
+    }
+
+    public void setDaysLeft(int daysLeft) {
+        this.daysLeft = daysLeft;
     }
 }
 

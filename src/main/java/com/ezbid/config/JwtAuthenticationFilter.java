@@ -105,14 +105,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Token expired. Please log in again.");
             response.getWriter().flush();
-            return; // Stop further processing
+            // Stop further processing
 
         } catch (JwtException e) {
             // Invalid JWT, send 401 response
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Invalid token. Please log in again.");
             response.getWriter().flush();
-            return; // Stop further processing
+            // Stop further processing
 
         } catch (Exception e) {
                 System.out.println("An error occurred: " + e.getMessage());

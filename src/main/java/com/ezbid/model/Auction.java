@@ -16,9 +16,9 @@ public class Auction {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bid_id")
     private Bid currentBid;
-    @ManyToOne
+
     @JoinColumn(name = "category_id")
-    private Category category;
+    private Long categoryId;
     private double startingBid;
     private int bidsNumber;
     private String title;
@@ -39,14 +39,14 @@ public class Auction {
 
     }
 
-    public Auction(User user, String title,String subtitle, Double startingBid, String description, Category category, int daysLeft) {
+    public Auction(User user, String title,String subtitle, Double startingBid, String description, Long categoryId, int daysLeft) {
         this.user = user;
         this.title = title;
         this.subtitle = subtitle;
         this.startingBid = startingBid;
         this.bidsNumber = 0;
         this.description = description;
-        this.category = category;
+        this.categoryId = categoryId;
         this.startTime = LocalDateTime.now();
         this.endTime = LocalDateTime.now().plusDays(daysLeft);
     }
@@ -157,12 +157,12 @@ public class Auction {
         this.active = active;
     }
 
-    public Category getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
 

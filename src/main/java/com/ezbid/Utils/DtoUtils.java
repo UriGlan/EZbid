@@ -37,7 +37,7 @@ public class DtoUtils {
         dto.setTitle(auction.getTitle());
         dto.setSubtitle(auction.getSubtitle());
         dto.setDescription(auction.getDescription());
-        dto.setCategory(auction.getCategory());
+        dto.setCategoryId(auction.getCategoryId());
         dto.setStartingBid(auction.getStartingBid());
         dto.setCurrentBid(convertToCurrBidDto(auction.getCurrentBid()));
         dto.setBidsNumber(auction.getBidsNumber());
@@ -55,7 +55,7 @@ public class DtoUtils {
         auction.setTitle(dto.getTitle());
         auction.setSubtitle(dto.getSubtitle());
         auction.setDescription(dto.getDescription());
-        auction.setCategory(dto.getCategory());
+        auction.setCategoryId(dto.getCategoryId());
         auction.setStartingBid(dto.getStartingBid());
         auction.setCurrentBid(convertToEntity(dto.getCurrentBid()));
         auction.setBidsNumber(dto.getBidsNumber());

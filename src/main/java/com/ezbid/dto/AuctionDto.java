@@ -15,7 +15,7 @@ public class AuctionDto {
     private String title;
     private String subtitle;
     private String description;
-    private Category category;
+    private Long categoryId;
     private CurrBidDto currentBid;
     private double startingBid;
     private int bidsNumber;
@@ -28,7 +28,7 @@ public class AuctionDto {
     }
 
     public AuctionDto(String username,String firstName, String lastName, String title,String subtitle,
-                      String description,Category category, CurrBidDto currentBid, Double startingBid,
+                      String description,Long categoryId, CurrBidDto currentBid, Double startingBid,
                       int bidsNumber, boolean active, int daysLeft) {
         this.username = username;
         this.firstName = firstName;
@@ -36,7 +36,7 @@ public class AuctionDto {
         this.title = title;
         this.subtitle = subtitle;
         this.description = description;
-        this.category = category;
+        this.categoryId = categoryId;
         this.currentBid = currentBid;
         this.startingBid = startingBid;
         this.bidsNumber = bidsNumber;
@@ -187,12 +187,12 @@ public class AuctionDto {
         this.status = status;
     }
 
-    public Category getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public int getDaysLeft() {

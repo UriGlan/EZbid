@@ -1,5 +1,6 @@
 package com.ezbid.exception;  // Adjust this based on your package structure
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +18,18 @@ public class GlobalExceptionHandler {
         response.put("message", e.getMessage());
 
         // Return the response with a bad request (400) status
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, String>> handleConstraintViolation(DataIntegrityViolationException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Data integrity violation");
+        // Check if it's a duplicate key violation
+        if (ex.getMessage().contains("Duplicate entry")) {
+            response.put("message", "Email or Username already exists");
+        }
+        // Generic message for other data integrity violations
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

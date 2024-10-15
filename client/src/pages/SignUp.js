@@ -23,6 +23,10 @@ const SignUp = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        if (data.get('password').length < 8) {
+            setError('Password must be at least 8 characters long.');
+            return;
+        }
 
         const signupData = {
             username: data.get('username'),
@@ -144,6 +148,9 @@ const SignUp = () => {
                                                     type="password"
                                                     id="password"
                                                     autoComplete="new-password"
+                                                    inputProps={{ minLength: 8 }}
+                                                    helperText={'Password must be at least 8 characters long'}
+                                                    error={error && error.includes('Password')}
                                                 />
                                             </Grid>
                                             {error && (

@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import SignIn from './pages/SignIn.js';
 import Home from './pages/Home.js';
 import SignUp from './pages/SignUp.js';
@@ -11,20 +11,42 @@ import ResetPassword from "./pages/ResetPassword";
 import VerificationResetCode from "./pages/VerificationResetCode";
 import VerificationCode from "./pages/VerificationCode";
 
+// This function checks if the user is authenticated
+const isAuthenticated = () => {
+    return localStorage.getItem("token") !== null;
+};
 
 function App() {
     return (
         <Router>
             <Routes>
-                {/* Define the routes for your application */}
                 <Route path="/" element={<Navigate to="/signIn" />} />
                 <Route path="/signIn" element={<SignIn />} />
                 <Route path="/signUp" element={<SignUp />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/mybids" element={<MyBids />} />
-                <Route path="/myitems" element={<MyItems />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/editprofile" element={<EditProfile />} />
+
+                {/* Protected Routes */}
+                <Route
+                    path="/home"
+                    element={isAuthenticated() ? <Home /> : <Navigate to="/signIn" />}
+                />
+                <Route
+                    path="/mybids"
+                    element={isAuthenticated() ? <MyBids /> : <Navigate to="/signIn" />}
+                />
+                <Route
+                    path="/myitems"
+                    element={isAuthenticated() ? <MyItems /> : <Navigate to="/signIn" />}
+                />
+                <Route
+                    path="/profile"
+                    element={isAuthenticated() ? <Profile /> : <Navigate to="/signIn" />}
+                />
+                <Route
+                    path="/editprofile"
+                    element={isAuthenticated() ? <EditProfile /> : <Navigate to="/signIn" />}
+                />
+
+                {/* Public Routes */}
                 <Route path="/resetpassword" element={<ResetPassword />} />
                 <Route path="/verificationresetcode" element={<VerificationResetCode />} />
                 <Route path="/verificationcode" element={<VerificationCode />} />

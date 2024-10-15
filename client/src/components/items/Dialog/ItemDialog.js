@@ -31,7 +31,7 @@ const ItemDialog = ({open, handleClose, item}) => {
         } else if (currentBid < 1000) {
             increment = 50;
         } else if (currentBid < 10000) {
-            increment = 500;
+            increment = 100;
         } else if (currentBid < 50000){
             increment = 1000;
         } else {

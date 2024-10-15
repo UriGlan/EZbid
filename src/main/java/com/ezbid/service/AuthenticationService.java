@@ -131,7 +131,7 @@ public class AuthenticationService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found " + email));
 
-        String token = UUID.randomUUID().toString();
+        String token = generateVerificationCode();
         PasswordResetToken passwordResetToken = new PasswordResetToken();
         passwordResetToken.setToken(token);
         passwordResetToken.setExpirationTime(LocalDateTime.now().plusMinutes(15));
@@ -144,7 +144,6 @@ public class AuthenticationService {
         String token = newPasswordDto.getToken();
         String email = newPasswordDto.getEmail();
         String password = newPasswordDto.getPassword();
-        System.out.println("Searching for token: " + token+ " email: "+ email + " password: "+ password);
         PasswordResetToken passwordResetToken = tokenRepository.findByToken(token)
                 .orElseThrow(() -> new RuntimeException("Invalid token"));
         if (passwordResetToken.getExpirationTime().isBefore(LocalDateTime.now())) {

@@ -34,7 +34,11 @@ const ResetPassword = () => {
             setMessage('Verification email sent. Please check your email and follow the instructions to reset your password.');
             window.location.href = '/verificationresetcode';
         } catch (error) {
-            setError('Email send failed.');
+            if (error.response && error.response.data) {
+                setError(error.response.data.message || 'Email send failed.');
+            } else {
+                setError('Email send failed. Please try again.');
+            }
             console.error('There was an error!', error);
         }
     };

@@ -53,8 +53,9 @@ public class AuthenticationService {
         user.setVerificationCode(generateVerificationCode());
         user.setVerificationCodeExpiration(Timestamp.valueOf(LocalDateTime.now().plusMinutes(15)));
         user.setEnabled(false);
+        User response = userRepository.save(user);
         sendVerificationEmail(user);
-        return userRepository.save(user);
+        return response;
     }
 
     // This method authenticates a user and return the JWT token

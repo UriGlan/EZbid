@@ -1,5 +1,5 @@
 package com.ezbid.exception;  // Adjust this based on your package structure
-
+//
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

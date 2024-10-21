@@ -30,16 +30,15 @@ public class Auction {
     private LocalDateTime startTime= LocalDateTime.now();
     private LocalDateTime endTime = LocalDateTime.now().plusDays(daysLeft);
     private boolean active = true;
+    private String imageUrl;
 
 
-
-
-// Empty constructor
+    // Empty constructor
     public Auction() {
 
     }
 
-    public Auction(User user, String title,String subtitle, Double startingBid, String description, Long categoryId, int daysLeft) {
+    public Auction(User user, String title,String subtitle, Double startingBid, String description, Long categoryId, int daysLeft, String imageUrl) {
         this.user = user;
         this.title = title;
         this.subtitle = subtitle;
@@ -49,6 +48,8 @@ public class Auction {
         this.categoryId = categoryId;
         this.startTime = LocalDateTime.now();
         this.endTime = LocalDateTime.now().plusDays(daysLeft);
+        this.active = true;
+        this.imageUrl = imageUrl;
     }
 // Getters and setters
     public void setAuction_id(Long auction_id) {
@@ -165,5 +166,11 @@ public class Auction {
         this.categoryId = categoryId;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

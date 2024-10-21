@@ -10,6 +10,7 @@ const NewAuctionDialog = ({ open, onClose, onCreate }) => {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [daysLeft, setDaysLeft] = useState('');
+    const [selectFile, setSelectFile] = useState(null);
     const [error, setError] = useState('');
 
 
@@ -31,32 +32,45 @@ const NewAuctionDialog = ({ open, onClose, onCreate }) => {
     }, [open]);
 
     const handleCreate = async () => {
-        const newAuction = {
-            username: "current_user",  // This will come from the logged-in user
+        const formData = new FormData();
+
+        // Create the auctionDto object
+        const auctionDto = {
             title,
             subtitle,
             description,
-            currentBid: null,  // Assuming this will be set by the backend
             startingBid: parseFloat(startingBid),
             daysLeft: parseInt(daysLeft),
-            categoryId: selectedCategory  // Pass selected category to backend
+            categoryId: selectedCategory
         };
+
+        // Append the auctionDto as a JSON string
+        formData.append('auctionDto', new Blob([JSON.stringify(auctionDto)], { type: 'application/json' }));
+
+        // Append the selected image file (if any)
+        if (selectFile) {
+            formData.append('img', selectFile);
+        }
+
         try {
-            await postApiCalls(ApiMethod.NEW_AUCTION, newAuction);
-            onCreate(newAuction);
+            // Send the form data via postApiCalls
+            await postApiCalls(ApiMethod.NEW_AUCTION, formData);
+            onCreate();  // Call the onCreate handler to update UI or state
             setTitle('');
             setSubtitle('');
             setDescription('');
             setStartingBid('');
             setSelectedCategory('');
             setDaysLeft('');
+            setSelectFile(null);
             onClose();
         } catch (error) {
             console.error('Error creating auction:', error);
-            const errorMessage = error.response.data.message;
-            setError(errorMessage || 'Creation failed.');
+            const errorMessage = error.response?.data?.message || 'Creation failed.';
+            setError(errorMessage);
         }
     };
+
 
     return (
         <Dialog open={open} onClose={onClose}>
@@ -152,6 +166,18 @@ const NewAuctionDialog = ({ open, onClose, onCreate }) => {
                     </Select>
                 </FormControl>
 
+                {/* File input for image upload */}
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                        const file = e.target.files[0];
+                        if(file){
+                            setSelectFile(file);
+                        }
+                        console.log("file uploaded" + file);
+                    }}
+                />
 
             </DialogContent>
             {error && <DialogContent>{error}</DialogContent>}

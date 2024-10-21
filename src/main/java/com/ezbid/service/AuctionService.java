@@ -8,13 +8,21 @@ import com.ezbid.model.User;
 import com.ezbid.repository.AuctionRepository;
 import com.ezbid.repository.BidRepository;
 import com.ezbid.repository.UserRepository;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static com.ezbid.constant.Constant.PHOTO_DIRECTORY;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Service
 @Transactional(rollbackOn = Exception.class)
@@ -40,12 +48,17 @@ public class AuctionService {
     }
 
     // Create an auction from a DTO
-    public AuctionDto createAuction(AuctionDto auctionDto, String username) {
+    public AuctionDto createAuction(AuctionDto auctionDto,
+                                    String username,
+                                    MultipartFile img) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         Auction auction = DtoUtils.convertToEntity(auctionDto);
         auction.setUser(user);
         auctionRepository.save(auction);
+        if (img != null && !img.isEmpty()) {
+            uploadImage(auction.getAuction_id(), img);
+        }
         return DtoUtils.convertToDto(auction);
     }
     // Delete auction by ID
@@ -83,4 +96,40 @@ public class AuctionService {
         auctionRepository.save(auction);
         return DtoUtils.convertToDto(auction);
     }
+
+    // Upload image to auction
+    public String uploadImage(Long id, MultipartFile file) {
+        Auction auction = auctionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Auction not found"));
+        String imageUrl = uploadImage.apply(id.toString(), file);
+        auction.setImageUrl(imageUrl);
+        auctionRepository.save(auction);
+        return imageUrl;
+    }
+
+    // Get the file extension of an image
+    private final Function<String, String> fileExtension = (filename) -> {
+        int index = filename.lastIndexOf('.');
+        return index == -1 ? ".png" : filename.substring(index);
+    };
+
+    // Upload image to disk and return the URL
+    private final BiFunction<String, MultipartFile, String> uploadImage = (id, file) -> {
+        String filename = id + fileExtension.apply(file.getOriginalFilename());
+        try {
+            Path path = Paths.get(PHOTO_DIRECTORY).toAbsolutePath().normalize();
+            if(!Files.exists((path))){
+                Files.createDirectories(path); // will create parent directories if not exists
+            }
+            Files.copy(file.getInputStream(), path.resolve(filename), REPLACE_EXISTING); // Save image to disk with auction ID as filename
+            return ServletUriComponentsBuilder
+                    .fromCurrentContextPath()
+                    .path("/img/").path(filename)
+                    .toUriString();
+
+
+        } catch (Exception e) {
+            throw new RuntimeException("Could not upload image");
+        }
+    };
 }

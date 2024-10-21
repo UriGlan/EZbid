@@ -23,18 +23,23 @@ async function makeApiCall (apiPath){
     }
 }
 
-export async function postApiCalls(apiPath, data){
-    const headers = {};
-    headers['Authorization'] = `Bearer ${localStorage.token}`;
-    console.log(data);
+export async function postApiCalls(apiPath, formData) {
+    const headers = {
+        'Authorization': `Bearer ${localStorage.token}`,
+        // No need to set Content-Type, Axios will handle it for FormData
+    };
+
     try {
-        const response = await axios.post(`http://localhost:8080/api/${apiPath}`,data ,{ headers });
+        const response = await axios.post(`http://localhost:8080/api/${apiPath}`, formData, { headers });
         return response.data;
     } catch (error) {
         console.error('API call error:', error);
         throw error;
     }
 }
+
+
+
 
 export async function deleteApiCalls(apiPath) {
     const headers = {};

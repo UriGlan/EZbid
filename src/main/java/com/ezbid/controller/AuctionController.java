@@ -4,10 +4,12 @@ import com.ezbid.dto.AuctionDto;
 import com.ezbid.exception.ResourceNotFoundException;
 import com.ezbid.model.Auction;
 import com.ezbid.service.AuctionService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -34,12 +36,18 @@ public class AuctionController {
 
 
     // This method creates a new auction
-    @PostMapping("/new")
-    public ResponseEntity<AuctionDto> createAuction(@RequestBody AuctionDto auctionDto, @AuthenticationPrincipal UserDetails userDetails) {
-        String username = userDetails.getUsername();  // Extract the username from the token
-        AuctionDto createdAuction = auctionService.createAuction(auctionDto, username);
+    @PostMapping(value = "/new", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<AuctionDto> createAuction(
+            @RequestPart("auctionDto") AuctionDto auctionDto,  // Deserialized automatically by Spring
+            @RequestPart(value = "img", required = false) MultipartFile img,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        String username = userDetails.getUsername();
+        AuctionDto createdAuction = auctionService.createAuction(auctionDto, username, img);
         return ResponseEntity.ok(createdAuction);
     }
+
+
 
     // This method deletes an auction
     @DeleteMapping("/{id}")

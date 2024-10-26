@@ -69,7 +69,20 @@ const MyItems = () => {
                     >
                         My Listed Items
                     </Typography>
-                    <ListItems items={auctions} DialogComponent={MyListedItemsDialog}
+                    <ListItems items={auctions.sort((a, b) => {
+                        const dateA = new Date(a.endTime);
+                        const dateB = new Date(b.endTime);
+                        if (dateA < new Date() && dateB < new Date()) {
+                            return dateA - dateB; // Both are expired, sort by end time
+                        } else if (dateA < new Date()) {
+                            return 1; // a is expired, move it to the end
+                        } else if (dateB < new Date()) {
+                            return -1; // b is expired, move it to the end
+                        } else {
+                            return dateA - dateB; // Both are active, sort by end time
+                        }
+                    })}
+                               DialogComponent={MyListedItemsDialog}
                                handleDeleteItem={handleDeleteItem}/>
                     <Grid
                         container

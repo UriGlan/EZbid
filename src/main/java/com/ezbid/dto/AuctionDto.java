@@ -23,33 +23,12 @@ public class AuctionDto {
     private LocalDateTime endTime;
     private int daysLeft;
     private String status = "Active";
+    private String imageUrl;
 
     public AuctionDto() {
     }
 
-    public AuctionDto(String username,String firstName, String lastName, String title,String subtitle,
-                      String description,Long categoryId, CurrBidDto currentBid, Double startingBid,
-                      int bidsNumber, boolean active, int daysLeft) {
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.title = title;
-        this.subtitle = subtitle;
-        this.description = description;
-        this.categoryId = categoryId;
-        this.currentBid = currentBid;
-        this.startingBid = startingBid;
-        this.bidsNumber = bidsNumber;
-        if (active) {
-            this.status = "Active";
-        } else if (currentBid == null) {
-            this.status = "Expired";
-        } else {
-            this.status = "Won";
-        }
-        this.daysLeft = daysLeft;
-
-    }
+    // Getters and Setters
 
     public Long getAuction_id() {
         return auction_id;
@@ -201,6 +180,14 @@ public class AuctionDto {
 
     public void setDaysLeft(int daysLeft) {
         this.daysLeft = daysLeft;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
 

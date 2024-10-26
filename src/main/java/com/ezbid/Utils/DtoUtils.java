@@ -46,6 +46,7 @@ public class DtoUtils {
         dto.setEndTime(auction.getEndTime());
         auction.checkAuctionStatus();
         dto.setActive(auction.isActive());
+        dto.setImageUrl(auction.getImageUrl());
         return dto;
     }
 
@@ -63,6 +64,7 @@ public class DtoUtils {
         auction.setStartTime(dto.getStartTime());
         auction.setEndTime(dto.getEndTime());
         auction.setActive(dto.isActive());
+        auction.setImageUrl(dto.getImageUrl());
         return auction;
     }
 }

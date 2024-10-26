@@ -124,7 +124,7 @@ public class AuctionService {
             Files.copy(file.getInputStream(), path.resolve(filename), REPLACE_EXISTING); // Save image to disk with auction ID as filename
             return ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/img/").path(filename)
+                    .path("/uploads/").path(filename)
                     .toUriString();
 
 

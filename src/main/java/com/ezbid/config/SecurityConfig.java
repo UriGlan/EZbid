@@ -8,37 +8,39 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
 @Configuration
-public class SecurityConfig {
+@EnableWebSecurity
+public class SecurityConfig implements WebMvcConfigurer {
+
     private final AuthenticationProvider authenticationProvider;
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomUserDetailsService customUserDetailsService;
 
-    public SecurityConfig(AuthenticationProvider authenticationProvider,
-                          JwtAuthenticationFilter jwtAuthenticationFilter,
-                          CustomUserDetailsService customUserDetailsService) {
+    // Remove direct dependency on JwtAuthenticationFilter
+    public SecurityConfig(AuthenticationProvider authenticationProvider, CustomUserDetailsService customUserDetailsService) {
         this.authenticationProvider = authenticationProvider;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.customUserDetailsService = customUserDetailsService;
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {  // Inject here instead
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless JWT
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll() // Allow all requests to /auth/**
-                        .requestMatchers(HttpMethod.GET, "/api/auctions/**").permitAll() // Allow access to auctions endpoint without authentication for testing
+                        .requestMatchers("/uploads/**").permitAll() // Allow public access to the uploads folder
                         .anyRequest().authenticated() // All other requests need authentication
                 )
                 .sessionManagement(session -> session
@@ -54,7 +56,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource(){
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000")); // React app URL
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
@@ -64,5 +66,12 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // This maps the external folder to the URL path /uploads/**
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:" + System.getProperty("user.home") + "/Desktop/uploads/");
     }
 }

@@ -24,7 +24,8 @@ const Home = () => {
     // Fetch Auctions
     const fetchAuctions = async () => {
     try {
-        const data = await makeApiCall(ApiMethod.ALL_AUCTIONS);
+        const data = await makeApiCall(ApiMethod.ALL_AUCTIONS); // Call the Api for fetching auctions
+        console.log('Fetched auctions:', data);
         if (Array.isArray(data)) {
             const activeAuctions = data.filter(auction => auction.status === 'Active');
             setAuctions(activeAuctions);

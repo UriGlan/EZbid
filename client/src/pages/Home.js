@@ -27,8 +27,10 @@ const Home = () => {
         const data = await makeApiCall(ApiMethod.ALL_AUCTIONS); // Call the Api for fetching auctions
         console.log('Fetched auctions:', data);
         if (Array.isArray(data)) {
-            const activeAuctions = data.filter(auction => auction.status === 'Active');
-            setAuctions(activeAuctions);
+    const activeAuctions = data
+        .filter(auction => auction.status === 'Active')
+        .sort((a, b) => new Date(a.endTime) - new Date(b.endTime));
+    setAuctions(activeAuctions);
         } else {
             console.error('Expected array, but got', data);
             setAuctions([]);

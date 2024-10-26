@@ -1,5 +1,6 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import React, { useState } from "react";
+import {IMAGE_URLS} from "../../img/Constants";
 
 const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
     console.log(item);
@@ -20,8 +21,9 @@ const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
             <Card style={{ height: 'auto', display: 'flex', flexDirection: 'column', marginTop: '3em' }}>
                 <CardMedia
                     component="img"
-                    image={item.imageUrl || "https://images.unsplash.com/photo-1586796304259-5fa44d5e3f71?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
+                    image={item.imageUrl || IMAGE_URLS.DEFAULT_IMAGE}
                     title={item.title}
+                    style={{ height: '11em', objectFit: 'cover' }}
                 />
                 <CardContent style={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5">

@@ -18,7 +18,15 @@ const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
 
     return (
         <>
-            <Card style={{ height: 'auto', display: 'flex', flexDirection: 'column', marginTop: '3em' }}>
+
+            <Card style={{
+                backgroundColor:'#f1f1f1',
+                height: '28em',
+                display: 'flex',
+                flexDirection: 'column',
+                marginTop: '3em',
+                borderRadius: '1em',
+            }}>
                 <CardMedia
                     component="img"
                     image={item.imageUrl || IMAGE_URLS.DEFAULT_IMAGE}

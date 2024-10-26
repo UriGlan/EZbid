@@ -47,7 +47,6 @@ const EditProfile = () => {
             <main>
                 <Box
                     sx={{
-                        backgroundColor: '#d7d7d7',
                         height: 'auto',
                         paddingLeft:35,
                         paddingRight:7,

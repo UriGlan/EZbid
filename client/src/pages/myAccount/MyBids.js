@@ -6,6 +6,7 @@ import MyBidsDialog from "../../components/items/Dialog/ItemDialog";
 import Typography from "@mui/material/Typography";
 import makeApiCall, {ApiMethod} from "../../Utils/ApiUtils";
 import {useEffect} from "react";
+import Footer from "../../components/Footer";
 
 
 
@@ -35,9 +36,13 @@ const MyBids = () => {
         <>
             <PermanentDrawerLeft />
             <Box
-                component="main"
-                sx={{ flexGrow: 1, paddingLeft: 35, paddingRight: 7 }}
-            >
+                sx={{
+                    height: 'auto',
+                    paddingLeft:35,
+                    paddingRight:7,
+                    paddingTop: '80px',
+                    paddingBottom: '15%'
+                }}>
                 <Typography
                     variant='h2'
                     align='center'
@@ -65,6 +70,7 @@ const MyBids = () => {
                 }
                     DialogComponent={MyBidsDialog}
                 />
+                <Footer sx={{marginTop:'10em'}}/>
             </Box>
         </>
             )

@@ -35,7 +35,6 @@ const Profile = () => {
             <main>
                 <Box
                     sx={{
-                        backgroundColor: '#d7d7d7',
                         height: 'auto',
                         paddingLeft:35,
                         paddingRight:7,
@@ -53,6 +52,7 @@ const Profile = () => {
                     <Container    sx={{
                         paddingTop: 7,
                         paddingBottom: 17,
+                        fontWeight: 700,
                         display: 'flex',
                         justifyContent: 'center', // Center the Divider horizontally
                         alignItems: 'center', // Center the Divider vertically (if applicable)

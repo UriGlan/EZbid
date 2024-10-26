@@ -117,11 +117,11 @@ const Home = () => {
             <CssBaseline />
             <VariantAppBar />
             <main>
-                <Box sx={{ backgroundColor: '#d7d7d7', height: 'auto', paddingTop: '80px', paddingBottom: '15%' }}>
+                <Box sx={{ height: 'auto', paddingTop: '80px', paddingBottom: '15%' }}>
 
                     <Container maxWidth="sm">
                         <Typography variant="h2" align="center" color="textPrimary" gutterBottom sx={{ fontWeight: "bold" }}>
-                            Listed Items
+                            All Active Auctions
                         </Typography>
                     </Container>
 

@@ -60,7 +60,13 @@ const Profile = () => {
                         <DividerVariants profile={profile}/>
                     </Container>
                     <Box sx={{ textAlign: 'center', paddingBottom:7 }}>
-                        <Button  variant="contained" color="primary" onClick={() => navigate("/editprofile")}>
+                        <Button  variant="contained" color="primary" onClick={() => navigate("/editprofile")} sx={{
+                            backgroundColor: '#748eeb',
+                            width: '7em',
+                            '&:hover': {
+                                backgroundColor: '#5a7ddb', // Change this to your desired hover color
+                            }
+                        }}>
                             Edit
                         </Button>
                     </Box>

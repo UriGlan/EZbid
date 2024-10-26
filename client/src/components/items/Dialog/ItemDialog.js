@@ -70,23 +70,23 @@ const ItemDialog = ({open, handleClose, item}) => {
                     title ={item.title}
                     style = {{height:'auto'}}
                 />
-                <Typography variant = 'h5'>
+                <Typography variant = 'h4' align="center" marginTop='1em' fontWeight='bold'>
                     {item.title}
                 </Typography>
-                <Typography variant= 'h6'>
+                <Typography variant= 'h6' align="center">
                     {item.subtitle}
                 </Typography>
-                <Typography variant= "body2">
+                <Typography variant= "body1" fontSize='16px'>
                     {item.description}
                 </Typography>
-                <Typography>
+                <Typography fontSize='20px'>
                     <strong>Starting Bid:</strong> ${item.startingBid}
                 </Typography>
-                <Typography>
+                <Typography fontSize='20px'>
                     <strong>Current:</strong> ${item.currentBid ? item.currentBid.bidAmount : item.startingBid}
                 </Typography>
                 {item.myBid ? (
-                    <Typography color={item.myBid === item.currentBid ? "green" : ""}>
+                    <Typography color={item.myBid === item.currentBid.bidAmount ? "green" : "red"} fontSize='20px'>
                         <strong>My Bid:</strong> ${item.myBid}
                     </Typography>
                 ) : (<></>)}
@@ -96,7 +96,7 @@ const ItemDialog = ({open, handleClose, item}) => {
                 <Typography>
                     <strong>Auction Started On:</strong> {new Date(item.startTime).toLocaleString(undefined, {hour12: false})}
                 </Typography>
-                <Typography>
+                <Typography marginBottom='1em'>
                     <strong>End Date:</strong> {new Date(item.endTime).toLocaleString(undefined, {hour12: false})}
                     </Typography>
                 {item.status === 'Active' ?(

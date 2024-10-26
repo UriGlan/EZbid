@@ -75,10 +75,22 @@ const EditProfile = () => {
                     </Container>
                     {error && <Typography variant='h6' color='error' align='center'>{error}</Typography>}
                     <Box sx={{ textAlign: 'center', paddingBottom:7 }}>
-                        <Button  variant="contained" color="primary" sx={{width: 5}} onClick={saveProfileChanges}>
+                        <Button  variant="contained" color="primary" sx={{
+                            backgroundColor: '#748eeb',
+                            width: '7em',
+                            '&:hover': {
+                                backgroundColor: '#5a7ddb', // Change this to your desired hover color
+                            }
+                        }} onClick={saveProfileChanges}>
                             Save
                         </Button>
-                        <Button  variant="contained" color="primary" sx={{marginLeft:3, width: 5}} onClick={()=>navigate('/profile')}>
+                        <Button  variant="contained" color="primary" sx={{
+                            marginLeft:3,
+                            backgroundColor: '#748eeb',
+                            width: '7em',
+                            '&:hover': {
+                                backgroundColor: '#5a7ddb', // Change this to your desired hover color
+                            }}} onClick={()=>navigate('/profile')}>
                             Cancel
                         </Button>
                     </Box>

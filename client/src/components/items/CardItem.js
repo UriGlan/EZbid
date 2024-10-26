@@ -21,7 +21,7 @@ const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
 
             <Card style={{
                 backgroundColor:'#f1f1f1',
-                height: '28em',
+                height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
                 marginTop: '3em',
@@ -34,37 +34,49 @@ const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
                     style={{ height: '11em', objectFit: 'cover' }}
                 />
                 <CardContent style={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5">
+                    <Typography gutterBottom variant="h4" align="center">
                         {item.title}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
+                    <Typography variant="subtitle2" color="textSecondary" align="center" fontSize="18px">
                         {item.subtitle}
                     </Typography>
 
-                    <Typography variant="body1" color="textPrimary">
+                    <Typography variant="body2" color={item.active ? "green" : item.bidsNumber === 0 ? "red" : "#dc5b03"} align="center">
+                        Item status: {item.active ? "Active" : item.bidsNumber === 0 ? "Expired" : "Sold"}
+                    </Typography>
+
+                    <Typography variant="body1" color="textPrimary" marginTop="1em">
                         Current Bid: ${bidAmount}
                     </Typography>
 
                     {item.myBid ? (
-                        <Typography variant="body1" color="green">
-                            You placed a bid: ${item.myBid}
+                        <Typography variant="body1" color="purple">
+                            Your bid: ${item.myBid}
                         </Typography>
                     ) : (
                         <Typography variant="body1" color="gray">
-                            You haven't placed a bid on this auction
+                            You haven't placed a bid
                         </Typography>
                     )}
 
-                    <Typography variant="body2" color={item.active ? "green" : item.bidsNumber === 0 ? "red" : "orange"}>
-                        {item.active ? "Active" : item.bidsNumber === 0 ? "Expired" : "Sold"}
-                    </Typography>
-                    <Typography variant="body1" color="green">
+                    <Typography variant="h6" color="green" align="center" fontWeight="bold"
+                    sx={{
+                        marginTop: '2em',
+                    }}>
                         {item.currentBid?.bidAmount === item.myBid && item.status === 'Won' ? 'You won this auction!' : ''}
                     </Typography>
 
                 </CardContent>
-                <CardActions>
-                    <Button size="small" color="primary" onClick={handleClickOpen}>
+                <CardActions style={{marginTop:'auto'}}>
+                    <Button  color="primary" onClick={handleClickOpen} sx={{
+                        backgroundColor: '#748eeb',
+                        color: 'white',
+                        width:'-webkit-fill-available',
+                        borderRadius: '9px',
+                        '&:hover': {
+                            backgroundColor: '#5a7ddb', // Change this to your desired hover color
+                        }
+                    }}>
                         View Details
                     </Button>
                 </CardActions>

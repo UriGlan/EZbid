@@ -88,7 +88,15 @@ const MyItems = () => {
                         justifyContent="center"
                         sx={{mt: 4, paddingBottom: 10, paddingTop: 2}}
                     >
-                        <Button onClick={handleNewItem} variant="contained" color="primary">
+                        <Button onClick={handleNewItem} variant="contained" color="primary" sx={{
+                            backgroundColor: '#748eeb',
+                            marginTop:'4em',
+                            color: 'white',
+                            borderRadius: '9px',
+                            '&:hover': {
+                                backgroundColor: '#5a7ddb', // Change this to your desired hover color
+                            }
+                        }}>
                             Add new item +
                         </Button>
                         <NewAuctionDialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)} onCreate={(newAuction) => {

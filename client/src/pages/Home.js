@@ -20,33 +20,63 @@ const Home = () => {
     const [filteredAuctions, setFilteredAuctions] = useState([]);
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("All");
+    const [userBids, setUserBids] = useState([]);
+
+    // Fetch User Bids
+    const fetchUserBids = async () => {
+        try {
+            const data = await makeApiCall(ApiMethod.MY_BIDS); // Assuming you have this API
+            if (Array.isArray(data)) {
+                setUserBids(data.map(bid => ({
+                    auctionId: bid.auction.auction_id,
+                    myBid: bid.bidAmount
+                })));
+            } else {
+                console.error('Expected array, but got', data);
+                setUserBids([]);
+            }
+        } catch (error) {
+            console.error('Error fetching user bids:', error);
+            setUserBids([]);
+        }
+    }
 
     // Fetch Auctions
     const fetchAuctions = async () => {
-    try {
-        const data = await makeApiCall(ApiMethod.ALL_AUCTIONS); // Call the Api for fetching auctions
-        console.log('Fetched auctions:', data);
-        if (Array.isArray(data)) {
-    const activeAuctions = data
-        .filter(auction => auction.status === 'Active')
-        .sort((a, b) => new Date(a.endTime) - new Date(b.endTime));
-    setAuctions(activeAuctions);
-        } else {
-            console.error('Expected array, but got', data);
+        try {
+            const data = await makeApiCall(ApiMethod.ALL_AUCTIONS); // Call the Api for fetching auctions
+            console.log('Fetched auctions:', data);
+            if (Array.isArray(data)) {
+                const activeAuctions = data
+                    .filter(auction => auction.status === 'Active')
+                    .sort((a, b) => new Date(a.endTime) - new Date(b.endTime));
+
+                // Mark the auctions where the user has placed a bid
+                const updatedAuctions = activeAuctions.map(auction => {
+                    const userBid = userBids.find(bid => bid.auctionId === auction.auction_id);
+                    if (userBid) {
+                        return { ...auction, myBid: userBid.myBid };
+                    }
+                    return auction;
+                });
+
+                setAuctions(updatedAuctions);
+            } else {
+                console.error('Expected array, but got', data);
+                setAuctions([]);
+            }
+        } catch (error) {
+            console.error('Error fetching auctions:', error);
             setAuctions([]);
         }
-    } catch (error) {
-        console.error('Error fetching auctions:', error);
-        setAuctions([]);
-    }
-};
+    };
 
     // Fetch Categories
     const fetchCategories = async () => {
         try {
             const data = await makeApiCall(ApiMethod.ALL_CATEGORIES); // Assuming you have this API
             if (Array.isArray(data)) {
-                setCategories([{name: "All", id: "All"}, ...data]); // Add 'All' as the first option
+                setCategories([{ name: "All", id: "All" }, ...data]); // Add 'All' as the first option
             } else {
                 console.error('Expected array, but got', data);
                 setCategories([]);
@@ -73,13 +103,11 @@ const Home = () => {
     };
 
     useEffect(() => {
+        fetchUserBids();
         fetchAuctions();
         fetchCategories();
-        const intervalId = setInterval(fetchAuctions, 2000);
-        return () => clearInterval(intervalId);
-    }, []);
+    }, [userBids]);
 
-    // Apply the filter when auctions or selectedCategory changes
     useEffect(() => {
         applyCategoryFilter();
     }, [auctions, selectedCategory]);
@@ -99,7 +127,7 @@ const Home = () => {
 
                     {/* Dropdown to Filter by Category */}
                     <Container>
-                        <FormControl sx={{width: '20%'}}>
+                        <FormControl sx={{ width: '20%' }}>
                             <InputLabel>Category</InputLabel>
                             <Select
                                 value={selectedCategory}

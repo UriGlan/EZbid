@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -61,16 +62,49 @@ public class AuctionService {
         }
         return DtoUtils.convertToDto(auction);
     }
+
     // Delete auction by ID
     @Transactional
     public void deleteAuction(Long auctionId) {
         Auction auction = auctionRepository.findById(auctionId)
                 .orElseThrow(() -> new ResourceNotFoundException("Auction not found"));
 
+        // Delete bids associated with the auction
         bidRepository.deleteByAuction(auction);
+
+        // Delete auction image if it exists
+        if (auction.getImageUrl() != null) {
+            deletePhotoFile(auction.getImageUrl());
+        }
+
+        // Delete the auction from the database
         auctionRepository.delete(auction);
     }
 
+    // Method to delete the image file from the filesystem
+    private void deletePhotoFile(String imageUrl) {
+        try {
+            // Extract the file name from the image URL
+            String filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+            Path filePath = Paths.get(PHOTO_DIRECTORY, filename).toAbsolutePath().normalize();
+            File file = filePath.toFile();
+
+            // Delete the file if it exists
+            if (file.exists()) {
+                boolean deleted = file.delete();
+                if (deleted) {
+                    System.out.println("Image deleted successfully");
+                } else {
+                    System.err.println("Failed to delete image");
+                }
+            } else {
+                System.out.println("Image file not found: " + filename);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error occurred while deleting image file");
+        }
+    }
 
     // Get auction by ID and convert to DTO
     public AuctionDto getAuctionById(Long auctionId) {
@@ -79,9 +113,7 @@ public class AuctionService {
         return DtoUtils.convertToDto(auction);
     }
 
-    // Convert Auction entity to AuctionDto
-
-
+    // Get all active auctions and convert to DTO
     public List<AuctionDto> getAllActiveAuctions() {
         List<Auction> auctions = auctionRepository.findAll();
         return auctions.stream()
@@ -89,6 +121,7 @@ public class AuctionService {
                 .collect(Collectors.toList());
     }
 
+    // End auction by setting it as inactive
     public AuctionDto endAuction(Long auctionId) {
         Auction auction = auctionRepository.findById(auctionId)
                 .orElseThrow(() -> new ResourceNotFoundException("Auction not found"));
@@ -119,15 +152,13 @@ public class AuctionService {
         try {
             Path path = Paths.get(PHOTO_DIRECTORY).toAbsolutePath().normalize();
             if(!Files.exists((path))){
-                Files.createDirectories(path); // will create parent directories if not exists
+                Files.createDirectories(path); // Create directories if they don't exist
             }
             Files.copy(file.getInputStream(), path.resolve(filename), REPLACE_EXISTING); // Save image to disk with auction ID as filename
             return ServletUriComponentsBuilder
                     .fromCurrentContextPath()
                     .path("/uploads/").path(filename)
                     .toUriString();
-
-
         } catch (Exception e) {
             throw new RuntimeException("Could not upload image");
         }

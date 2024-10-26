@@ -34,13 +34,13 @@ const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
                     </Typography>
 
                     {item.myBid ? (
-                        <Typography variant="body1" color={item.myBid == bidAmount ? "green" : "red"}>
+                        <Typography variant="body1" color={item.myBid === bidAmount ? "green" : "red"}>
                             My Bid: ${item.myBid}
                         </Typography>
                     ) : (<></>)}
 
-                    <Typography variant="body2" color={item.active ? "green": "red"}>
-                        {item.active ? "Active" : "Expired"}
+                    <Typography variant="body2" color={item.active ? "green": item.bidsNumber === 0 ? "red" :  "orange"}>
+                        {item.active ? "Active" : item.bidsNumber === 0 ? "Expired" : "Sold"}
                     </Typography>
                     <Typography variant="body1" color="green">
                         {item.currentBid?.bidAmount === item.myBid && item.status === 'Won' ? 'You won this auction!' : ''}

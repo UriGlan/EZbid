@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
+// This class is a global exception handler that catches all exceptions thrown by the application
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    // This method handles all exceptions of type ResourceNotFoundException
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException e) {
         // Prepare the response as a map with a 'message' key
@@ -20,6 +23,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    // This method handles DataIntegrityViolationException
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Map<String, String>> handleConstraintViolation(DataIntegrityViolationException ex) {
         Map<String, String> response = new HashMap<>();

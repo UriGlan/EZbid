@@ -16,6 +16,7 @@ import { useState } from "react";
 
 const defaultTheme = createTheme();
 
+// ResetPassword component
 const ResetPassword = () => {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');

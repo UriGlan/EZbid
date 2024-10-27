@@ -2,6 +2,8 @@ import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@
 import React, { useState } from "react";
 import {IMAGE_URLS} from "../../img/Constants";
 
+// This component is used to display a single item in a card format
+
 const CardItem = ({ item, DialogComponent, handleDeleteItem }) => {
     console.log(item);
     const [open, setOpen] = useState(false);

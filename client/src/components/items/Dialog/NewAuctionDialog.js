@@ -31,6 +31,8 @@ const NewAuctionDialog = ({ open, onClose, onCreate }) => {
         }
     }, [open]);
 
+    // Create a new auction
+
     const handleCreate = async () => {
         const formData = new FormData();
 

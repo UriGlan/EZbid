@@ -32,16 +32,6 @@ public class BidService {
         this.auctionRepository = auctionRepository;
     }
 
-    public static void deleteBidsByAuctionId(Long auctionId) {
-        // delete all bids by auction id
-
-    }
-
-    // This method returns all bids
-    public List<Bid> getAllBids() {
-        return bidRepository.findAll();
-    }
-
     // Place new bid
     public void placeBid(PlaceBidDto bidDto, String username) {
         User user = userRepository.findByUsername(username)
@@ -78,11 +68,6 @@ public class BidService {
         dto.setBidTime(bid.getBidTime());
         dto.setUsername(bid.getUser().getUsername());
         return dto;
-    }
-
-    // This method returns a bid by id
-    public Bid getBidById(Long id) {
-        return bidRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Bid not found"));
     }
 
     public Bid convertToEntity(BidDto currentBid) {

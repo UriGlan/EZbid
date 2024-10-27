@@ -14,6 +14,7 @@ import {func} from "prop-types";
 import NewAuctionDialog from "../../components/items/Dialog/NewAuctionDialog";
 
 
+// This is the MyItems page that displays the items that the user has listed for auction
 const MyItems = () => {
     const [auctions, setAuctions] = React.useState([]);
     const [isDialogOpen, setIsDialogOpen] = useState(false);

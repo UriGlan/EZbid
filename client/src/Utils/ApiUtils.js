@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Define the API path here
 export class ApiMethod {
     static ALL_AUCTIONS = "auctions/all";
     static MY_BIDS = "bids/mybids";
@@ -11,6 +12,7 @@ export class ApiMethod {
     static ALL_CATEGORIES = "categories/all";
 }
 
+// Define the API get call here
 async function makeApiCall (apiPath){
     const headers = {};
     headers['Authorization'] = `Bearer ${localStorage.token}`;
@@ -23,6 +25,7 @@ async function makeApiCall (apiPath){
     }
 }
 
+// Define the API post call here
 export async function postApiCalls(apiPath, formData) {
     const headers = {
         'Authorization': `Bearer ${localStorage.token}`,
@@ -38,9 +41,7 @@ export async function postApiCalls(apiPath, formData) {
     }
 }
 
-
-
-
+// Define the API delete call here
 export async function deleteApiCalls(apiPath) {
     const headers = {};
     headers['Authorization'] = `Bearer ${localStorage.token}`;

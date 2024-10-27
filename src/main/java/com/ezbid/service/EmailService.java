@@ -6,14 +6,17 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+// This class is a service that handles email sending
 @Service
 public class EmailService {
     private final JavaMailSender emailSender;
 
+    // This constructor initializes the email sender
     public EmailService(JavaMailSender emailSender) {
         this.emailSender = emailSender;
     }
 
+    // This method sends a verification email
     public void sendVerificationEmail(String to, String subject, String text) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -25,6 +28,7 @@ public class EmailService {
         emailSender.send(message);
     }
 
+    // This method sends a password reset email
     public void sendPasswordResetEmail(String email, String token) throws MessagingException {
         String subject = "Password Reset";
         String text = "<h1>Password Reset</h1>"

@@ -6,11 +6,11 @@ import com.ezbid.responses.LogInResponse;
 import com.ezbid.service.AuthenticationService;
 import com.ezbid.service.JwtService;
 import jakarta.mail.MessagingException;
-import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+// This class is responsible for handling authentication requests
 @RequestMapping("/auth")
 @RestController
 public class AuthenticationController {
@@ -23,12 +23,14 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
+    // Register a new user
     @PostMapping("/signup")
     public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
         User registerUser = authenticationService.signUp(registerUserDto);
         return ResponseEntity.ok(registerUser);
     }
 
+    // Log in a user
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginUserDto loginUserDto) {
         try {
@@ -39,7 +41,7 @@ public class AuthenticationController {
         }
     }
 
-
+    // Verify a user
     @PostMapping("/verify")
     public ResponseEntity<?> verifyUser(@RequestBody VerifyUserDto verifyUserDto) {
         try{
@@ -50,13 +52,14 @@ public class AuthenticationController {
         }
     }
 
-
+    // Send a password reset email
     @PostMapping("/reset-password-mail")
     public ResponseEntity<?> sendResetPasswordMail(@RequestBody MailAddressDto emailDto) throws MessagingException {
             authenticationService.sendPasswordEmail(emailDto);
             return ResponseEntity.ok("Password reset link sent successfully");
     }
 
+    // Reset a user's password
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody NewPasswordDto newPasswordDto) {
         try {

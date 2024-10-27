@@ -7,7 +7,7 @@ import makeApiCall, {ApiMethod, postApiCalls} from "../../../Utils/ApiUtils";
 import AuctionWonDialog from "./AuctionWonDialog";
 import {IMAGE_URLS} from "../../../img/Constants";
 
-
+// This component is used to display a dialog for placing a bid on an item
 const ItemDialog = ({open, handleClose, item}) => {
     const [bidAmount, setBidAmount]= useState('');
     const [error, setError] = useState('')
@@ -19,7 +19,7 @@ const ItemDialog = ({open, handleClose, item}) => {
             <AuctionWonDialog open={open} handleClose={handleClose} item={item}/>
         )
     }
-
+    // Function to validate the bid amount
     const isValidBidAmount = (bidAmount) => {
         const bid = parseFloat(bidAmount);
         const currentBid = item.currentBid ? item.currentBid.bidAmount : item.startingBid;
@@ -44,13 +44,15 @@ const ItemDialog = ({open, handleClose, item}) => {
         }
         return '';
     }
-
+    // Function to handle placing a bid
     const handlePlaceBid = async () => {
         const errorMessage = isValidBidAmount(bidAmount);
+        /// If there is an error message, set the error state and return
         if (errorMessage){
             setError(errorMessage);
             return;
         }
+        // Call the API to place the bid
         try {
             await postApiCalls(ApiMethod.PLACE_BID, {auction_id: item.auction_id, bidAmount: bidAmount});
             handleClose();

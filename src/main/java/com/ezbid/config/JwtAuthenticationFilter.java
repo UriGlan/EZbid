@@ -20,18 +20,21 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 
+// This class is responsible for filtering incoming requests and authenticating them using JWT
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
+    // Constructor for the JwtAuthenticationFilter class
     public JwtAuthenticationFilter(HandlerExceptionResolver handlerExceptionResolver, JwtService jwtService, UserDetailsService userDetailsService) {
         this.handlerExceptionResolver = handlerExceptionResolver;
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
     }
 
+    // This method filters incoming requests and authenticates them using JWT
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -52,15 +55,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response); // Continue with the filter chain if there's no valid header
             return;
         }
-
+        // Extract the JWT from the Authorization header
         try {
             final String jwt = authHeader.substring(7); // Extract the JWT from the Bearer token
-            System.out.println("Extracted JWT token: " + jwt);
             final String username = jwtService.extractUsername(jwt); // Extract the username from the JWT
 
             // Log extracted username
-            System.out.println("Extracted username from JWT: " + username);
-
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
             // Check if username is valid and the user is not yet authenticated

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import "./css/Login.css"
+
+
+// This is the login component
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,6 +15,7 @@ const Login = () => {
         setPassword(e.target.value);
     };
 
+    // This function is called when the form is submitted
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Email:', email);

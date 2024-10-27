@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
 
+// Custom theme
 
 const theme = createTheme({
     palette: {

@@ -26,7 +26,7 @@ const VerificationResetCode = () => {
 
         const resetData = {
             email: data.get('email'),
-            token: data.get('token'),  // Assuming you have a token in the reset email
+            token: data.get('token'),
             newPassword: data.get('newPassword'),
         };
 

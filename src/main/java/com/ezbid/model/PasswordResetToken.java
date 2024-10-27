@@ -1,9 +1,9 @@
 package com.ezbid.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
+// This class is the model for a password reset token
 @Entity
 public class PasswordResetToken {
     @Id

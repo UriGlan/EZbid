@@ -17,6 +17,7 @@ import Container from "@mui/material/Container";
 
 const defaultTheme = createTheme();
 
+// This component is used to sign up a new user
 const SignUp = () => {
     const [error, setError] = React.useState('');
 
@@ -32,8 +33,8 @@ const SignUp = () => {
             username: data.get('username'),
             password: data.get('password'),
             email: data.get('email'),
-            firstName: data.get('firstName'),
-            lastName: data.get('lastName'),
+            firstname: data.get('firstName'),
+            lastname: data.get('lastName'),
         };
 
         try {

@@ -10,6 +10,7 @@ import makeApiCall, {ApiMethod} from "../../Utils/ApiUtils";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 
+// Profile page
 const Profile = () => {
     const navigate = useNavigate();
     const [profile, setProfile] = React.useState({});

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
+// This component will fetch all auctions from the server and display them in a list.
 const Auction = () => {
     const [auctions, setAuctions] = useState([]);
     useEffect(() => {

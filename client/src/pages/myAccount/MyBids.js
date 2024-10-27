@@ -9,7 +9,7 @@ import {useEffect} from "react";
 import Footer from "../../components/Footer";
 
 
-
+// MyBids is a page that displays all the bids that the user has placed on auctions.
 const MyBids = () => {
     const [bids, setBids] = React.useState([]);
     const fetchBids = async () => {

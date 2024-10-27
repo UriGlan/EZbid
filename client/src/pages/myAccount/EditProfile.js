@@ -3,7 +3,6 @@ import Footer from "../../components/Footer";
 import PermanentDrawerLeft from "../../components/PermanentDrawerLeft";
 import Typography from "@mui/material/Typography";
 import {Box, Container} from "@mui/material";
-import DividerVariants from "../../components/DividerVariants";
 import Button from "@mui/material/Button";
 import * as React from "react";
 import ProfileEditComponents from "../../components/ProfileEditComponents";
@@ -11,10 +10,13 @@ import {useNavigate} from "react-router-dom";
 import makeApiCall, {ApiMethod, postApiCalls} from "../../Utils/ApiUtils";
 import {useEffect} from "react";
 
+
+// Edit Profile Page
 const EditProfile = () => {
     const navigate = useNavigate();
     const [profile, setProfile] = React.useState({});
     const [error, setError] = React.useState('');
+
     const fetchProfile = async () => {
         try {
             const data = await makeApiCall(ApiMethod.PROFILE)
@@ -25,10 +27,12 @@ const EditProfile = () => {
         }
     };
 
+    // Fetch Profile
     useEffect(() => {
         fetchProfile()
     }, []);
 
+    // Save Profile Changes
     const saveProfileChanges = async () => {
         try {
             await postApiCalls(ApiMethod.EDIT_PROFILE, {firstName: profile.firstName, lastName: profile.lastName});

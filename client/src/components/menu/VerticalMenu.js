@@ -5,6 +5,8 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+// This is a vertical menu that can be used in the sidebar of a dashboard.
+
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 

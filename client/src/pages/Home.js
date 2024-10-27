@@ -15,6 +15,8 @@ import ListItems from "../components/items/ListItems";
 import makeApiCall, { ApiMethod } from "../Utils/ApiUtils";
 import MyBidsDialog from "../components/items/Dialog/ItemDialog";
 
+
+// Home Page
 const Home = () => {
     const [auctions, setAuctions] = useState([]);
     const [filteredAuctions, setFilteredAuctions] = useState([]);
@@ -25,7 +27,7 @@ const Home = () => {
     // Fetch User Bids
     const fetchUserBids = async () => {
         try {
-            const data = await makeApiCall(ApiMethod.MY_BIDS); // Assuming you have this API
+            const data = await makeApiCall(ApiMethod.MY_BIDS); // Call the Api for fetching user bids
             if (Array.isArray(data)) {
                 setUserBids(data.map(bid => ({
                     auctionId: bid.auction.auction_id,
@@ -74,7 +76,7 @@ const Home = () => {
     // Fetch Categories
     const fetchCategories = async () => {
         try {
-            const data = await makeApiCall(ApiMethod.ALL_CATEGORIES); // Assuming you have this API
+            const data = await makeApiCall(ApiMethod.ALL_CATEGORIES); // Call the Api for fetching categories
             if (Array.isArray(data)) {
                 setCategories([{ name: "All", id: "All" }, ...data]); // Add 'All' as the first option
             } else {

@@ -14,6 +14,7 @@ const style = {
     alignItems: 'center',
 };
 
+// Profile is passed as a prop to DividerVariants
 const DividerVariants = (profile) => {
     console.log(profile);
     return (

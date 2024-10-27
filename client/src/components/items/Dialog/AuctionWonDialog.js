@@ -1,10 +1,9 @@
 import {CardMedia, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import makeApiCall, {ApiMethod, postApiCalls} from "../../../Utils/ApiUtils";
-import {useState} from "react";
 import {IMAGE_URLS} from "../../../img/Constants";
 
+// This component is used to display a dialog when the user wins an auction
 const AuctionWonDialog = ({ open, handleClose, item }) => {
 
     return (

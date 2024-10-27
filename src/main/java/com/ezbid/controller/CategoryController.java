@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+// Controller for handling category requests
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
@@ -18,6 +19,7 @@ public class CategoryController {
         this.categoryRepository = categoryRepository;
     }
 
+    // Get all categories
     @GetMapping("/all")
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();

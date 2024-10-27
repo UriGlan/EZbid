@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
+
+// This class is a service that handles custom user details
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -20,6 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    // This method loads a user by email
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // Log the email for debugging

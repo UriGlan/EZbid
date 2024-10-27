@@ -25,6 +25,8 @@ public class EmailConfiguration {
         ((JavaMailSenderImpl) mailSender).setUsername(emailUserName);
         ((JavaMailSenderImpl) mailSender).setPassword(emailPassword);
 
+        // Configuring the mail properties
+
         Properties props = ((JavaMailSenderImpl) mailSender).getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");

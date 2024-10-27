@@ -22,6 +22,7 @@ import {useNavigate} from "react-router-dom";
 
 const defaultTheme = createTheme();
 
+// This component is used to sign in the user
 const SignInSite = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();

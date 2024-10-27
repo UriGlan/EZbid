@@ -28,31 +28,18 @@ public class UserService {
         users.addAll(userRepository.findAll());
         return users;
     }
-    // This method creates a user
-    public User createUser(User user) {
-        return userRepository.save(user);
-    }
+
+
     //  This method updates a user
     public User updateUser(User user, String firstName, String lastName) {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         return userRepository.save(user);
     }
-    // This method deletes a user
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
-    }
-
 
     // This method returns a user by id
     public User getUserById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-    }
-
-    // This method returns a user by email
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 

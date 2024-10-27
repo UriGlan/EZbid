@@ -14,12 +14,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.awt.desktop.SystemSleepEvent;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.UUID;
 
+// This class is a service that handles authentication logics
 @Service
 public class AuthenticationService {
     private final UserRepository userRepository;
@@ -139,6 +138,8 @@ public class AuthenticationService {
         tokenRepository.save(passwordResetToken);
         emailService.sendPasswordResetEmail(email, token);
     }
+
+    // logic for resetting password
     @Transactional
     public void resetPassword(NewPasswordDto newPasswordDto) {
         String token = newPasswordDto.getToken();

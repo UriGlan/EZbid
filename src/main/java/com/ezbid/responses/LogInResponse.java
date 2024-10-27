@@ -1,5 +1,7 @@
 package com.ezbid.responses;
 
+
+// LogInResponse class is used to send the token and its expiration time to the client
 public class LogInResponse {
     private String token;
     private Long expiresIn;

@@ -1,6 +1,8 @@
 import React from 'react';
 import './css/Logo.css'
 
+
+// This is the logo component
 const Logo = () => {
     return (
         <div className="logo-component">

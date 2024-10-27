@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 import static com.ezbid.constant.Constant.PHOTO_DIRECTORY;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
+// This class is a service that handles logics for auctions
 @Service
 @Transactional(rollbackOn = Exception.class)
 public class AuctionService {

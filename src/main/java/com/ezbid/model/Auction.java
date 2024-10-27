@@ -1,6 +1,6 @@
 package com.ezbid.model;
-import jakarta.persistence.*;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 // This class is the model for an auction

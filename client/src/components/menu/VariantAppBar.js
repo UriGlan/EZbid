@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import VariantButtonGroup from "../VariantButtonGroup";
 import React from "react";
 
+// AppBar with logo and button group
 const VariantAppBar = () =>{
     return(
         <AppBar position="fixed"

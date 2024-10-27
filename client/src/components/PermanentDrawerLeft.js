@@ -16,7 +16,7 @@ import {useNavigate} from "react-router-dom";
 
 const drawerWidth = 240;
 
-
+// Permanent Drawer Left component
 const PermanentDrawerLeft = () => {
     const navigate = useNavigate();
 

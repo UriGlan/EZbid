@@ -1,6 +1,7 @@
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 
+// Profile Edit Components
 const ProfileEditComponents = ({profile,onChange}) => {
 
     const fields = [

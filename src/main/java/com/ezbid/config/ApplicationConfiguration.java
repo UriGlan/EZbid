@@ -11,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
+// This class is to configure the application
+// It is used to configure the authentication manager, authentication provider, user details service, and password encoder
 @Configuration
 public class ApplicationConfiguration {
     private final UserRepository userRepository;
@@ -19,13 +22,14 @@ public class ApplicationConfiguration {
         this.userRepository = userRepository;
     }
 
+    // User Details Service
     @Bean
     UserDetailsService userDetailsService() {
         return username -> userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 
-    // This method is to encrypt passwords
+    // Password Encoder
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

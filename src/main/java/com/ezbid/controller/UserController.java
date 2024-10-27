@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+// Controller for handling user-related requests
 @RequestMapping("/api/users")
 @RestController
 public class UserController {
@@ -27,6 +28,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    // Get the authenticated user's profile
     @GetMapping("/profile")
     public ResponseEntity<ProfileDto> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -34,12 +36,14 @@ public class UserController {
         return ResponseEntity.ok(userService.getProfileDto(userDetails.getUsername()));
     }
 
+    // Get all users
     @GetMapping("/")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 
+    // Get a user by ID
     @GetMapping("/user/{id}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id);
@@ -47,6 +51,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    // Update the user's profile
     @PostMapping("/editprofile")
     public ResponseEntity<User> updateUser(@RequestBody Map<String,String>body, @AuthenticationPrincipal UserDetails userDetails) {
         String firstName = body.get("firstName");

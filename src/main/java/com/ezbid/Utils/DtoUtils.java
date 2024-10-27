@@ -5,6 +5,8 @@ import com.ezbid.dto.CurrBidDto;
 import com.ezbid.model.Auction;
 import com.ezbid.model.Bid;
 
+// This class contains utility methods for converting DTOs to entities and vice versa
+
 public class DtoUtils {
 
     public static CurrBidDto convertToCurrBidDto(Bid bid) {

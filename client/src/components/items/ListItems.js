@@ -3,6 +3,8 @@ import Grid from "@mui/material/Grid";
 import CardItem from "./CardItem";
 import Typography from "@mui/material/Typography";
 
+// ListItems component
+
 const ListItems = ({ items,DialogComponent, handleDeleteItem }) => {
     if (!Array.isArray(items)){
         return  <Typography>

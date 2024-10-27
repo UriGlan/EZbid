@@ -15,8 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.function.Function;
 
-import static io.jsonwebtoken.security.Keys.hmacShaKeyFor;
-
+// This class is a service that handles JWT logics
 @Service
 public class JwtService {
     @Value("${jwt.secret}")

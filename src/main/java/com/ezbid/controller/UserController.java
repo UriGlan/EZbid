@@ -51,7 +51,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    // Update the user's profile
+     // Update the user's profile
     @PostMapping("/editprofile")
     public ResponseEntity<User> updateUser(@RequestBody Map<String,String>body, @AuthenticationPrincipal UserDetails userDetails) {
         String firstName = body.get("firstName");
